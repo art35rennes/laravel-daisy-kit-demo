@@ -1,0 +1,15 @@
+---
+alwaysApply: true
+---
+- This repository is a **Laravel application**, not the reusable package.
+- It must consume `art35rennes/laravel-daisy-kit` like a real host application would.
+- Do not copy package internals into this app unless the code is documentation-only or demo-only by nature.
+- Package namespace remains `daisy::`; the app may add its own local Blade components for docs, layouts, and navigation.
+- Documentation pages, demo routes, controllers, scanners, inventory tooling, and navigation belong in this repository.
+- If the app needs package assets, prefer the package's public integration contract first:
+  - published/build assets
+  - config keys
+  - Blade components and namespaced views
+  - explicit source publishing only when deliberately testing that workflow
+- Never rely on undocumented package internals when a public integration surface exists.
+- Keep this app aligned with the package but independent in responsibility, tests, and release cycle.
