@@ -1,0 +1,12 @@
+/\.env
+/vendor
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/public/vendor/art35rennes/laravel-daisy-kit/assets
+/bootstrap/cache/*.php
+/database/*.sqlite
+/storage/pail
+/storage/*.key
+/.phpunit.result.cache
