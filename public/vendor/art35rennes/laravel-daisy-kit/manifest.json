@@ -128,7 +128,7 @@
     "isDynamicEntry": true
   },
   "../laravel-daisy-kit/resources/js/calendar-full/index.js": {
-    "file": "assets/index-CIZZiTGT.js",
+    "file": "assets/index-_XdGdbve.js",
     "name": "index",
     "src": "../laravel-daisy-kit/resources/js/calendar-full/index.js",
     "isDynamicEntry": true,
@@ -189,7 +189,7 @@
     ]
   },
   "../laravel-daisy-kit/resources/js/leaflet/index.js": {
-    "file": "assets/leaflet-core-Bw5OaLTN.js",
+    "file": "assets/leaflet-core-C8BmiT0V.js",
     "name": "leaflet-core",
     "src": "../laravel-daisy-kit/resources/js/leaflet/index.js",
     "isDynamicEntry": true,
@@ -276,7 +276,7 @@
     "isDynamicEntry": true
   },
   "../laravel-daisy-kit/resources/js/modules/csrf-keeper.js": {
-    "file": "assets/csrf-keeper-DmJYALjz.js",
+    "file": "assets/csrf-keeper-D40JlrFu.js",
     "name": "csrf-keeper",
     "src": "../laravel-daisy-kit/resources/js/modules/csrf-keeper.js",
     "isDynamicEntry": true
@@ -397,13 +397,13 @@
     "isDynamicEntry": true
   },
   "../laravel-daisy-kit/resources/js/transfer.js": {
-    "file": "assets/transfer-BtgJuRoJ.js",
+    "file": "assets/transfer-CWPeiSv_.js",
     "name": "transfer",
     "src": "../laravel-daisy-kit/resources/js/transfer.js",
     "isDynamicEntry": true
   },
   "../laravel-daisy-kit/resources/js/treeview.js": {
-    "file": "assets/treeview-D1l50rvA.js",
+    "file": "assets/treeview-EhIvz3Y6.js",
     "name": "treeview",
     "src": "../laravel-daisy-kit/resources/js/treeview.js",
     "isDynamicEntry": true
@@ -534,7 +534,7 @@
     "name": "vendor"
   },
   "resources/css/app.css": {
-    "file": "assets/app-DiPSTqVA.css",
+    "file": "assets/app-DYonbVwD.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -543,7 +543,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-BT4hdn-R.js",
+    "file": "assets/app-CIiCN4IB.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -552,41 +552,6 @@
       "_vendor-pbZnJK6P.js"
     ],
     "dynamicImports": [
-      "../laravel-daisy-kit/resources/js/modules/chat-input.js",
-      "../laravel-daisy-kit/resources/js/modules/chat-messages.js",
-      "../laravel-daisy-kit/resources/js/modules/chat-widget.js",
-      "../laravel-daisy-kit/resources/js/modules/copyable.js",
-      "../laravel-daisy-kit/resources/js/modules/csrf-keeper.js",
-      "../laravel-daisy-kit/resources/js/modules/menu-filter.js",
-      "../laravel-daisy-kit/resources/js/modules/notifications.js",
-      "../laravel-daisy-kit/resources/js/modules/otp-code.js",
-      "../laravel-daisy-kit/resources/js/modules/popover.js",
-      "../laravel-daisy-kit/resources/js/modules/select.js",
-      "../laravel-daisy-kit/resources/js/modules/sidebar.js",
-      "../laravel-daisy-kit/resources/js/modules/sign.js",
-      "../laravel-daisy-kit/resources/js/modules/forms/inline.js",
-      "../laravel-daisy-kit/resources/js/modules/forms/tabs.js",
-      "../laravel-daisy-kit/resources/js/modules/forms/wizard.js",
-      "../laravel-daisy-kit/resources/js/code-editor.js",
-      "../laravel-daisy-kit/resources/js/color-picker.js",
-      "../laravel-daisy-kit/resources/js/file-input.js",
-      "../laravel-daisy-kit/resources/js/input-mask.js",
-      "../laravel-daisy-kit/resources/js/lazy-editors.js",
-      "../laravel-daisy-kit/resources/js/lightbox.js",
-      "../laravel-daisy-kit/resources/js/media-gallery.js",
-      "../laravel-daisy-kit/resources/js/onboarding.js",
-      "../laravel-daisy-kit/resources/js/popconfirm.js",
-      "../laravel-daisy-kit/resources/js/popover.js",
-      "../laravel-daisy-kit/resources/js/scroll-status.js",
-      "../laravel-daisy-kit/resources/js/scrollspy.js",
-      "../laravel-daisy-kit/resources/js/stepper.js",
-      "../laravel-daisy-kit/resources/js/table.js",
-      "../laravel-daisy-kit/resources/js/transfer.js",
-      "../laravel-daisy-kit/resources/js/treeview.js",
-      "../laravel-daisy-kit/resources/js/calendar-full/index.js",
-      "_chart-DkC_7JRR.js",
-      "../laravel-daisy-kit/resources/js/chat/index.js",
-      "../laravel-daisy-kit/resources/js/leaflet/index.js",
       "../laravel-daisy-kit/resources/js/modules/chat-input.js",
       "../laravel-daisy-kit/resources/js/modules/chat-messages.js",
       "../laravel-daisy-kit/resources/js/modules/chat-widget.js",
