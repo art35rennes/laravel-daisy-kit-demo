@@ -10,3 +10,8 @@
 /storage/pail
 /storage/*.key
 /.phpunit.result.cache
+.agents/
+.codex/
+.cursor/skills/
+AGENTS.md
+storage/daisy-kit-vite.hot
