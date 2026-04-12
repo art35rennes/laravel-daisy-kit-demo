@@ -48,10 +48,11 @@
                         ],
                         [
                             'id' => '1-3',
-                            'label' => 'Sandbox (états mixtes au chargement)',
+                            'label' => 'Sandbox (état mixed explicite)',
+                            'state' => 'mixed',
                             'children' => [
-                                ['id' => '1-3-1', 'label' => 'Draft.md', 'selected' => true],
-                                ['id' => '1-3-2', 'label' => 'Notes.md', 'selected' => false],
+                                ['id' => '1-3-1', 'label' => 'Draft.md', 'checked' => true],
+                                ['id' => '1-3-2', 'label' => 'Notes.md'],
                             ],
                         ],
                     ],
@@ -64,8 +65,9 @@
                         [
                             'id' => '2-1',
                             'label' => 'Documentation',
+                            'checked' => true,
                             'children' => [
-                                ['id' => '2-1-1', 'label' => 'README.md'],
+                                ['id' => '2-1-1', 'label' => 'README.md', 'checked' => true],
                                 ['id' => '2-1-2', 'label' => 'INSTALL.md'],
                             ],
                         ],
@@ -163,5 +165,4 @@ Route::get('/demo/api/tree-children', function (\Illuminate\Http\Request $reques
     })();
     </script>
 </section>
-
 

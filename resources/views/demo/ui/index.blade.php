@@ -164,36 +164,16 @@
         })();
     </script>
 
-    <!-- Section navigator: style FAB (sans classe .fab daisyUI — elle désactive pointer-events sur le trigger en :focus-within). -->
-    <div id="sectionNav" class="fixed bottom-6 right-6 z-50 hidden md:block">
-        <button type="button" id="sectionNavBtn" class="btn btn-lg btn-circle btn-primary shadow-lg" aria-label="Ouvrir le sommaire des sections" aria-expanded="false">
-            <svg id="sectionNavIconOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6h.01v.01H3.75V6zm.375 6a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 5.25a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0z" /></svg>
-            <svg id="sectionNavIconClose" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 hidden"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
-        </button>
-        <div id="sectionNavPanel" class="absolute bottom-full right-0 mb-3 hidden w-[min(100vw-2rem,20rem)]">
-            <div id="sectionNavBox" class="bg-base-200 rounded-box shadow p-3 w-72 sm:w-80 max-w-[calc(100vw-2rem)]">
-                <div class="font-semibold mb-2">Sommaire</div>
-                <div class="mb-2">
-                    <label class="input input-bordered flex items-center gap-2 w-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 opacity-70"><path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 3.897 12.303l3.775 3.775a.75.75 0 1 0 1.06-1.06l-3.775-3.776A6.75 6.75 0 0 0 10.5 3.75ZM5.25 10.5a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z" clip-rule="evenodd"/></svg>
-                        <input id="sectionNavSearch" type="text" placeholder="Filtrer les sections…" class="grow" autocomplete="off" />
-                    </label>
-                </div>
-                <ul id="sectionNavList" class="menu"></ul>
-            </div>
-        </div>
-    </div>
+    <x-daisy::ui.navigation.section-nav
+        title="Sommaire"
+        targetSelector="div.space-y-10 > section"
+        headingSelector="h2"
+        buttonColor="primary"
+        searchPlaceholder="Filtrer les sections…"
+        emptyLabel="Aucune section correspondante"
+    />
     <script>
         (function(){
-            const root = document.getElementById('sectionNav');
-            const panel = document.getElementById('sectionNavPanel');
-            const box = document.getElementById('sectionNavBox');
-            const list = document.getElementById('sectionNavList');
-            const search = document.getElementById('sectionNavSearch');
-            const btn = document.getElementById('sectionNavBtn');
-            const iconOpen = document.getElementById('sectionNavIconOpen');
-            const iconClose = document.getElementById('sectionNavIconClose');
-            if (!root || !panel || !btn) return;
             function normalizeText(t){ return (t || '').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,''); }
             function slugify(text){ return (text || '').toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-'); }
             /** @returns {string} */
@@ -278,86 +258,15 @@
                 }
                 return data;
             }
-            let cachedData = [];
-            function buildList(filter = ''){
-                if (!list) return;
-                if (!cachedData.length) cachedData = collectSections();
-                list.innerHTML = '';
-                const key = normalizeText(filter);
-                cachedData.filter((d) => !key || d.labelKey.includes(key)).forEach((d) => {
-                    const li = document.createElement('li');
-                    if (d.level === 2) {
-                        li.className = 'pl-2 ml-1 border-l border-base-300';
-                    }
-                    const a = document.createElement('a');
-                    a.href = '#' + d.id;
-                    a.textContent = d.label;
-                    if (d.level === 2) {
-                        a.className = 'text-sm';
-                    }
-                    li.appendChild(a);
-                    list.appendChild(li);
-                });
-            }
-
-            function adjustOverflow(){
-                if (!box) return;
-                const viewportH = window.innerHeight;
-                const viewportW = window.innerWidth;
-                const maxH = Math.max(240, Math.floor(viewportH * 0.7));
-                box.style.maxHeight = maxH + 'px';
-                box.style.maxWidth = Math.max(240, viewportW - 32) + 'px';
-                const needScroll = box.scrollHeight > box.clientHeight;
-                box.style.overflowY = needScroll ? 'auto' : 'visible';
-            }
-
-            function toggle(open){
-                const willOpen = open ?? panel.classList.contains('hidden');
-                panel.classList.toggle('hidden', !willOpen);
-                iconOpen.classList.toggle('hidden', willOpen);
-                iconClose.classList.toggle('hidden', !willOpen);
-                btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
-                if (willOpen) {
-                    cachedData = [];
-                    if (search) search.value = '';
-                    buildList();
-                    adjustOverflow();
-                    const pr = panel.getBoundingClientRect();
-                    const shift = Math.max(0, pr.right - window.innerWidth + 16);
-                    panel.style.transform = shift ? `translateX(-${shift}px)` : '';
-                    if (search) setTimeout(() => search.focus(), 0);
-                }
-            }
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                toggle();
-            });
-            panel.addEventListener('click', (e) => {
-                if (e.target.tagName === 'A') toggle(false);
-            });
-            document.addEventListener('click', (e) => {
-                if (!root.contains(e.target)) toggle(false);
-            });
-            window.addEventListener('resize', adjustOverflow);
-            if (search) search.addEventListener('input', () => buildList(search.value));
-            document.addEventListener('keydown', (e) => {
-                if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey) {
-                    const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
-                    if (tag === 'input' || tag === 'textarea') {
-                        return;
-                    }
-                    if (panel.classList.contains('hidden')) toggle(true);
-                    if (search) { e.preventDefault(); search.focus(); }
-                }
-            });
             document.addEventListener('DOMContentLoaded', () => {
                 augmentDemoBlockAnchors();
-                cachedData = [];
                 const wrap = document.querySelector('div.space-y-10');
                 if (wrap) {
                     const mo = new MutationObserver(() => {
-                        cachedData = [];
-                        if (!panel.classList.contains('hidden')) buildList(search?.value || '');
+                        const navRoots = document.querySelectorAll('[data-section-nav]');
+                        navRoots.forEach((navRoot) => {
+                            navRoot.dataset.sectionNavReady = '';
+                        });
                     });
                     mo.observe(wrap, { childList: true, subtree: true });
                 }
@@ -480,6 +389,7 @@
                 @include('daisy-dev::demo.ui.partials.test-rating')
                 @include('daisy-dev::demo.ui.partials.test-selects')
                 @include('daisy-dev::demo.ui.partials.test-inputs')
+                @include('daisy-dev::demo.ui.partials.test-token-input')
                 @include('daisy-dev::demo.ui.partials.test-textareas')
                 @include('daisy-dev::demo.ui.partials.test-toggle')
                 @include('daisy-dev::demo.ui.partials.test-validator')
@@ -620,5 +530,4 @@
     })();
     </script>
 </x-daisy::layout.app>
-
 

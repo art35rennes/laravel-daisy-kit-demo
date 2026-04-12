@@ -7,9 +7,12 @@ it('renders the UI demo page with section anchors and FAB navigator', function (
     $response->assertSee('DaisyUI Kit - Demo', false);
     $response->assertSee('id="demo-actions"', false);
     $response->assertSee('href="#demo-actions"', false);
-    $response->assertSee('id="sectionNav"', false);
-    $response->assertSee('fixed bottom-6 right-6', false);
+    $response->assertSee('data-section-nav', false);
+    $response->assertSee('data-section-nav-button', false);
     $response->assertSee('Package inventory · Manifest cache', false);
+    $response->assertSee('data-sync', false);
+    $response->assertSee('data-indeterminate="true"', false);
+    $response->assertSee('data-module="token-input"', false);
 });
 
 it('returns DataTables JSON from the demo datatable endpoint', function () {

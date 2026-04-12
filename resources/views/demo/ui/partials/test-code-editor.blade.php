@@ -2,21 +2,21 @@
 <section class="space-y-4 bg-base-200 p-6 rounded-box">
     <h2 class="text-lg font-medium">Code Editor</h2>
     <div class="space-y-3">
-        <div class="text-sm opacity-70">Disposition à hauteur fixe (2 colonnes)</div>
+        <div class="text-sm opacity-70">Disposition à hauteur fixe, thème explicite et synchronisation formulaire.</div>
         <div class="grid md:grid-cols-2 gap-6">
             <!-- Colonne gauche: JSON (60% haut) + Résultat (40% bas) -->
             <div class="grid gap-6" style="grid-template-rows: 60vh 40vh;">
-                <x-daisy::ui.advanced.code-editor id="jsonInput" language="json" :showToolbar="true" height="100%" value='{
+                <x-daisy::ui.advanced.code-editor id="jsonInput" name="json_payload" language="json" theme="dark" :tabSize="4" :showToolbar="true" height="100%" value='{
   "products": [
     {"id": 1, "name": "Keyboard", "price": 49.9},
     {"id": 2, "name": "Mouse", "price": 29.9}
   ]
 }' />
-                <x-daisy::ui.advanced.code-editor id="jsonResult" language="json" :showToolbar="true" height="100%" readonly value='{}' />
+                <x-daisy::ui.advanced.code-editor id="jsonResult" language="json" theme="light" :showToolbar="true" height="100%" readonly value='{}' />
             </div>
             <!-- Colonne droite: Expression / Script -->
-            <x-daisy::ui.advanced.code-editor id="jsonExpr" language="javascript" :showToolbar="true" height="100vh" value='// Expression / script
-// Filtrer les produits > 40
+            <x-daisy::ui.advanced.code-editor id="jsonExpr" language="javascript" :showToolbar="true" theme="dark" height="100vh" value='// Expression / script
+// Le textarea caché name="json_payload" reste synchronisé
 const data = JSON.parse(json);
 const expensive = data.products.filter(p => p.price > 40);
 result = { expensive };' />
@@ -49,5 +49,4 @@ result = { expensive };' />
     })();
     </script>
 </section>
-
 
