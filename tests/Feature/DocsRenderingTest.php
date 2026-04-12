@@ -30,6 +30,36 @@ it('renders the datatable documentation with the current component API', functio
     $res->assertDontSee('x-daisy::ui.advanced.table', false);
 });
 
+it('renders the updated code editor and tree view documentation', function () {
+    Config::set('daisy-kit.docs.enabled', true);
+
+    $codeEditor = $this->get('/docs/advanced/code-editor');
+    $codeEditor->assertSuccessful();
+    $codeEditor->assertSee('name="payload"', false);
+    $codeEditor->assertSee('theme="dark"', false);
+
+    $treeView = $this->get('/docs/advanced/tree-view');
+    $treeView->assertSuccessful();
+    $treeView->assertSee('data-indeterminate="true"', false);
+    $treeView->assertSee('aria-checked="mixed"', false);
+});
+
+it('renders the token input and section nav documentation', function () {
+    Config::set('daisy-kit.docs.enabled', true);
+
+    $tokenInput = $this->get('/docs/inputs/token-input');
+    $tokenInput->assertSuccessful();
+    $tokenInput->assertSee('data-module="token-input"', false);
+    $tokenInput->assertSee('name="recipients[]"', false);
+    $tokenInput->assertSee('data-suggestions=', false);
+
+    $sectionNav = $this->get('/docs/navigation/section-nav');
+    $sectionNav->assertSuccessful();
+    $sectionNav->assertSee('data-section-nav', false);
+    $sectionNav->assertSee('data-section-nav-button', false);
+    $sectionNav->assertSee('fixed top-6 right-6', false);
+});
+
 it('does not return 404 for any component documentation page', function () {
     Config::set('daisy-kit.docs.enabled', true);
     $prefix = config('daisy-kit.docs.prefix', 'docs');

@@ -7,6 +7,7 @@
         ['id' => 'intro', 'label' => 'Introduction'],
         ['id' => 'base', 'label' => 'Exemple de base'],
         ['id' => 'variants', 'label' => 'Variantes'],
+        ['id' => 'sync', 'label' => 'Sync formulaire'],
         ['id' => 'api', 'label' => 'API'],
     ];
     $props = DocsHelper::getComponentProps($category, $name);
@@ -37,6 +38,8 @@
                 language="php" 
                 :value="$phpHelloWorld"
                 height="200px"
+                theme="dark"
+                :tabSize="4"
             />
         </x-slot:preview>
         <x-slot:code>
@@ -45,6 +48,8 @@
     language="php" 
     value="<' . "?php echo \\'Hello World\\'; ?" . '>"
     height="200px"
+    theme="dark"
+    :tabSize="4"
 />';
             @endphp
             <x-daisy::ui.advanced.code-editor 
@@ -82,11 +87,12 @@
                     </div>
                 </div>
                 <div>
-                    <p class="text-sm font-semibold mb-2">Avec barre d'outils</p>
+                    <p class="text-sm font-semibold mb-2">Avec barre d'outils et thème explicite</p>
                     <x-daisy::ui.advanced.code-editor 
                         language="blade" 
                         value="<x-component />" 
                         height="150px"
+                        theme="dark"
                         :showToolbar="true"
                     />
                 </div>
@@ -106,6 +112,7 @@
     language="blade" 
     value="<x-component />" 
     height="150px"
+    theme="dark"
     :showToolbar="true"
 />';
             @endphp
@@ -122,6 +129,52 @@
             />
         </x-slot:code>
     </x-daisy::docs.sections.variants>
+
+    <x-daisy::docs.sections.custom id="sync" title="Sync formulaire">
+        <div class="not-prose space-y-4">
+            <div class="alert alert-info alert-soft">
+                <span>
+                    Quand la prop <code>name</code> est renseignée, le composant maintient un <code>textarea[data-sync]</code> caché à jour.
+                    Les props <code>theme</code> et <code>tabSize</code> sont aussi prises en compte par CodeMirror.
+                </span>
+            </div>
+
+            <div class="rounded-box border border-base-content/5 bg-base-100 p-4">
+                <x-daisy::ui.advanced.code-editor
+                    language="json"
+                    name="payload"
+                    theme="dark"
+                    :tabSize="4"
+                    height="180px"
+                    value='{"name":"Demo","enabled":true}'
+                />
+            </div>
+
+            @php
+                $syncCode = <<<'CODE'
+<x-daisy::ui.advanced.code-editor
+    language="json"
+    name="payload"
+    theme="dark"
+    :tabSize="4"
+    height="180px"
+    value='{"name":"Demo","enabled":true}'
+/>
+CODE;
+            @endphp
+            <x-daisy::ui.advanced.code-editor
+                language="blade"
+                :value="$syncCode"
+                :readonly="true"
+                :showToolbar="false"
+                :showFoldAll="false"
+                :showUnfoldAll="false"
+                :showFormat="false"
+                :showCopy="true"
+                height="180px"
+            />
+        </div>
+    </x-daisy::docs.sections.custom>
 
     <x-daisy::docs.sections.api :category="$category" :name="$name" />
 </x-daisy::docs.page>
