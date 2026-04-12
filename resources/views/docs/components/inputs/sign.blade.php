@@ -27,11 +27,11 @@
 
     <x-daisy::docs.sections.example name="sign">
         <x-slot:preview>
-            <x-daisy::ui.inputs.sign width="400" height="200" :showActions="true" />
+            <x-daisy::ui.inputs.sign width="320" height="120" :showActions="true" />
         </x-slot:preview>
         <x-slot:code>
             @php
-                $baseCode = '<x-daisy::ui.inputs.sign width="400" height="200" :showActions="true" />';
+                $baseCode = '<x-daisy::ui.inputs.sign width="320" height="120" :showActions="true" />';
             @endphp
             <x-daisy::ui.advanced.code-editor 
                 language="blade" 
@@ -42,7 +42,7 @@
                 :showUnfoldAll="false"
                 :showFormat="false"
                 :showCopy="true"
-                height="200px"
+                height="140px"
             />
         </x-slot:code>
     </x-daisy::docs.sections.example>

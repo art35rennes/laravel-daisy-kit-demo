@@ -7,8 +7,8 @@
     <h2>Exemple de base</h2>
     <div class="tabs tabs-box">
         <input type="radio" name="base-example-{{ $name }}" class="tab" aria-label="Preview" checked />
-        <div class="tab-content bg-base-100 p-6">
-            <div class="not-prose">
+        <div class="tab-content bg-base-100 p-6 min-h-0 overflow-x-hidden">
+            <div class="not-prose min-h-0">
                 {{ $preview ?? '' }}
             </div>
         </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\DocsHelper;
 use Illuminate\Support\Facades\Config;
 
 it('renders docs index page', function () {
@@ -17,11 +18,23 @@ it('renders a component page (button)', function () {
     $res->assertSee('Button', false);
 });
 
+it('renders the datatable documentation with the current component API', function () {
+    Config::set('daisy-kit.docs.enabled', true);
+    $res = $this->get('/docs/data-display/datatable');
+
+    $res->assertSuccessful();
+    $res->assertSee('x-daisy::ui.data-display.datatable', false);
+    $res->assertSee('server-side', false);
+    $res->assertSee(':ajax=', false);
+    $res->assertDontSee('x-daisy::ui.data-display.table', false);
+    $res->assertDontSee('x-daisy::ui.advanced.table', false);
+});
+
 it('does not return 404 for any component documentation page', function () {
     Config::set('daisy-kit.docs.enabled', true);
     $prefix = config('daisy-kit.docs.prefix', 'docs');
 
-    $navigationItems = \App\Helpers\DocsHelper::getNavigationItems($prefix);
+    $navigationItems = DocsHelper::getNavigationItems($prefix);
     $failedComponents = [];
 
     foreach ($navigationItems as $category) {
