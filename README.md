@@ -1,27 +1,48 @@
 # Laravel Daisy Kit Demo
 
-Laravel Daisy Kit Demo is a standalone Laravel application that documents and validates the `art35rennes/laravel-daisy-kit` package in a real host app.
+Laravel Daisy Kit Demo is the showcase and validation app for [`art35rennes/laravel-daisy-kit`](https://github.com/art35rennes/laravel-daisy-kit).
 
-## Responsibilities
+It is a real Laravel host application used to:
 
-This repository owns:
+- publish and review the package documentation
+- render demo pages and integration examples
+- validate package behavior in an application context
+- run feature and browser tests against the docs and demo UX
 
-- documentation pages
+The reusable package itself lives in a separate repository. This repository owns the host app, not the UI kit source code.
+
+## Repository Scope
+
+Use this repository when you need to work on:
+
+- docs pages
 - demo pages
-- app routes and controllers
+- host app routes and controllers
 - inventory and docs generation tooling
-- browser and integration tests
+- integration and browser coverage
 
-The reusable UI kit itself lives in a separate repository: `laravel-daisy-kit`.
+Use the package repository when you need to work on:
+
+- reusable Blade components
+- package templates
+- translations shipped by the package
+- package service providers and package internals
+
+## Requirements
+
+- PHP 8.2+
+- Composer
+- Node.js and npm
+- SQLite for local development
 
 ## Local Development
 
-Clone the two repositories side by side:
+Clone both repositories side by side:
 
 - `laravel-daisy-kit`
 - `laravel-daisy-kit-demo`
 
-The demo app uses a Composer `path` repository pointed at `../laravel-daisy-kit` during local development.
+This demo app uses a Composer `path` repository pointing to `../laravel-daisy-kit` during local package development.
 
 ```bash
 composer install
@@ -31,31 +52,50 @@ touch database/database.sqlite
 php artisan key:generate
 php artisan migrate
 npm run dev
-php artisan serve
 ```
 
-### Valet / Laravel Herd (`.test`)
+The application is expected to run on a local `.test` domain through Laravel Herd or Valet.
 
-1. Point `APP_URL` in `.env` to your local domain, for example `http://laravel-daisy-kit-demo.test`, so redirects and generated URLs stay on that host.
-2. Link the project so the hostname resolves (example with Valet from the demo directory):
+### Laravel Herd / Valet
 
-   ```bash
-   valet link laravel-daisy-kit-demo
-   ```
+1. Set `APP_URL` in `.env` to your local domain, for example `http://laravel-daisy-kit-demo.test`.
+2. Link or register the site with your local web server.
+3. Run migrations before loading the app.
 
-   With Herd, add the site in the UI or use the equivalent link command.
+This step is mandatory because the demo uses database-backed session, cache, and queue drivers. If you skip migrations, pages may fail with `no such table: sessions`.
 
-3. **Migrations are required**: this app uses `SESSION_DRIVER=database` (and database cache/queue). If you skip `php artisan migrate`, every page can return **500** with `no such table: sessions`.
+## Usage
 
-### Quick checks
+Once the app is running:
 
-- Docs home: `/` redirects to `/docs` when `docs.enabled` is true in `config/daisy-kit.php`.
-- Demo UI hub: `/demo`
+- `/` redirects to `/docs` when `docs.enabled` is enabled in `config/daisy-kit.php`
+- `/docs` is the documentation entry point
+- `/demo` is the UI demo hub
 
 ## Testing
+
+Run the app test suite with:
 
 ```bash
 composer test
 ```
 
-Browser tests stay in this repository because they validate the docs/demo experience, not the package internals.
+Browser tests stay in this repository because they validate the documentation and demo experience, not the internal package implementation.
+
+## Versioning
+
+This project follows **Semantic Versioning (SemVer)** for releases: `MAJOR.MINOR.PATCH`.
+
+- `MAJOR`: breaking changes
+- `MINOR`: backward-compatible features and enhancements
+- `PATCH`: backward-compatible fixes and documentation corrections
+
+During day-to-day development, this demo application may point to `dev-main` of `art35rennes/laravel-daisy-kit` through a local Composer path repository. Published releases and tags should still follow SemVer so compatibility expectations remain explicit for GitHub and Packagist consumers.
+
+## Release Notes
+
+If a change affects public usage, installation flow, configuration, or documented behavior, it should be reflected in the changelog or release notes associated with the tagged version.
+
+## License
+
+This project is distributed under the MIT license.

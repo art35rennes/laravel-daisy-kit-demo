@@ -1,10 +1,18 @@
 {
     "agents": [
-        "cursor"
+        "cursor",
+        "codex"
     ],
-    "editors": [
-        "cursor"
+    "guidelines": true,
+    "mcp": true,
+    "nightwatch_mcp": false,
+    "packages": [
+        "art35rennes/laravel-daisy-kit"
     ],
-    "guidelines": [],
-    "herd_mcp": true
+    "sail": false,
+    "skills": [
+        "laravel-best-practices",
+        "pest-testing",
+        "tailwindcss-development"
+    ]
 }
