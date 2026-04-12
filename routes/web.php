@@ -19,6 +19,7 @@ Route::get('/demo', function () {
 })->name('demo');
 
 Route::get('/demo/api/calendar-events', [DemoApiController::class, 'calendarEvents'])->name('demo.calendar.events');
+Route::get('/demo/datatable/api/get', [DemoApiController::class, 'datatableUsers'])->name('demo.datatable.api.get');
 Route::get('/demo/api/tree-children', [DemoApiController::class, 'treeChildren'])->name('demo.tree.children');
 Route::get('/demo/api/tree-search', [DemoApiController::class, 'treeSearch'])->name('demo.tree.search');
 Route::get('/demo/api/select-options', [DemoApiController::class, 'selectOptions'])->name('demo.select.options');

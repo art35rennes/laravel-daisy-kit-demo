@@ -14,6 +14,10 @@
             <li><a>Item 1</a></li>
             <li><a>Item 2</a></li>
         </x-daisy::ui.overlay.dropdown>
+        <x-daisy::ui.overlay.dropdown label="Hover + forceClose" :hover="true" :forceClose="true">
+            <li><a>Option A</a></li>
+            <li><a>Option B</a></li>
+        </x-daisy::ui.overlay.dropdown>
 
         <!-- Helper dropdown (card) -->
         <div class="flex items-center gap-2">

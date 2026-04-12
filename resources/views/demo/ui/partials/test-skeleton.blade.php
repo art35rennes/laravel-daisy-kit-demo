@@ -26,6 +26,16 @@
         <x-daisy::ui.feedback.skeleton height="h-4" class="w-full" />
         <x-daisy::ui.feedback.skeleton height="h-4" class="w-full" />
     </div>
+
+    <!-- Variante texte (daisyUI 5.5+) -->
+    <div class="space-y-2">
+        <p class="text-sm font-medium text-base-content/80">Variante <code class="kbd kbd-sm">text</code> (lignes de texte)</p>
+        <div class="flex max-w-md flex-col gap-2">
+            <x-daisy::ui.feedback.skeleton variant="text" class="h-4 w-full" />
+            <x-daisy::ui.feedback.skeleton variant="text" class="h-4 w-[92%]" />
+            <x-daisy::ui.feedback.skeleton variant="text" class="h-4 w-[78%]" />
+        </div>
+    </div>
 </section>
 
 

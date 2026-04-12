@@ -7,6 +7,65 @@ use Illuminate\Http\Request;
 
 class DemoApiController extends Controller
 {
+    public function datatableUsers(Request $request): JsonResponse
+    {
+        $rows = collect([
+            ['id' => 1, 'name' => 'Cy Ganderton', 'email' => 'cy@example.com', 'status' => 'Active'],
+            ['id' => 2, 'name' => 'Hart Hagerty', 'email' => 'hart@example.com', 'status' => 'Invited'],
+            ['id' => 3, 'name' => 'Brice Swyre', 'email' => 'brice@example.com', 'status' => 'Archived'],
+            ['id' => 4, 'name' => 'Jolie Winters', 'email' => 'jolie@example.com', 'status' => 'Active'],
+            ['id' => 5, 'name' => 'Nico Bernard', 'email' => 'nico@example.com', 'status' => 'Invited'],
+            ['id' => 6, 'name' => 'Lina Carter', 'email' => 'lina@example.com', 'status' => 'Archived'],
+            ['id' => 7, 'name' => 'Mia Holmes', 'email' => 'mia@example.com', 'status' => 'Active'],
+            ['id' => 8, 'name' => 'Theo Bishop', 'email' => 'theo@example.com', 'status' => 'Invited'],
+            ['id' => 9, 'name' => 'Emma Stone', 'email' => 'emma@example.com', 'status' => 'Active'],
+            ['id' => 10, 'name' => 'Lucas Ford', 'email' => 'lucas@example.com', 'status' => 'Archived'],
+            ['id' => 11, 'name' => 'Nina Ross', 'email' => 'nina@example.com', 'status' => 'Active'],
+            ['id' => 12, 'name' => 'Owen Reed', 'email' => 'owen@example.com', 'status' => 'Invited'],
+        ]);
+
+        $columns = collect($request->input('columns', []));
+        $orderColumnIndex = (int) $request->input('order.0.column', 0);
+        $orderDirection = strtolower((string) $request->input('order.0.dir', 'asc')) === 'desc' ? 'desc' : 'asc';
+        $search = trim((string) $request->input('search.value', ''));
+        $start = max(0, (int) $request->integer('start', 0));
+        $length = max(1, (int) $request->integer('length', 10));
+        $draw = (int) $request->integer('draw', 1);
+
+        $orderColumn = $columns->get($orderColumnIndex);
+        $orderKey = is_array($orderColumn) ? ($orderColumn['data'] ?? null) : null;
+
+        if ($search !== '') {
+            $normalizedSearch = mb_strtolower($search);
+            $rows = $rows->filter(function (array $row) use ($normalizedSearch): bool {
+                foreach (['name', 'email', 'status'] as $key) {
+                    if (str_contains(mb_strtolower((string) $row[$key]), $normalizedSearch)) {
+                        return true;
+                    }
+                }
+
+                return false;
+            })->values();
+        }
+
+        $recordsFiltered = $rows->count();
+
+        if (is_string($orderKey) && in_array($orderKey, ['name', 'email', 'status'], true)) {
+            $rows = $rows
+                ->sortBy($orderKey, SORT_NATURAL | SORT_FLAG_CASE, $orderDirection === 'desc')
+                ->values();
+        }
+
+        $pageRows = $rows->slice($start, $length)->values()->all();
+
+        return response()->json([
+            'draw' => $draw,
+            'recordsTotal' => 12,
+            'recordsFiltered' => $recordsFiltered,
+            'data' => $pageRows,
+        ]);
+    }
+
     public function calendarEvents(Request $request): JsonResponse
     {
         $start = new \DateTime((string) $request->query('start', date('Y-m-01')));

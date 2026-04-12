@@ -1,5 +1,18 @@
 @php
     $prefix = config('daisy-kit.docs.prefix', 'docs');
+    /** @var list<array{id: string, title: string}> */
+    $demoUiSections = [
+        ['id' => 'demo-actions', 'title' => 'Components · Actions'],
+        ['id' => 'demo-data-media', 'title' => 'Components · Data & media'],
+        ['id' => 'demo-navigation', 'title' => 'Components · Navigation'],
+        ['id' => 'demo-feedback', 'title' => 'Components · Feedback'],
+        ['id' => 'demo-forms', 'title' => 'Components · Forms & inputs'],
+        ['id' => 'demo-layout', 'title' => 'Components · Layout'],
+        ['id' => 'demo-mockups', 'title' => 'Components · Mockups'],
+        ['id' => 'demo-inventory', 'title' => 'Package inventory · Manifest cache'],
+        ['id' => 'demo-extensions', 'title' => 'Extensions · External libraries'],
+        ['id' => 'demo-js-kit', 'title' => 'JavaScript · Daisy Kit modules'],
+    ];
 @endphp
 <x-daisy::layout.app title="DaisyUI Kit - Demo" :container="false">
     {{-- Navbar avec navigation Docs/Démo/Template --}}
@@ -33,9 +46,21 @@
     </x-daisy::ui.navigation.navbar>
 
     <div class="container mx-auto px-4 sm:px-6 py-4 sm:py-6">
-        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
             <h1 class="text-xl sm:text-2xl font-semibold">DaisyUI Kit - Demo</h1>
         </div>
+        <nav aria-label="Page sections" class="mb-8 rounded-box bg-base-200/80 p-3 card-border">
+            <div class="text-xs font-semibold uppercase tracking-wide text-base-content/60 mb-2">Sommaire</div>
+            <div class="-mx-1 overflow-x-auto pb-1">
+                <ul class="menu menu-horizontal flex-nowrap gap-1 bg-transparent px-1 py-0 min-w-max">
+                    @foreach ($demoUiSections as $demoSection)
+                        <li>
+                            <a href="#{{ $demoSection['id'] }}" class="rounded-btn whitespace-nowrap text-sm">{{ $demoSection['title'] }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </nav>
     
     <!-- Sélecteur de thème flottant -->
     <div id="themePicker" class="fixed top-4 right-4 z-50 hidden md:block">
@@ -139,24 +164,24 @@
         })();
     </script>
 
-    <!-- Floating Section Navigator (sans Alpine) -->
+    <!-- Section navigator: style FAB (sans classe .fab daisyUI — elle désactive pointer-events sur le trigger en :focus-within). -->
     <div id="sectionNav" class="fixed bottom-6 right-6 z-50 hidden md:block">
-        <div id="sectionNavPanel" class="absolute bottom-16 right-0 hidden">
+        <button type="button" id="sectionNavBtn" class="btn btn-lg btn-circle btn-primary shadow-lg" aria-label="Ouvrir le sommaire des sections" aria-expanded="false">
+            <svg id="sectionNavIconOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6h.01v.01H3.75V6zm.375 6a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0zm0 5.25a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0z" /></svg>
+            <svg id="sectionNavIconClose" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6 hidden"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>
+        </button>
+        <div id="sectionNavPanel" class="absolute bottom-full right-0 mb-3 hidden w-[min(100vw-2rem,20rem)]">
             <div id="sectionNavBox" class="bg-base-200 rounded-box shadow p-3 w-72 sm:w-80 max-w-[calc(100vw-2rem)]">
-                <div class="font-semibold mb-2">Sections</div>
+                <div class="font-semibold mb-2">Sommaire</div>
                 <div class="mb-2">
                     <label class="input input-bordered flex items-center gap-2 w-full">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 opacity-70"><path fill-rule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 3.897 12.303l3.775 3.775a.75.75 0 1 0 1.06-1.06l-3.775-3.776A6.75 6.75 0 0 0 10.5 3.75ZM5.25 10.5a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Z" clip-rule="evenodd"/></svg>
-                        <input id="sectionNavSearch" type="text" placeholder="Rechercher..." class="grow" autocomplete="off" />
+                        <input id="sectionNavSearch" type="text" placeholder="Filtrer les sections…" class="grow" autocomplete="off" />
                     </label>
                 </div>
                 <ul id="sectionNavList" class="menu"></ul>
             </div>
         </div>
-        <button id="sectionNavBtn" class="btn btn-primary btn-circle shadow" aria-label="Open section navigator">
-            <svg id="sectionNavIconOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
-            <svg id="sectionNavIconClose" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 hidden"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-        </button>
     </div>
     <script>
         (function(){
@@ -171,22 +196,85 @@
             if (!root || !panel || !btn) return;
             function normalizeText(t){ return (t || '').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,''); }
             function slugify(text){ return (text || '').toLowerCase().trim().replace(/[^\w\s-]/g,'').replace(/\s+/g,'-'); }
+            /** @returns {string} */
+            function shortSectionLabel(fullTitle) {
+                const m = (fullTitle || '').match(/·\s*(.+)$/);
+                return m ? m[1].trim() : (fullTitle || '').trim();
+            }
+            /**
+             * Adds stable ids and permalink links to each demo block (partial) inside a main section.
+             *
+             * @returns {void}
+             */
+            function augmentDemoBlockAnchors() {
+                const mainSections = document.querySelectorAll('div.space-y-10 > section[id]');
+                mainSections.forEach((main) => {
+                    const prefix = main.id;
+                    const innerSections = main.querySelectorAll(':scope > div.space-y-6 > section');
+                    innerSections.forEach((inner, idx) => {
+                        const h2 = inner.querySelector(':scope > h2');
+                        if (!h2 || h2.querySelector('a[href^="#"]')) {
+                            return;
+                        }
+                        const raw = h2.textContent.trim();
+                        let slug = slugify(raw);
+                        if (!slug) {
+                            slug = 'block-' + idx;
+                        }
+                        let id = inner.id ? inner.id : (prefix + '-' + slug);
+                        let n = 2;
+                        while (document.getElementById(id)) {
+                            id = prefix + '-' + slug + '-' + n;
+                            n += 1;
+                        }
+                        inner.id = id;
+                        inner.classList.add('scroll-mt-6');
+                        const a = document.createElement('a');
+                        a.href = '#' + id;
+                        a.className = 'link link-hover';
+                        while (h2.firstChild) {
+                            a.appendChild(h2.firstChild);
+                        }
+                        h2.appendChild(a);
+                    });
+                });
+            }
             function collectSections(){
                 const wrap = document.querySelector('div.space-y-10');
-                const sections = wrap ? Array.from(wrap.querySelectorAll(':scope > section')) : [];
+                if (!wrap) {
+                    return [];
+                }
+                const sections = Array.from(wrap.querySelectorAll(':scope > section'));
                 const seen = new Set();
                 const data = [];
                 for (const sec of sections) {
-                    const h2 = sec.querySelector('h2');
-                    if (!h2) continue;
-                    const label = h2.textContent.trim();
+                    const h2 = sec.querySelector(':scope > h2');
+                    if (!h2) {
+                        continue;
+                    }
+                    const titleLink = h2.querySelector('a');
+                    const label = (titleLink ? titleLink.textContent : h2.textContent).trim();
                     let id = sec.id || slugify(label);
                     let base = id, i = 2;
                     while (seen.has(id)) { id = base + '-' + (i++); }
                     seen.add(id);
                     if (!sec.id) sec.id = id;
-                    // On ne conserve que les sections de premier niveau, dans l'ordre du document
                     data.push({ id, label, labelKey: normalizeText(label), level: 1 });
+                    const innerSections = sec.querySelectorAll(':scope > div.space-y-6 > section');
+                    innerSections.forEach((inner) => {
+                        const ih2 = inner.querySelector(':scope > h2');
+                        if (!ih2) {
+                            return;
+                        }
+                        const innerId = inner.id;
+                        if (!innerId) {
+                            return;
+                        }
+                        const iLink = ih2.querySelector('a');
+                        const innerTitle = (iLink ? iLink.textContent : ih2.textContent).trim();
+                        const displayLabel = shortSectionLabel(label) + ' · ' + innerTitle;
+                        data.push({ id: innerId, label: displayLabel, labelKey: normalizeText(displayLabel), level: 2 });
+                    });
                 }
                 return data;
             }
@@ -198,9 +286,15 @@
                 const key = normalizeText(filter);
                 cachedData.filter((d) => !key || d.labelKey.includes(key)).forEach((d) => {
                     const li = document.createElement('li');
+                    if (d.level === 2) {
+                        li.className = 'pl-2 ml-1 border-l border-base-300';
+                    }
                     const a = document.createElement('a');
                     a.href = '#' + d.id;
                     a.textContent = d.label;
+                    if (d.level === 2) {
+                        a.className = 'text-sm';
+                    }
                     li.appendChild(a);
                     list.appendChild(li);
                 });
@@ -210,10 +304,8 @@
                 if (!box) return;
                 const viewportH = window.innerHeight;
                 const viewportW = window.innerWidth;
-                // Hauteur max à 70% de l'écran, min 240px
                 const maxH = Math.max(240, Math.floor(viewportH * 0.7));
                 box.style.maxHeight = maxH + 'px';
-                // Largeur max: bord à 1rem
                 box.style.maxWidth = Math.max(240, viewportW - 32) + 'px';
                 const needScroll = box.scrollHeight > box.clientHeight;
                 box.style.overflowY = needScroll ? 'auto' : 'visible';
@@ -224,20 +316,22 @@
                 panel.classList.toggle('hidden', !willOpen);
                 iconOpen.classList.toggle('hidden', willOpen);
                 iconClose.classList.toggle('hidden', !willOpen);
+                btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
                 if (willOpen) {
-                    cachedData = []; // force recalcul
+                    cachedData = [];
                     if (search) search.value = '';
                     buildList();
                     adjustOverflow();
-                    // Si le panneau déborde horizontalement, le décaler à gauche
                     const pr = panel.getBoundingClientRect();
                     const shift = Math.max(0, pr.right - window.innerWidth + 16);
                     panel.style.transform = shift ? `translateX(-${shift}px)` : '';
-                    // Focus le champ de recherche après ouverture
                     if (search) setTimeout(() => search.focus(), 0);
                 }
             }
-            btn.addEventListener('click', () => toggle());
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggle();
+            });
             panel.addEventListener('click', (e) => {
                 if (e.target.tagName === 'A') toggle(false);
             });
@@ -246,26 +340,45 @@
             });
             window.addEventListener('resize', adjustOverflow);
             if (search) search.addEventListener('input', () => buildList(search.value));
-            // Raccourci clavier "/" pour ouvrir et focaliser la recherche
             document.addEventListener('keydown', (e) => {
                 if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+                    const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
+                    if (tag === 'input' || tag === 'textarea') {
+                        return;
+                    }
                     if (panel.classList.contains('hidden')) toggle(true);
                     if (search) { e.preventDefault(); search.focus(); }
                 }
             });
-            // Observer: si le contenu change, invalider le cache
-            const wrap = document.querySelector('div.space-y-10');
-            if (wrap) {
-                const mo = new MutationObserver(() => { cachedData = []; if (!panel.classList.contains('hidden')) buildList(search?.value || ''); });
-                mo.observe(wrap, { childList: true, subtree: true });
-            }
+            document.addEventListener('DOMContentLoaded', () => {
+                augmentDemoBlockAnchors();
+                cachedData = [];
+                const wrap = document.querySelector('div.space-y-10');
+                if (wrap) {
+                    const mo = new MutationObserver(() => {
+                        cachedData = [];
+                        if (!panel.classList.contains('hidden')) buildList(search?.value || '');
+                    });
+                    mo.observe(wrap, { childList: true, subtree: true });
+                }
+                const hash = window.location.hash.slice(1);
+                if (hash) {
+                    const el = document.getElementById(hash);
+                    if (el) {
+                        setTimeout(() => el.scrollIntoView({ block: 'start', behavior: 'smooth' }), 100);
+                    }
+                }
+            });
         })();
     </script>
 
     <div class="space-y-10">
+        @php ($s = $demoUiSections[0]) @endphp
         <!-- Components / Actions -->
-        <section>
-            <h2 class="text-xl font-semibold">Components · Actions</h2>
+        <section id="{{ $s['id'] }}" class="scroll-mt-8">
+            <h2 class="text-xl font-semibold">
+                <a href="#{{ $s['id'] }}" class="link link-hover">{{ $s['title'] }}</a>
+            </h2>
             <div class="space-y-6">
                 @include('daisy-dev::demo.ui.partials.test-buttons')
                 @include('daisy-dev::demo.ui.partials.test-dropdown')
@@ -276,9 +389,12 @@
             </div>
         </section>
 
-        <!-- Components / Data display -->
-        <section>
-            <h2 class="text-xl font-semibold">Components · Data display</h2>
+        @php ($s = $demoUiSections[1]) @endphp
+        <!-- Components / Data & media -->
+        <section id="{{ $s['id'] }}" class="scroll-mt-8">
+            <h2 class="text-xl font-semibold">
+                <a href="#{{ $s['id'] }}" class="link link-hover">{{ $s['title'] }}</a>
+            </h2>
             <div class="space-y-6">
                 @include('daisy-dev::demo.ui.partials.test-accordion')
                 @include('daisy-dev::demo.ui.partials.test-avatars')
@@ -298,16 +414,21 @@
                 @include('daisy-dev::demo.ui.partials.test-timeline')
                 @include('daisy-dev::demo.ui.partials.test-lightbox')
                 @include('daisy-dev::demo.ui.partials.test-media-gallery')
+                @include('daisy-dev::demo.ui.partials.test-hover-gallery')
                 {{-- @include('daisy-dev::demo.ui.partials.test-embeds') --}}
             </div>
         </section>
 
+        @php ($s = $demoUiSections[2]) @endphp
         <!-- Components / Navigation -->
-        <section>
-            <h2 class="text-xl font-semibold">Components · Navigation</h2>
+        <section id="{{ $s['id'] }}" class="scroll-mt-8">
+            <h2 class="text-xl font-semibold">
+                <a href="#{{ $s['id'] }}" class="link link-hover">{{ $s['title'] }}</a>
+            </h2>
             <div class="space-y-6">
                 @include('daisy-dev::demo.ui.partials.test-breadcrumbs')
                 @include('daisy-dev::demo.ui.partials.test-dock')
+                @include('daisy-dev::demo.ui.partials.test-fab')
                 @include('daisy-dev::demo.ui.partials.test-links')
                 @include('daisy-dev::demo.ui.partials.test-menu')
                 @include('daisy-dev::demo.ui.partials.test-navbar')
@@ -320,9 +441,12 @@
             </div>
         </section>
 
+        @php ($s = $demoUiSections[3]) @endphp
         <!-- Components / Feedback -->
-        <section>
-            <h2 class="text-xl font-semibold">Components · Feedback</h2>
+        <section id="{{ $s['id'] }}" class="scroll-mt-8">
+            <h2 class="text-xl font-semibold">
+                <a href="#{{ $s['id'] }}" class="link link-hover">{{ $s['title'] }}</a>
+            </h2>
             <div class="space-y-6">
                 @include('daisy-dev::demo.ui.partials.test-callout')
                 @include('daisy-dev::demo.ui.partials.test-alert')
@@ -339,9 +463,12 @@
             </div>
         </section>
 
-        <!-- Components / Data input -->
-        <section>
-            <h2 class="text-xl font-semibold">Components · Data input</h2>
+        @php ($s = $demoUiSections[4]) @endphp
+        <!-- Components / Forms & inputs -->
+        <section id="{{ $s['id'] }}" class="scroll-mt-8">
+            <h2 class="text-xl font-semibold">
+                <a href="#{{ $s['id'] }}" class="link link-hover">{{ $s['title'] }}</a>
+            </h2>
             <div class="space-y-6">
                 @include('daisy-dev::demo.ui.partials.test-checkbox')
                 @include('daisy-dev::demo.ui.partials.test-fieldset')
@@ -363,9 +490,12 @@
             </div>
         </section>
 
+        @php ($s = $demoUiSections[5]) @endphp
         <!-- Components / Layout -->
-        <section>
-            <h2 class="text-xl font-semibold">Components · Layout</h2>
+        <section id="{{ $s['id'] }}" class="scroll-mt-8">
+            <h2 class="text-xl font-semibold">
+                <a href="#{{ $s['id'] }}" class="link link-hover">{{ $s['title'] }}</a>
+            </h2>
             <div class="space-y-6">
                 @include('daisy-dev::demo.ui.partials.test-divider')
                 @include('daisy-dev::demo.ui.partials.test-drawer')
@@ -378,12 +508,16 @@
                 @include('daisy-dev::demo.ui.partials.test-stack')
                 @include('daisy-dev::demo.ui.partials.test-grid-layout')
                 @include('daisy-dev::demo.ui.partials.test-layouts')
+                @include('daisy-dev::demo.ui.partials.test-daisyui5-motion')
             </div>
         </section>
 
-        <!-- Components / Mockup -->
-        <section>
-            <h2 class="text-xl font-semibold">Components · Mockup</h2>
+        @php ($s = $demoUiSections[6]) @endphp
+        <!-- Components / Mockups -->
+        <section id="{{ $s['id'] }}" class="scroll-mt-8">
+            <h2 class="text-xl font-semibold">
+                <a href="#{{ $s['id'] }}" class="link link-hover">{{ $s['title'] }}</a>
+            </h2>
             <div class="space-y-6">
                 @include('daisy-dev::demo.ui.partials.test-mockup-browser')
                 @include('daisy-dev::demo.ui.partials.test-mockup-code')
@@ -392,9 +526,12 @@
             </div>
         </section>
 
-        <!-- Catalogue auto (piloté par le manifeste) -->
-        <section>
-            <h2 class="text-xl font-semibold">Catalogue · Auto (manifeste)</h2>
+        @php ($s = $demoUiSections[7]) @endphp
+        <!-- Package inventory (manifest cache) -->
+        <section id="{{ $s['id'] }}" class="scroll-mt-8">
+            <h2 class="text-xl font-semibold">
+                <a href="#{{ $s['id'] }}" class="link link-hover">{{ $s['title'] }}</a>
+            </h2>
             @php
                 $components = [];
                 try {
@@ -442,9 +579,12 @@
         </section>
 
 
-        <!-- Extensions · Composants avec dépendances externes -->
-        <section>
-            <h2 class="text-xl font-semibold">Extensions · Dépendances externes</h2>
+        @php ($s = $demoUiSections[8]) @endphp
+        <!-- External libraries (Leaflet, charts, etc.) -->
+        <section id="{{ $s['id'] }}" class="scroll-mt-8">
+            <h2 class="text-xl font-semibold">
+                <a href="#{{ $s['id'] }}" class="link link-hover">{{ $s['title'] }}</a>
+            </h2>
             <div class="space-y-6">
                 @include('daisy-dev::demo.ui.partials.test-charts')
                 @include('daisy-dev::demo.ui.partials.test-leaflet')
@@ -456,9 +596,12 @@
         </section>
 
 
-        <!-- JavaScript / Runtime -->
-        <section>
-            <h2 class="text-xl font-semibold">JavaScript · Runtime</h2>
+        @php ($s = $demoUiSections[9]) @endphp
+        <!-- Daisy Kit JS modules -->
+        <section id="{{ $s['id'] }}" class="scroll-mt-8">
+            <h2 class="text-xl font-semibold">
+                <a href="#{{ $s['id'] }}" class="link link-hover">{{ $s['title'] }}</a>
+            </h2>
             <div class="space-y-6">
                 @include('daisy-dev::demo.ui.partials.test-js-modules')
             </div>

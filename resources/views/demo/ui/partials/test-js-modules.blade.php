@@ -48,7 +48,7 @@
                     <tr><td><code>[data-media-gallery="1"]</code></td><td>media-gallery</td><td>Grille média interactive.</td></tr>
                     <tr><td><code>.collapse .code-editor</code>, <code>.collapse trix-editor</code></td><td>lazy-editors</td><td>Chargement de CodeMirror / Trix à l'ouverture.</td></tr>
                     <tr><td><code>[data-chart="1"]</code></td><td>chart</td><td>Chart.js avec thème DaisyUI.</td></tr>
-                    <tr><td><code>[data-leaflet="1"]</code></td><td>leaflet</td><td>Carte Leaflet et plug-ins associés.</td></tr>
+                    <tr><td><code>[data-module="leaflet"]</code></td><td>leaflet</td><td>Carte Leaflet et plug-ins associés.</td></tr>
                     <tr><td><code>.cally</code> ou balises <code>calendar-*</code></td><td>cally</td><td>Web Components calendrier.</td></tr>
                 </tbody>
             </table>

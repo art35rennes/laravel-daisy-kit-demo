@@ -1,40 +1,103 @@
-<!-- Table -->
+<!-- Datatable -->
 <section class="space-y-4 bg-base-200 p-6 rounded-box">
-    <h2 class="text-lg font-medium">Table</h2>
+    <h2 class="text-lg font-medium">Datatable</h2>
     <div class="space-y-4">
-        <!-- Basique -->
-        <x-daisy::ui.data-display.table :headers="['#','Name','Job','Favorite Color']"
-            :rows="[
-                ['1','Cy Ganderton','Quality Control Specialist','Blue'],
-                ['2','Hart Hagerty','Desktop Support Technician','Purple'],
-                ['3','Brice Swyre','Tax Accountant','Red'],
+        <!-- Données locales -->
+        <x-daisy::ui.data-display.datatable
+            zebra
+            size="sm"
+            caption="Utilisateurs"
+            :columns="[
+                ['key' => 'name', 'title' => 'Nom'],
+                ['key' => 'role', 'title' => 'Rôle'],
+                ['key' => 'status', 'title' => 'Statut', 'html' => true],
             ]"
-            :rowHeaders="true" selection="multiple" :showRowNumbers="true" :offset="1"
+            :data="[
+                ['name' => 'Cy Ganderton', 'role' => 'Admin', 'status' => '<span class=\'badge badge-primary badge-soft\'>Active</span>'],
+                ['name' => 'Hart Hagerty', 'role' => 'Support', 'status' => '<span class=\'badge badge-success badge-soft\'>Invited</span>'],
+                ['name' => 'Brice Swyre', 'role' => 'Finance', 'status' => '<span class=\'badge badge-ghost\'>Archived</span>'],
+                ['name' => 'Jolie Winters', 'role' => 'Ops', 'status' => '<span class=\'badge badge-primary badge-soft\'>Active</span>'],
+                ['name' => 'Nico Bernard', 'role' => 'Support', 'status' => '<span class=\'badge badge-success badge-soft\'>Invited</span>'],
+                ['name' => 'Lina Carter', 'role' => 'Finance', 'status' => '<span class=\'badge badge-ghost\'>Archived</span>'],
+            ]"
+            :options="[
+                'pageLength' => 2,
+                'lengthMenu' => [2, 4, 6],
+            ]"
         />
 
-        <!-- Avec bordure et fond -->
-        <x-daisy::ui.data-display.table containerClass="rounded-box border border-base-content/5 bg-base-100"
-            :headers="['#','Name','Job','Favorite Color']"
-            :rows="[
-                ['1','Cy Ganderton','Quality Control Specialist','Blue'],
-                ['2','Hart Hagerty','Desktop Support Technician','Purple'],
-                ['3','Brice Swyre','Tax Accountant','Red'],
+        <!-- Slots structurés -->
+        <x-daisy::ui.data-display.datatable
+            zebra
+            size="sm"
+            caption="Équipe support"
+            :columns="[
+                ['key' => 'name', 'title' => 'Nom'],
+                ['key' => 'team', 'title' => 'Équipe'],
             ]"
-            :rowHeaders="true" selection="single" :showRowNumbers="true" :offset="11"
-        />
+            :options="[
+                'pageLength' => 2,
+                'lengthMenu' => [2, 4, 6],
+            ]"
+        >
+            <x-slot:head>
+                <tr>
+                    <th>Nom</th>
+                    <th>Équipe</th>
+                </tr>
+            </x-slot:head>
 
-        <!-- Zebra + tailles + pin -->
-        <x-daisy::ui.data-display.table zebra size="sm" :pinRows="true" :pinCols="true" overflowX overflowY
-            :headers="['#','Name','Job','Company','Location','Last Login','Favorite Color','']"
-            :rows="[
-                ['1','Cy Ganderton','Quality Control Specialist','Littel, Schaden and Vandervort','Canada','12/16/2020','Blue','1'],
-                ['2','Hart Hagerty','Desktop Support Technician','Zemlak, Daniel and Leannon','United States','12/5/2020','Purple','2'],
-                ['3','Brice Swyre','Tax Accountant','Carroll Group','China','8/15/2020','Red','3'],
+            <x-slot:body>
+                <tr>
+                    <td>Cy Ganderton</td>
+                    <td>Ops</td>
+                </tr>
+                <tr>
+                    <td>Hart Hagerty</td>
+                    <td>Support</td>
+                </tr>
+                <tr>
+                    <td>Brice Swyre</td>
+                    <td>Finance</td>
+                </tr>
+                <tr>
+                    <td>Jolie Winters</td>
+                    <td>Ops</td>
+                </tr>
+                <tr>
+                    <td>Nico Bernard</td>
+                    <td>Support</td>
+                </tr>
+                <tr>
+                    <td>Lina Carter</td>
+                    <td>Finance</td>
+                </tr>
+            </x-slot:body>
+        </x-daisy::ui.data-display.datatable>
+
+        <!-- Multi-page serveur -->
+        <x-daisy::ui.data-display.datatable
+            server-side
+            responsive
+            size="sm"
+            pin-cols
+            caption="Catalogue"
+            :ajax="[
+                'url' => route('demo.datatable.api.get'),
+                'type' => 'GET',
             ]"
-            :footer="['','Name','Job','Company','Location','Last Login','Favorite Color','']"
-            :rowHeaders="true" selection="multiple" :showRowNumbers="true" :offset="21"
+            :columns="[
+                ['data' => 'name', 'title' => 'Nom', 'name' => 'users.name'],
+                ['data' => 'email', 'title' => 'Email'],
+                ['data' => 'status', 'title' => 'Statut', 'responsivePriority' => 1],
+            ]"
+            :options="[
+                'pageLength' => 5,
+                'lengthMenu' => [5, 10, 25],
+                'scrollX' => true,
+                'searching' => true,
+                'ordering' => true,
+            ]"
         />
     </div>
 </section>
-
-
