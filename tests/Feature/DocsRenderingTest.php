@@ -55,6 +55,25 @@ it('renders the updated code editor and tree view documentation', function () {
     $treeView->assertSee('aria-checked="mixed"', false);
 });
 
+it('renders the new charts documentation', function () {
+    Config::set('daisy-kit.docs.enabled', true);
+
+    $line = $this->get('/docs/charts/line');
+    $line->assertSuccessful();
+    $line->assertSee('x-daisy::charts.line', false);
+    $line->assertSee('data-daisy-chart="1"', false);
+
+    $sparkline = $this->get('/docs/charts/sparkline');
+    $sparkline->assertSuccessful();
+    $sparkline->assertSee('x-daisy::charts.sparkline', false);
+    $sparkline->assertSee('Pipeline', false);
+
+    $legacy = $this->get('/docs/advanced/chart');
+    $legacy->assertSuccessful();
+    $legacy->assertSee('Chart (legacy)', false);
+    $legacy->assertSee('x-daisy::charts.line', false);
+});
+
 it('renders the token input and section nav documentation', function () {
     Config::set('daisy-kit.docs.enabled', true);
 
@@ -69,6 +88,37 @@ it('renders the token input and section nav documentation', function () {
     $sectionNav->assertSee('data-section-nav', false);
     $sectionNav->assertSee('data-section-nav-button', false);
     $sectionNav->assertSee('fixed top-6 right-6', false);
+});
+
+it('renders the editable grid documentation', function () {
+    Config::set('daisy-kit.docs.enabled', true);
+
+    $grid = $this->get('/docs/layout/editable-grid');
+    $grid->assertSuccessful();
+    $grid->assertSee('data-module="editable-grid"', false);
+    $grid->assertSee('grid-stack daisy-editable-grid', false);
+    $grid->assertSee('responsive', false);
+    $grid->assertSee('Team priorities', false);
+
+    $item = $this->get('/docs/layout/editable-grid-item');
+    $item->assertSuccessful();
+    $item->assertSee('gs-x="4"', false);
+    $item->assertSee('data-meta=', false);
+});
+
+it('renders the ordered list and transfer documentation with the updated API', function () {
+    Config::set('daisy-kit.docs.enabled', true);
+
+    $orderedList = $this->get('/docs/layout/ordered-list');
+    $orderedList->assertSuccessful();
+    $orderedList->assertSee('data-module="ordered-list"', false);
+    $orderedList->assertSee('name="roadmap_order"', false);
+
+    $transfer = $this->get('/docs/advanced/transfer');
+    $transfer->assertSuccessful();
+    $transfer->assertSee('data-drag-and-drop="true"', false);
+    $transfer->assertSee('data-transfer-handle', false);
+    $transfer->assertSee('customId', false);
 });
 
 it('does not return 404 for any component documentation page', function () {

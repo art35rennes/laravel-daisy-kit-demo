@@ -6,9 +6,45 @@
     $sections = [
         ['id' => 'intro', 'label' => 'Introduction'],
         ['id' => 'base', 'label' => 'Exemple de base'],
+        ['id' => 'dnd', 'label' => 'Drag and drop'],
         ['id' => 'api', 'label' => 'API'],
     ];
     $props = DocsHelper::getComponentProps($category, $name);
+
+    $baseCode = <<<'CODE'
+<x-daisy::ui.advanced.transfer
+    titleSource="Utilisateurs disponibles"
+    titleTarget="Utilisateurs sélectionnés"
+    :search="true"
+    :source="[
+        ['data' => 'Alice Martin'],
+        ['data' => 'Bob Dupont'],
+        ['data' => 'Claire Bernard'],
+    ]"
+    :target="[
+        ['data' => 'Sophie Blanc'],
+    ]"
+/>
+CODE;
+
+    $dndCode = <<<'CODE'
+<x-daisy::ui.advanced.transfer
+    titleSource="Backlog"
+    titleTarget="Sprint en cours"
+    :sortable="true"
+    :dragAndDrop="true"
+    :handle="true"
+    buttonsMode="icon"
+    buttonsVariant="outline"
+    :source="[
+        ['data' => 'Refonte landing page', 'customId' => 'landing'],
+        ['data' => 'Corriger les exports CSV', 'customId' => 'csv'],
+    ]"
+    :target="[
+        ['data' => 'Publier les charts', 'customId' => 'charts'],
+    ]"
+/>
+CODE;
 @endphp
 
 <x-daisy::docs.page 
@@ -28,27 +64,21 @@
 
     <x-daisy::docs.sections.example name="transfer">
         <x-slot:preview>
-            @php
-                $source = [
-                    ['id' => 1, 'label' => 'Item 1'],
-                    ['id' => 2, 'label' => 'Item 2'],
-                    ['id' => 3, 'label' => 'Item 3'],
-                    ['id' => 4, 'label' => 'Item 4'],
-                ];
-            @endphp
-            <x-daisy::ui.advanced.transfer :source="$source" />
+            <x-daisy::ui.advanced.transfer
+                titleSource="Utilisateurs disponibles"
+                titleTarget="Utilisateurs sélectionnés"
+                :search="true"
+                :source="[
+                    ['data' => 'Alice Martin'],
+                    ['data' => 'Bob Dupont'],
+                    ['data' => 'Claire Bernard'],
+                ]"
+                :target="[
+                    ['data' => 'Sophie Blanc'],
+                ]"
+            />
         </x-slot:preview>
         <x-slot:code>
-            @php
-                $baseCode = <<<'CODE'
-<x-daisy::ui.advanced.transfer :source="[
-    ['id' => 1, 'label' => 'Item 1'],
-    ['id' => 2, 'label' => 'Item 2'],
-    ['id' => 3, 'label' => 'Item 3'],
-    ['id' => 4, 'label' => 'Item 4'],
-]" />
-CODE;
-            @endphp
             <x-daisy::ui.advanced.code-editor 
                 language="blade" 
                 :value="$baseCode"
@@ -62,6 +92,45 @@ CODE;
             />
         </x-slot:code>
     </x-daisy::docs.sections.example>
+
+    <x-daisy::docs.sections.custom id="dnd" title="Drag and drop">
+        <div class="not-prose space-y-4">
+            <div class="alert alert-info alert-soft">
+                <span>Activez <code>dragAndDrop</code>, <code>sortable</code> et <code>handle</code> pour permettre le réordonnancement visuel des deux listes.</span>
+            </div>
+
+            <div class="rounded-box border border-base-content/10 bg-base-100 p-4">
+                <x-daisy::ui.advanced.transfer
+                    titleSource="Backlog"
+                    titleTarget="Sprint en cours"
+                    :sortable="true"
+                    :dragAndDrop="true"
+                    :handle="true"
+                    buttonsMode="icon"
+                    buttonsVariant="outline"
+                    :source="[
+                        ['data' => 'Refonte landing page', 'customId' => 'landing'],
+                        ['data' => 'Corriger les exports CSV', 'customId' => 'csv'],
+                    ]"
+                    :target="[
+                        ['data' => 'Publier les charts', 'customId' => 'charts'],
+                    ]"
+                />
+            </div>
+
+            <x-daisy::ui.advanced.code-editor
+                language="blade"
+                :value="$dndCode"
+                :readonly="true"
+                :showToolbar="false"
+                :showFoldAll="false"
+                :showUnfoldAll="false"
+                :showFormat="false"
+                :showCopy="true"
+                height="280px"
+            />
+        </div>
+    </x-daisy::docs.sections.custom>
 
     <x-daisy::docs.sections.api :category="$category" :name="$name" />
 </x-daisy::docs.page>

@@ -27,7 +27,7 @@ class ComponentPropsParser
         }
 
         $propsBlock = $matches[1];
-        
+
         // Nettoyer le bloc (retirer les espaces en début/fin)
         $propsBlock = trim($propsBlock);
 
@@ -47,6 +47,7 @@ class ComponentPropsParser
             // Détecter un commentaire multiligne avant une prop
             if (preg_match('/^\/\/\s*(.+)$/', $line, $commentMatch)) {
                 $currentComment = trim($commentMatch[1]);
+
                 continue;
             }
 
@@ -59,7 +60,7 @@ class ComponentPropsParser
             } elseif (preg_match("/^'([^']+)'\s*=>\s*(.+?)(?:\/\/\s*(.+))?$/", $line, $propMatch)) {
                 $matched = true;
             }
-            
+
             if ($matched) {
                 $name = $propMatch[1];
                 $defaultValueStr = trim($propMatch[2], " \t,");
@@ -225,9 +226,10 @@ class ComponentPropsParser
      */
     public static function parseComponent(string $category, string $name): array
     {
-        $filePath = resource_path("views/components/ui/{$category}/{$name}.blade.php");
+        $filePath = $category === 'charts'
+            ? resource_path("views/components/charts/{$name}.blade.php")
+            : resource_path("views/components/ui/{$category}/{$name}.blade.php");
 
         return self::parse($filePath);
     }
 }
-

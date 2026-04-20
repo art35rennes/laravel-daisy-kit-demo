@@ -97,25 +97,25 @@ class ComponentScanner extends AbstractScanner
      */
     private static function componentFiles(): array
     {
-        $componentsPath = self::packagePath('resources/views/components/ui');
-        if (! File::isDirectory($componentsPath)) {
-            return [];
-        }
-
-        $files = File::allFiles($componentsPath);
         $paths = [];
 
-        foreach ($files as $file) {
-            if (! str_ends_with($file->getFilename(), '.blade.php')) {
+        foreach (self::componentDirectories() as $componentsPath) {
+            if (! File::isDirectory($componentsPath)) {
                 continue;
             }
 
-            $normalized = str_replace('\\', '/', $file->getPathname());
-            if (str_contains($normalized, '/partials/')) {
-                continue;
-            }
+            foreach (File::allFiles($componentsPath) as $file) {
+                if (! str_ends_with($file->getFilename(), '.blade.php')) {
+                    continue;
+                }
 
-            $paths[] = $file->getPathname();
+                $normalized = str_replace('\\', '/', $file->getPathname());
+                if (str_contains($normalized, '/partials/')) {
+                    continue;
+                }
+
+                $paths[] = $file->getPathname();
+            }
         }
 
         sort($paths);
@@ -132,15 +132,33 @@ class ComponentScanner extends AbstractScanner
         $components = [];
         $dataAttributesMap = [];
         $jsDeps = [];
-
-        $componentsPath = rtrim(str_replace('\\', '/', self::packagePath('resources/views/components/ui')), '/').'/';
+        $componentRoots = collect(self::componentDirectories())
+            ->mapWithKeys(fn (string $path): array => [rtrim(str_replace('\\', '/', $path), '/').'/' => self::componentRootMeta($path)])
+            ->all();
 
         foreach ($paths as $path) {
             $fullPath = str_replace('\\', '/', $path);
-            $relativePath = Str::startsWith($fullPath, $componentsPath) ? substr($fullPath, strlen($componentsPath)) : $fullPath;
-            $pathParts = explode('/', $relativePath);
+            $rootPath = null;
+            $rootMeta = null;
 
-            $category = $pathParts[0] ?? 'misc';
+            foreach ($componentRoots as $candidateRoot => $candidateMeta) {
+                if (Str::startsWith($fullPath, $candidateRoot)) {
+                    $rootPath = $candidateRoot;
+                    $rootMeta = $candidateMeta;
+                    break;
+                }
+            }
+
+            $rootMeta ??= [
+                'category' => 'ui',
+                'view_prefix' => 'daisy::components.ui',
+            ];
+
+            $relativePath = $rootPath !== null ? substr($fullPath, strlen($rootPath)) : $fullPath;
+            $pathParts = explode('/', $relativePath);
+            $category = $rootMeta['category'] === 'charts'
+                ? 'charts'
+                : ($pathParts[0] ?? 'misc');
             $name = basename($path, '.blade.php');
 
             $content = File::get($path);
@@ -166,7 +184,9 @@ class ComponentScanner extends AbstractScanner
 
             $tags = self::generateTags($category, $jsModule);
 
-            $viewPath = "daisy::components.ui.{$category}.{$name}";
+            $viewPath = $rootMeta['view_prefix'] === 'daisy::components.charts'
+                ? "daisy::components.charts.{$name}"
+                : "daisy::components.ui.{$category}.{$name}";
 
             $components[] = [
                 'name' => $name,
@@ -195,6 +215,37 @@ class ComponentScanner extends AbstractScanner
             'components' => $components,
             'dataAttributesMap' => $dataAttributesMap,
             'jsDeps' => $jsDeps,
+        ];
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private static function componentDirectories(): array
+    {
+        return [
+            self::packagePath('resources/views/components/ui'),
+            self::packagePath('resources/views/components/charts'),
+        ];
+    }
+
+    /**
+     * @return array{category: string, view_prefix: string}
+     */
+    private static function componentRootMeta(string $path): array
+    {
+        $normalizedPath = str_replace('\\', '/', $path);
+
+        if (str_ends_with($normalizedPath, '/components/charts')) {
+            return [
+                'category' => 'charts',
+                'view_prefix' => 'daisy::components.charts',
+            ];
+        }
+
+        return [
+            'category' => 'ui',
+            'view_prefix' => 'daisy::components.ui',
         ];
     }
 
