@@ -13,18 +13,36 @@ it('renders the UI demo page with section anchors and FAB navigator', function (
     $response->assertSee('data-sync', false);
     $response->assertSee('data-indeterminate="true"', false);
     $response->assertSee('data-module="token-input"', false);
+    $response->assertSee('Pipeline équipe produit', false);
+    $response->assertSee('Annuaire synchronisé', false);
+    $response->assertSee('Checklist support', false);
+    $response->assertSee('data-table-filter="team"', false);
+    $response->assertSee('data-table-filter="active_only"', false);
+    $response->assertSee('"stateKey":"demo-users-table"', false);
 });
 
-it('returns DataTables JSON from the demo datatable endpoint', function () {
-    $response = $this->getJson('/demo/datatable/api/get?draw=3&start=0&length=5&search[value]=hart&columns[0][data]=name&columns[1][data]=email&columns[2][data]=status&order[0][column]=0&order[0][dir]=asc');
+it('returns table JSON from the demo table endpoint', function () {
+    $response = $this->getJson('/demo/table/api/get?pageIndex=0&pageSize=5&globalFilter=hart&sorting=%5B%7B%22id%22%3A%22name%22,%22desc%22%3Afalse%7D%5D');
 
     $response->assertSuccessful();
     $response->assertJson([
-        'draw' => 3,
-        'recordsTotal' => 12,
-        'recordsFiltered' => 1,
+        'rowCount' => 1,
+        'pageCount' => 1,
+        'state' => [
+            'pageIndex' => 0,
+            'pageSize' => 5,
+        ],
     ]);
 
-    expect($response->json('data'))->toHaveCount(1);
-    expect($response->json('data.0.name'))->toBe('Hart Hagerty');
+    expect($response->json('rows'))->toHaveCount(1);
+    expect($response->json('rows.0.name'))->toBe('Hart Hagerty');
+});
+
+it('applies column filters on the demo table endpoint', function () {
+    $response = $this->getJson('/demo/table/api/get?pageIndex=0&pageSize=10&columnFilters=%5B%7B%22id%22%3A%22status%22,%22value%22%3A%22Archived%22%7D,%7B%22id%22%3A%22active_only%22,%22value%22%3Afalse%7D%5D');
+
+    $response->assertSuccessful();
+
+    expect($response->json('rowCount'))->toBe(3);
+    expect(collect($response->json('rows'))->pluck('status')->unique()->all())->toBe(['Archived']);
 });

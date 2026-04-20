@@ -18,16 +18,27 @@ it('renders a component page (button)', function () {
     $res->assertSee('Button', false);
 });
 
-it('renders the datatable documentation with the current component API', function () {
+it('renders the table documentation with the current component API', function () {
+    Config::set('daisy-kit.docs.enabled', true);
+    $res = $this->get('/docs/data-display/table');
+
+    $res->assertSuccessful();
+    $res->assertSee('x-daisy::ui.data-display.table', false);
+    $res->assertSee('mode=&quot;server&quot;', false);
+    $res->assertSee('endpoint=&quot;{{ route(', false);
+    $res->assertSee('persist-state=&quot;url&quot;', false);
+    $res->assertSee('data-table-filter="active_only"', false);
+    $res->assertDontSee('x-daisy::ui.advanced.table', false);
+});
+
+it('renders the datatable migration documentation', function () {
     Config::set('daisy-kit.docs.enabled', true);
     $res = $this->get('/docs/data-display/datatable');
 
     $res->assertSuccessful();
     $res->assertSee('x-daisy::ui.data-display.datatable', false);
-    $res->assertSee('server-side', false);
-    $res->assertSee(':ajax=', false);
-    $res->assertDontSee('x-daisy::ui.data-display.table', false);
-    $res->assertDontSee('x-daisy::ui.advanced.table', false);
+    $res->assertSee('x-daisy::ui.data-display.table', false);
+    $res->assertSee('retiré', false);
 });
 
 it('renders the updated code editor and tree view documentation', function () {

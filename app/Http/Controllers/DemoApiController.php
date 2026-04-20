@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class DemoApiController extends Controller
 {
-    public function datatableUsers(Request $request): JsonResponse
+    public function tableUsers(Request $request): JsonResponse
     {
         $rows = collect([
             ['id' => 1, 'name' => 'Cy Ganderton', 'email' => 'cy@example.com', 'status' => 'Active'],
@@ -24,16 +24,16 @@ class DemoApiController extends Controller
             ['id' => 12, 'name' => 'Owen Reed', 'email' => 'owen@example.com', 'status' => 'Invited'],
         ]);
 
-        $columns = collect($request->input('columns', []));
-        $orderColumnIndex = (int) $request->input('order.0.column', 0);
-        $orderDirection = strtolower((string) $request->input('order.0.dir', 'asc')) === 'desc' ? 'desc' : 'asc';
-        $search = trim((string) $request->input('search.value', ''));
-        $start = max(0, (int) $request->integer('start', 0));
-        $length = max(1, (int) $request->integer('length', 10));
-        $draw = (int) $request->integer('draw', 1);
-
-        $orderColumn = $columns->get($orderColumnIndex);
-        $orderKey = is_array($orderColumn) ? ($orderColumn['data'] ?? null) : null;
+        $pageIndex = max(0, (int) $request->integer('pageIndex', 0));
+        $pageSize = max(1, (int) $request->integer('pageSize', 10));
+        $search = trim((string) $request->input('globalFilter', ''));
+        $sorting = json_decode((string) $request->input('sorting', '[]'), true);
+        $columnFilters = json_decode((string) $request->input('columnFilters', '[]'), true);
+        $sorting = is_array($sorting) ? $sorting : [];
+        $columnFilters = is_array($columnFilters) ? $columnFilters : [];
+        $sortEntry = $sorting[0] ?? null;
+        $sortKey = is_array($sortEntry) ? ($sortEntry['id'] ?? null) : null;
+        $sortDirection = is_array($sortEntry) && ($sortEntry['desc'] ?? false) === true ? 'desc' : 'asc';
 
         if ($search !== '') {
             $normalizedSearch = mb_strtolower($search);
@@ -48,22 +48,53 @@ class DemoApiController extends Controller
             })->values();
         }
 
-        $recordsFiltered = $rows->count();
+        foreach ($columnFilters as $filter) {
+            if (! is_array($filter) || ! is_string($filter['id'] ?? null)) {
+                continue;
+            }
 
-        if (is_string($orderKey) && in_array($orderKey, ['name', 'email', 'status'], true)) {
+            $filterId = $filter['id'];
+            $filterValue = $filter['value'] ?? null;
+
+            $rows = match ($filterId) {
+                'status' => filled($filterValue)
+                    ? $rows->filter(fn (array $row): bool => strcasecmp((string) $row['status'], (string) $filterValue) === 0)->values()
+                    : $rows,
+                'email_domain' => filled($filterValue)
+                    ? $rows->filter(fn (array $row): bool => str_ends_with(mb_strtolower((string) $row['email']), '@'.mb_strtolower((string) $filterValue)))->values()
+                    : $rows,
+                'active_only' => filter_var($filterValue, FILTER_VALIDATE_BOOLEAN)
+                    ? $rows->filter(fn (array $row): bool => strcasecmp((string) $row['status'], 'Active') === 0)->values()
+                    : $rows,
+                default => $rows,
+            };
+        }
+
+        $rowCount = $rows->count();
+
+        if (is_string($sortKey) && in_array($sortKey, ['name', 'email', 'status'], true)) {
             $rows = $rows
-                ->sortBy($orderKey, SORT_NATURAL | SORT_FLAG_CASE, $orderDirection === 'desc')
+                ->sortBy($sortKey, SORT_NATURAL | SORT_FLAG_CASE, $sortDirection === 'desc')
                 ->values();
         }
 
-        $pageRows = $rows->slice($start, $length)->values()->all();
+        $pageRows = $rows->slice($pageIndex * $pageSize, $pageSize)->values()->all();
+        $pageCount = max(1, (int) ceil($rowCount / $pageSize));
 
         return response()->json([
-            'draw' => $draw,
-            'recordsTotal' => 12,
-            'recordsFiltered' => $recordsFiltered,
-            'data' => $pageRows,
+            'rows' => $pageRows,
+            'rowCount' => $rowCount,
+            'pageCount' => $pageCount,
+            'state' => [
+                'pageIndex' => $pageIndex,
+                'pageSize' => $pageSize,
+            ],
         ]);
+    }
+
+    public function datatableUsers(Request $request): JsonResponse
+    {
+        return $this->tableUsers($request);
     }
 
     public function calendarEvents(Request $request): JsonResponse
