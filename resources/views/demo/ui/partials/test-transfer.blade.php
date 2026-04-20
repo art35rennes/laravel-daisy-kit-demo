@@ -87,5 +87,28 @@
                 :search="true" 
                 buttonsSize="sm" />
         </div>
+
+        <div class="space-y-4 card-border rounded-box p-6 bg-base-50">
+            <h3 class="font-semibold text-primary">Drag and drop avec poignées</h3>
+            <x-daisy::ui.advanced.transfer
+                titleSource="Backlog"
+                titleTarget="Sprint en cours"
+                buttonsMode="icon"
+                buttonsVariant="outline"
+                buttonsSize="sm"
+                :sortable="true"
+                :dragAndDrop="true"
+                :handle="true"
+                :source="[
+                    ['data' => 'Refonte landing page', 'customId' => 'landing'],
+                    ['data' => 'Corriger les exports CSV', 'customId' => 'csv'],
+                    ['data' => 'Stabiliser le dark mode', 'customId' => 'dark'],
+                ]"
+                :target="[
+                    ['data' => 'Publier les charts', 'customId' => 'charts'],
+                    ['data' => 'Valider ordered list', 'customId' => 'ordered-list'],
+                ]"
+            />
+        </div>
     </div>
 </section>

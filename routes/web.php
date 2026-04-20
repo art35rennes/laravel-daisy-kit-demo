@@ -57,6 +57,7 @@ Route::prefix('templates')->name('templates.')->group(function () {
         Route::view('/sidebar', 'daisy-dev::demo.templates.test-sidebar')->name('sidebar');
         Route::view('/navbar-sidebar', 'daisy-dev::demo.templates.test-navbar-sidebar')->name('navbar-sidebar');
         Route::view('/grid-layout', 'daisy-dev::demo.templates.test-grid-layout')->name('grid-layout');
+        Route::view('/editable-grid', 'daisy::templates.layout.editable-grid')->name('editable-grid');
         Route::view('/crud-layout', 'daisy-dev::demo.templates.test-crud-layout')->name('crud-layout');
         Route::view('/footer', 'daisy-dev::demo.templates.test-footer')->name('footer');
         Route::view('/grid', 'daisy-dev::demo.templates.test-grid')->name('grid');
