@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "../laravel-daisy-kit",
-                "reference": "29d7359ec33586c68ff77d7e74cb307f99db2c61"
+                "reference": "939542496c065e7e9587a7d36e069fd0170c7d6a"
             },
             "require": {
                 "blade-ui-kit/blade-icons": "^1.8",
