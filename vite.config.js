@@ -1,8 +1,20 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
+import { fileURLToPath } from 'node:url';
+
+const nodeModule = (path) => fileURLToPath(new URL(`./node_modules/${path}`, import.meta.url));
 
 export default defineConfig({
+    resolve: {
+        preserveSymlinks: true,
+        alias: [
+            { find: /^tailwindcss$/, replacement: nodeModule('tailwindcss/index.css') },
+            { find: /^daisyui$/, replacement: nodeModule('daisyui/index.js') },
+            { find: /^gridstack(\/.*)?$/, replacement: `${nodeModule('gridstack')}$1` },
+            { find: /^trix(\/.*)?$/, replacement: `${nodeModule('trix')}$1` },
+        ],
+    },
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
