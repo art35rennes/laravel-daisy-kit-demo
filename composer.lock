@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fbe8c19028e3f5c4cd77408d7adf4192",
+    "content-hash": "bc4adb0f83a38655890571e208f850b1",
     "packages": [
         {
             "name": "art35rennes/laravel-daisy-kit",
@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "../laravel-daisy-kit",
-                "reference": "dac7df7b1aa2d61b0bad39f60a48fe658e454e7e"
+                "reference": "de98a0b96430dadf1eb71518a6bd22eb155c0c7a"
             },
             "require": {
                 "blade-ui-kit/blade-icons": "^1.8",

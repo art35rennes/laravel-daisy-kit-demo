@@ -1,525 +1,484 @@
 {
-  "_events-Uoh0sXeK.js": {
-    "file": "assets/events-Uoh0sXeK.js",
-    "name": "events"
-  },
-  "_jsonata-DzASGsAR.js": {
-    "file": "assets/jsonata-DzASGsAR.js",
-    "name": "jsonata",
+  "_builder-ByaGu-TO.js": {
+    "file": "assets/builder-ByaGu-TO.js",
+    "name": "builder",
     "imports": [
-      "_vendor-n9O6swcl.js"
+      "_jsonata-engine-kQaF4Km6.js"
     ]
   },
-  "_leaflet-cluster-dRz9h7ol.js": {
-    "file": "assets/leaflet-cluster-dRz9h7ol.js",
+  "_calendar-C7_4u741.js": {
+    "file": "assets/calendar-C7_4u741.js",
+    "name": "calendar",
+    "imports": [
+      "_rolldown-runtime-CMxvf4Kt.js"
+    ]
+  },
+  "_chart-CZUTCKpj.js": {
+    "file": "assets/chart-CZUTCKpj.js",
+    "name": "chart",
+    "imports": [
+      "_rolldown-runtime-CMxvf4Kt.js"
+    ]
+  },
+  "_code-editor-XAN2ZbKG.js": {
+    "file": "assets/code-editor-XAN2ZbKG.js",
+    "name": "code-editor",
+    "imports": [
+      "_rolldown-runtime-CMxvf4Kt.js"
+    ]
+  },
+  "_jsonata-engine-kQaF4Km6.js": {
+    "file": "assets/jsonata-engine-kQaF4Km6.js",
+    "name": "jsonata-engine",
+    "imports": [
+      "_rolldown-runtime-CMxvf4Kt.js",
+      "_leaflet-core-C1FkpUZH.js",
+      "_vendor-C9eSicuq.js"
+    ],
+    "dynamicImports": [
+      "_vendor-C9eSicuq.js"
+    ]
+  },
+  "_leaflet-cluster-DBCi3mq9.css": {
+    "file": "assets/leaflet-cluster-DBCi3mq9.css",
+    "src": "_leaflet-cluster-DBCi3mq9.css"
+  },
+  "_leaflet-cluster-DvA6K2Th.js": {
+    "file": "assets/leaflet-cluster-DvA6K2Th.js",
     "name": "leaflet-cluster",
-    "isDynamicEntry": true,
     "imports": [
-      "_vendor-n9O6swcl.js"
+      "_rolldown-runtime-CMxvf4Kt.js"
     ],
     "css": [
-      "assets/leaflet-cluster-k-SYLBed.css"
+      "assets/leaflet-cluster-DBCi3mq9.css"
     ]
   },
-  "_leaflet-cluster-k-SYLBed.css": {
-    "file": "assets/leaflet-cluster-k-SYLBed.css",
-    "src": "_leaflet-cluster-k-SYLBed.css"
-  },
-  "_leaflet-vendor-A1UIR-Wa.css": {
-    "file": "assets/leaflet-vendor-A1UIR-Wa.css",
-    "src": "_leaflet-vendor-A1UIR-Wa.css"
-  },
-  "_leaflet-vendor-C_BT-7IV.js": {
-    "file": "assets/leaflet-vendor-C_BT-7IV.js",
-    "name": "leaflet-vendor",
-    "isDynamicEntry": true,
+  "_leaflet-core-C1FkpUZH.js": {
+    "file": "assets/leaflet-core-C1FkpUZH.js",
+    "name": "leaflet-core",
     "imports": [
-      "_vendor-n9O6swcl.js"
+      "_rolldown-runtime-CMxvf4Kt.js"
+    ],
+    "dynamicImports": [
+      "_leaflet-core-C1FkpUZH.js",
+      "_leaflet-vendor-CYm2Ii6b.js",
+      "_leaflet-cluster-DvA6K2Th.js"
+    ]
+  },
+  "_leaflet-vendor-BcjvhrxA.css": {
+    "file": "assets/leaflet-vendor-BcjvhrxA.css",
+    "src": "_leaflet-vendor-BcjvhrxA.css"
+  },
+  "_leaflet-vendor-CYm2Ii6b.js": {
+    "file": "assets/leaflet-vendor-CYm2Ii6b.js",
+    "name": "leaflet-vendor",
+    "imports": [
+      "_rolldown-runtime-CMxvf4Kt.js"
     ],
     "css": [
-      "assets/leaflet-vendor-A1UIR-Wa.css"
+      "assets/leaflet-vendor-BcjvhrxA.css"
     ],
     "assets": [
-      "assets/marker-icon-hN30_KVU.png",
       "assets/marker-icon-2x-_ZA0WGCc.png",
+      "assets/marker-icon-hN30_KVU.png",
       "assets/marker-shadow-f7SaPCxT.png",
       "assets/layers-BWBAp2CZ.png",
-      "assets/layers-2x-Bpkbi35X.png",
-      "assets/icon-fullscreen-DV0efSKN.svg"
+      "assets/layers-2x-Bpkbi35X.png"
     ]
   },
-  "_table-core-TD5eAT0Q.js": {
-    "file": "assets/table-core-TD5eAT0Q.js",
-    "name": "table-core"
+  "_rolldown-runtime-CMxvf4Kt.js": {
+    "file": "assets/rolldown-runtime-CMxvf4Kt.js",
+    "name": "rolldown-runtime"
   },
-  "_trix-CUvHwtfI.js": {
-    "file": "assets/trix-CUvHwtfI.js",
+  "_runtime-z9lt_Vie.js": {
+    "file": "assets/runtime-z9lt_Vie.js",
+    "name": "runtime",
+    "imports": [
+      "_jsonata-engine-kQaF4Km6.js"
+    ]
+  },
+  "_trix-DYuE1V3W.js": {
+    "file": "assets/trix-DYuE1V3W.js",
     "name": "trix",
-    "isDynamicEntry": true
+    "imports": [
+      "_rolldown-runtime-CMxvf4Kt.js"
+    ]
   },
-  "_vendor-n9O6swcl.js": {
-    "file": "assets/vendor-n9O6swcl.js",
+  "_vendor-C9eSicuq.js": {
+    "file": "assets/vendor-C9eSicuq.js",
     "name": "vendor",
     "imports": [
-      "_trix-CUvHwtfI.js"
+      "_rolldown-runtime-CMxvf4Kt.js"
     ]
   },
-  "node_modules/cally/dist/cally.js": {
-    "file": "assets/calendar-Cr-9cI6k.js",
-    "name": "calendar",
-    "src": "node_modules/cally/dist/cally.js",
-    "isDynamicEntry": true
-  },
-  "node_modules/leaflet.fullscreen/icon-fullscreen.svg": {
-    "file": "assets/icon-fullscreen-DV0efSKN.svg",
-    "src": "node_modules/leaflet.fullscreen/icon-fullscreen.svg"
-  },
-  "node_modules/leaflet/dist/images/layers-2x.png": {
-    "file": "assets/layers-2x-Bpkbi35X.png",
-    "src": "node_modules/leaflet/dist/images/layers-2x.png"
-  },
-  "node_modules/leaflet/dist/images/layers.png": {
-    "file": "assets/layers-BWBAp2CZ.png",
-    "src": "node_modules/leaflet/dist/images/layers.png"
-  },
-  "node_modules/leaflet/dist/images/marker-icon-2x.png": {
-    "file": "assets/marker-icon-2x-_ZA0WGCc.png",
-    "src": "node_modules/leaflet/dist/images/marker-icon-2x.png"
-  },
-  "node_modules/leaflet/dist/images/marker-icon.png": {
-    "file": "assets/marker-icon-hN30_KVU.png",
-    "src": "node_modules/leaflet/dist/images/marker-icon.png"
-  },
-  "node_modules/leaflet/dist/images/marker-shadow.png": {
-    "file": "assets/marker-shadow-f7SaPCxT.png",
-    "src": "node_modules/leaflet/dist/images/marker-shadow.png"
-  },
   "resources/css/app.css": {
-    "file": "assets/app-BkS0OU8k.css",
-    "src": "resources/css/app.css",
-    "isEntry": true,
+    "file": "assets/app-BP3J2nCh.css",
     "name": "app",
     "names": [
       "app.css"
-    ]
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-BNAdg910.js",
+    "file": "assets/app-gCaUUWSd.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_jsonata-DzASGsAR.js",
-      "_vendor-n9O6swcl.js",
-      "_trix-CUvHwtfI.js"
+      "_leaflet-core-C1FkpUZH.js",
+      "_vendor-C9eSicuq.js"
     ],
     "dynamicImports": [
-      "resources/js/modules/chat-input.js",
-      "resources/js/modules/chat-messages.js",
-      "resources/js/modules/chat-widget.js",
-      "resources/js/modules/copyable.js",
-      "resources/js/modules/csrf-keeper.js",
-      "resources/js/modules/editable-grid.js",
-      "resources/js/modules/form-builder.js",
-      "resources/js/modules/form-viewer.js",
-      "resources/js/modules/menu-filter.js",
-      "resources/js/modules/notifications.js",
-      "resources/js/modules/ordered-list.js",
-      "resources/js/modules/otp-code.js",
-      "resources/js/modules/popover.js",
-      "resources/js/modules/select.js",
-      "resources/js/modules/sidebar.js",
-      "resources/js/modules/sign.js",
-      "resources/js/modules/token-input.js",
-      "resources/js/modules/forms/inline.js",
-      "resources/js/modules/forms/tabs.js",
-      "resources/js/modules/forms/wizard.js",
-      "resources/js/code-editor.js",
-      "resources/js/color-picker.js",
-      "resources/js/file-input.js",
-      "resources/js/input-mask.js",
-      "resources/js/lazy-editors.js",
-      "resources/js/lightbox.js",
-      "resources/js/media-gallery.js",
-      "resources/js/onboarding.js",
-      "resources/js/popconfirm.js",
-      "resources/js/popover.js",
-      "resources/js/scroll-status.js",
-      "resources/js/scrollspy.js",
-      "resources/js/stepper.js",
-      "resources/js/table-kit.js",
-      "resources/js/transfer.js",
-      "resources/js/treeview.js",
-      "resources/js/calendar-full/index.js",
-      "resources/js/chart/index.js",
-      "resources/js/chat/index.js",
-      "resources/js/form-kit/index.js",
-      "resources/js/leaflet/index.js",
-      "resources/js/modules/copyable.js",
-      "node_modules/cally/dist/cally.js",
-      "resources/js/color-picker.js",
-      "resources/js/treeview.js",
-      "resources/js/scrollspy.js",
-      "resources/js/popconfirm.js",
-      "resources/js/popover.js",
-      "resources/js/stepper.js",
-      "resources/js/onboarding.js",
-      "resources/js/table-kit.js",
-      "resources/js/file-input.js",
-      "resources/js/input-mask.js",
-      "resources/js/scroll-status.js",
-      "resources/js/transfer.js",
-      "resources/js/modules/ordered-list.js",
-      "resources/js/modules/sign.js",
-      "resources/js/lightbox.js",
-      "resources/js/media-gallery.js",
-      "resources/js/lazy-editors.js",
-      "resources/js/chart/index.js",
-      "resources/js/calendar-full/index.js"
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/chat-input.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/chat-messages.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/chat-widget.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/copyable.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/csrf-keeper.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/editable-grid.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/form-builder.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/form-viewer.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/menu-filter.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/notifications.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/ordered-list.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/otp-code.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/popover.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/select.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/sidebar.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/sign.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/token-input.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/forms/inline.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/forms/tabs.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/forms/wizard.js",
+      "_code-editor-XAN2ZbKG.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/color-picker.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/file-input.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/input-mask.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/lazy-editors.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/lightbox.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/media-gallery.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/onboarding.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/popconfirm.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/popover.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/scroll-status.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/scrollspy.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/stepper.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/table-kit.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/transfer.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/treeview.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/calendar-full/index.js",
+      "_chart-CZUTCKpj.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/chat/index.js",
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/form-kit/index.js",
+      "_leaflet-core-C1FkpUZH.js",
+      "_calendar-C7_4u741.js"
     ]
   },
-  "resources/js/calendar-full/index.js": {
-    "file": "assets/index-BBYsccB-.js",
-    "name": "index",
-    "src": "resources/js/calendar-full/index.js",
+  "vendor/art35rennes/laravel-daisy-kit/node_modules/leaflet/dist/images/layers-2x.png": {
+    "file": "assets/layers-2x-Bpkbi35X.png",
+    "src": "vendor/art35rennes/laravel-daisy-kit/node_modules/leaflet/dist/images/layers-2x.png"
+  },
+  "vendor/art35rennes/laravel-daisy-kit/node_modules/leaflet/dist/images/layers.png": {
+    "file": "assets/layers-BWBAp2CZ.png",
+    "src": "vendor/art35rennes/laravel-daisy-kit/node_modules/leaflet/dist/images/layers.png"
+  },
+  "vendor/art35rennes/laravel-daisy-kit/node_modules/leaflet/dist/images/marker-icon-2x.png": {
+    "file": "assets/marker-icon-2x-_ZA0WGCc.png",
+    "src": "vendor/art35rennes/laravel-daisy-kit/node_modules/leaflet/dist/images/marker-icon-2x.png"
+  },
+  "vendor/art35rennes/laravel-daisy-kit/node_modules/leaflet/dist/images/marker-icon.png": {
+    "file": "assets/marker-icon-hN30_KVU.png",
+    "src": "vendor/art35rennes/laravel-daisy-kit/node_modules/leaflet/dist/images/marker-icon.png"
+  },
+  "vendor/art35rennes/laravel-daisy-kit/node_modules/leaflet/dist/images/marker-shadow.png": {
+    "file": "assets/marker-shadow-f7SaPCxT.png",
+    "src": "vendor/art35rennes/laravel-daisy-kit/node_modules/leaflet/dist/images/marker-shadow.png"
+  },
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/calendar-full/index.js": {
+    "file": "assets/calendar-full-CLTfKgM6.js",
+    "name": "calendar-full",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/calendar-full/index.js",
     "isDynamicEntry": true,
     "imports": [
-      "resources/js/app.js",
-      "_jsonata-DzASGsAR.js",
-      "_vendor-n9O6swcl.js",
-      "_trix-CUvHwtfI.js"
+      "resources/js/app.js"
     ]
   },
-  "resources/js/chart/index.js": {
-    "file": "assets/chart-DlZFVHZW.js",
-    "name": "chart",
-    "src": "resources/js/chart/index.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/chat/index.js": {
+    "file": "assets/chat-xtTe4VQV.js",
+    "name": "chat",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/chat/index.js",
     "isDynamicEntry": true,
     "imports": [
-      "_vendor-n9O6swcl.js",
-      "_trix-CUvHwtfI.js"
+      "resources/js/app.js"
     ]
   },
-  "resources/js/chat/index.js": {
-    "file": "assets/index-eGvDfjpk.js",
-    "name": "index",
-    "src": "resources/js/chat/index.js",
-    "isDynamicEntry": true,
-    "imports": [
-      "_events-Uoh0sXeK.js"
-    ]
-  },
-  "resources/js/code-editor.js": {
-    "file": "assets/code-editor-B22SFFGb.js",
-    "name": "code-editor",
-    "src": "resources/js/code-editor.js",
-    "isDynamicEntry": true,
-    "imports": [
-      "_vendor-n9O6swcl.js",
-      "_trix-CUvHwtfI.js"
-    ]
-  },
-  "resources/js/color-picker.js": {
-    "file": "assets/color-picker-T7s1T1_f.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/color-picker.js": {
+    "file": "assets/color-picker-DM2Yf5r0.js",
     "name": "color-picker",
-    "src": "resources/js/color-picker.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/color-picker.js",
     "isDynamicEntry": true
   },
-  "resources/js/file-input.js": {
-    "file": "assets/file-input-CPpLJ5Oe.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/file-input.js": {
+    "file": "assets/file-input-jX7aQCmP.js",
     "name": "file-input",
-    "src": "resources/js/file-input.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/file-input.js",
     "isDynamicEntry": true
   },
-  "resources/js/form-kit/index.js": {
-    "file": "assets/form-kit-BdI2r4wb.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/form-kit/index.js": {
+    "file": "assets/form-kit-veNQmDsN.js",
     "name": "form-kit",
-    "src": "resources/js/form-kit/index.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/form-kit/index.js",
     "isDynamicEntry": true,
     "imports": [
-      "_jsonata-DzASGsAR.js",
-      "_vendor-n9O6swcl.js",
-      "_trix-CUvHwtfI.js"
+      "_builder-ByaGu-TO.js",
+      "_jsonata-engine-kQaF4Km6.js",
+      "_runtime-z9lt_Vie.js"
     ]
   },
-  "resources/js/input-mask.js": {
-    "file": "assets/input-mask-B8TazB8i.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/input-mask.js": {
+    "file": "assets/input-mask-DHVe-54J.js",
     "name": "input-mask",
-    "src": "resources/js/input-mask.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/input-mask.js",
     "isDynamicEntry": true
   },
-  "resources/js/lazy-editors.js": {
-    "file": "assets/lazy-editors-DsBtsV-0.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/lazy-editors.js": {
+    "file": "assets/lazy-editors-C0jGMPnG.js",
     "name": "lazy-editors",
-    "src": "resources/js/lazy-editors.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/lazy-editors.js",
     "isDynamicEntry": true,
     "imports": [
-      "_jsonata-DzASGsAR.js",
-      "_vendor-n9O6swcl.js",
-      "_trix-CUvHwtfI.js"
+      "_leaflet-core-C1FkpUZH.js"
     ],
     "dynamicImports": [
-      "resources/js/code-editor.js",
-      "_trix-CUvHwtfI.js"
+      "_code-editor-XAN2ZbKG.js",
+      "_trix-DYuE1V3W.js"
     ]
   },
-  "resources/js/leaflet/index.js": {
-    "file": "assets/leaflet-core-BffPql4D.js",
-    "name": "leaflet-core",
-    "src": "resources/js/leaflet/index.js",
-    "isDynamicEntry": true,
-    "imports": [
-      "_jsonata-DzASGsAR.js",
-      "_vendor-n9O6swcl.js",
-      "_trix-CUvHwtfI.js"
-    ],
-    "dynamicImports": [
-      "_leaflet-vendor-C_BT-7IV.js",
-      "_leaflet-vendor-C_BT-7IV.js",
-      "_leaflet-vendor-C_BT-7IV.js",
-      "_leaflet-vendor-C_BT-7IV.js",
-      "_leaflet-vendor-C_BT-7IV.js",
-      "_leaflet-vendor-C_BT-7IV.js",
-      "_leaflet-vendor-C_BT-7IV.js",
-      "_leaflet-vendor-C_BT-7IV.js",
-      "_leaflet-vendor-C_BT-7IV.js",
-      "_leaflet-cluster-dRz9h7ol.js",
-      "_leaflet-cluster-dRz9h7ol.js",
-      "_leaflet-cluster-dRz9h7ol.js"
-    ]
-  },
-  "resources/js/lightbox.js": {
-    "file": "assets/lightbox-DTOMq_Nr.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/lightbox.js": {
+    "file": "assets/lightbox-D6pswF8g.js",
     "name": "lightbox",
-    "src": "resources/js/lightbox.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/lightbox.js",
     "isDynamicEntry": true
   },
-  "resources/js/media-gallery.js": {
-    "file": "assets/media-gallery-D5Hf9w-R.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/media-gallery.js": {
+    "file": "assets/media-gallery-DN8FAbyu.js",
     "name": "media-gallery",
-    "src": "resources/js/media-gallery.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/media-gallery.js",
     "isDynamicEntry": true
   },
-  "resources/js/modules/chat-input.js": {
-    "file": "assets/chat-input-un37idH-.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/chat-input.js": {
+    "file": "assets/chat-input-Bg4e3dBT.js",
     "name": "chat-input",
-    "src": "resources/js/modules/chat-input.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/chat-input.js",
     "isDynamicEntry": true,
     "imports": [
-      "resources/js/chat/index.js",
-      "_events-Uoh0sXeK.js"
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/chat/index.js"
     ]
   },
-  "resources/js/modules/chat-messages.js": {
-    "file": "assets/chat-messages-DazhEiQj.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/chat-messages.js": {
+    "file": "assets/chat-messages-Cxi-xdvv.js",
     "name": "chat-messages",
-    "src": "resources/js/modules/chat-messages.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/chat-messages.js",
     "isDynamicEntry": true,
     "imports": [
-      "resources/js/chat/index.js",
-      "_events-Uoh0sXeK.js"
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/chat/index.js"
     ]
   },
-  "resources/js/modules/chat-widget.js": {
-    "file": "assets/chat-widget-CxJDFNMN.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/chat-widget.js": {
+    "file": "assets/chat-widget-DNsmWtj3.js",
     "name": "chat-widget",
-    "src": "resources/js/modules/chat-widget.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/chat-widget.js",
     "isDynamicEntry": true,
     "imports": [
-      "resources/js/chat/index.js",
-      "_events-Uoh0sXeK.js"
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/chat/index.js"
     ]
   },
-  "resources/js/modules/copyable.js": {
-    "file": "assets/copyable-D2P6QrCt.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/copyable.js": {
+    "file": "assets/copyable-IJBxItse.js",
     "name": "copyable",
-    "src": "resources/js/modules/copyable.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/copyable.js",
     "isDynamicEntry": true
   },
-  "resources/js/modules/csrf-keeper.js": {
-    "file": "assets/csrf-keeper-D40JlrFu.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/csrf-keeper.js": {
+    "file": "assets/csrf-keeper-Dris1P10.js",
     "name": "csrf-keeper",
-    "src": "resources/js/modules/csrf-keeper.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/csrf-keeper.js",
     "isDynamicEntry": true
   },
-  "resources/js/modules/editable-grid.js": {
-    "file": "assets/editable-grid-Ok1ziTM9.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/editable-grid.js": {
+    "file": "assets/editable-grid-WKFOQ0VV.js",
     "name": "editable-grid",
-    "src": "resources/js/modules/editable-grid.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/editable-grid.js",
     "isDynamicEntry": true,
     "imports": [
-      "_vendor-n9O6swcl.js",
-      "_trix-CUvHwtfI.js"
+      "_vendor-C9eSicuq.js"
     ]
   },
-  "resources/js/modules/form-builder.js": {
-    "file": "assets/form-builder-DMCoZC8v.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/form-builder.js": {
+    "file": "assets/form-builder-C4FMgnS_.js",
     "name": "form-builder",
-    "src": "resources/js/modules/form-builder.js",
-    "isDynamicEntry": true
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/form-builder.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_builder-ByaGu-TO.js",
+      "_jsonata-engine-kQaF4Km6.js"
+    ]
   },
-  "resources/js/modules/form-viewer.js": {
-    "file": "assets/form-viewer-BTlz0KiL.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/form-viewer.js": {
+    "file": "assets/form-viewer-CtNQWT8M.js",
     "name": "form-viewer",
-    "src": "resources/js/modules/form-viewer.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/form-viewer.js",
     "isDynamicEntry": true,
     "imports": [
-      "resources/js/form-kit/index.js",
-      "_jsonata-DzASGsAR.js",
-      "_vendor-n9O6swcl.js",
-      "_trix-CUvHwtfI.js"
+      "_jsonata-engine-kQaF4Km6.js",
+      "_runtime-z9lt_Vie.js"
     ]
   },
-  "resources/js/modules/forms/inline.js": {
-    "file": "assets/inline-BlHP2ece.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/forms/inline.js": {
+    "file": "assets/inline-BSoAmuAi.js",
     "name": "inline",
-    "src": "resources/js/modules/forms/inline.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/forms/inline.js",
     "isDynamicEntry": true
   },
-  "resources/js/modules/forms/tabs.js": {
-    "file": "assets/tabs-Dyh1PKIy.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/forms/tabs.js": {
+    "file": "assets/tabs-C6ouIPq0.js",
     "name": "tabs",
-    "src": "resources/js/modules/forms/tabs.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/forms/tabs.js",
     "isDynamicEntry": true
   },
-  "resources/js/modules/forms/wizard.js": {
-    "file": "assets/wizard-DMwWyt9x.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/forms/wizard.js": {
+    "file": "assets/wizard-DC_P2N4v.js",
     "name": "wizard",
-    "src": "resources/js/modules/forms/wizard.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/forms/wizard.js",
     "isDynamicEntry": true
   },
-  "resources/js/modules/menu-filter.js": {
-    "file": "assets/menu-filter-lpZW_8vG.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/menu-filter.js": {
+    "file": "assets/menu-filter-Bc2-1344.js",
     "name": "menu-filter",
-    "src": "resources/js/modules/menu-filter.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/menu-filter.js",
     "isDynamicEntry": true
   },
-  "resources/js/modules/notifications.js": {
-    "file": "assets/notifications-B7SVKFfe.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/notifications.js": {
+    "file": "assets/notifications-BcZvzD2c.js",
     "name": "notifications",
-    "src": "resources/js/modules/notifications.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/notifications.js",
     "isDynamicEntry": true,
     "imports": [
-      "_events-Uoh0sXeK.js"
+      "resources/js/app.js"
     ]
   },
-  "resources/js/modules/ordered-list.js": {
-    "file": "assets/ordered-list-DIcdwHfj.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/ordered-list.js": {
+    "file": "assets/ordered-list-C7Ms5t34.js",
     "name": "ordered-list",
-    "src": "resources/js/modules/ordered-list.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/ordered-list.js",
     "isDynamicEntry": true,
     "imports": [
-      "_vendor-n9O6swcl.js",
-      "_trix-CUvHwtfI.js"
+      "_vendor-C9eSicuq.js"
     ]
   },
-  "resources/js/modules/otp-code.js": {
-    "file": "assets/otp-code-DgebH9wj.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/otp-code.js": {
+    "file": "assets/otp-code-DgKKeGpK.js",
     "name": "otp-code",
-    "src": "resources/js/modules/otp-code.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/otp-code.js",
     "isDynamicEntry": true
   },
-  "resources/js/modules/popover.js": {
-    "file": "assets/popover-DFsvMILm.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/popover.js": {
+    "file": "assets/popover-o9AeDkrK.js",
     "name": "popover",
-    "src": "resources/js/modules/popover.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/popover.js",
     "isDynamicEntry": true
   },
-  "resources/js/modules/select.js": {
-    "file": "assets/select-CgFWIf7r.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/select.js": {
+    "file": "assets/select-BMMbCgRA.js",
     "name": "select",
-    "src": "resources/js/modules/select.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/select.js",
     "isDynamicEntry": true
   },
-  "resources/js/modules/sidebar.js": {
-    "file": "assets/sidebar-CjUYjR58.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/sidebar.js": {
+    "file": "assets/sidebar-DNfsttIq.js",
     "name": "sidebar",
-    "src": "resources/js/modules/sidebar.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/sidebar.js",
     "isDynamicEntry": true
   },
-  "resources/js/modules/sign.js": {
-    "file": "assets/sign-5GDmkn7Y.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/sign.js": {
+    "file": "assets/sign-BMhDgN5P.js",
     "name": "sign",
-    "src": "resources/js/modules/sign.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/sign.js",
     "isDynamicEntry": true,
     "imports": [
-      "_vendor-n9O6swcl.js",
-      "_trix-CUvHwtfI.js"
+      "_vendor-C9eSicuq.js"
     ]
   },
-  "resources/js/modules/token-input.js": {
-    "file": "assets/token-input-CdLVsUnx.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/token-input.js": {
+    "file": "assets/token-input-BtZDhb4J.js",
     "name": "token-input",
-    "src": "resources/js/modules/token-input.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/modules/token-input.js",
     "isDynamicEntry": true
   },
-  "resources/js/onboarding.js": {
-    "file": "assets/onboarding-haFbIRo3.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/onboarding.js": {
+    "file": "assets/onboarding-BAUi44Pc.js",
     "name": "onboarding",
-    "src": "resources/js/onboarding.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/onboarding.js",
     "isDynamicEntry": true,
     "imports": [
-      "_jsonata-DzASGsAR.js",
-      "_vendor-n9O6swcl.js",
-      "_trix-CUvHwtfI.js"
+      "_leaflet-core-C1FkpUZH.js"
     ],
     "dynamicImports": [
-      "resources/js/popconfirm.js"
+      "vendor/art35rennes/laravel-daisy-kit/resources/js/popconfirm.js"
     ]
   },
-  "resources/js/popconfirm.js": {
-    "file": "assets/popconfirm-B7jHWdjF.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/popconfirm.js": {
+    "file": "assets/popconfirm-10z6YMIA.js",
     "name": "popconfirm",
-    "src": "resources/js/popconfirm.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/popconfirm.js",
     "isDynamicEntry": true
   },
-  "resources/js/popover.js": {
-    "file": "assets/popover-COHuOe3J.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/popover.js": {
+    "file": "assets/popover-pAKP1SIR.js",
     "name": "popover",
-    "src": "resources/js/popover.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/popover.js",
     "isDynamicEntry": true
   },
-  "resources/js/scroll-status.js": {
-    "file": "assets/scroll-status-49X8_hZH.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/scroll-status.js": {
+    "file": "assets/scroll-status-DaAL1GEs.js",
     "name": "scroll-status",
-    "src": "resources/js/scroll-status.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/scroll-status.js",
     "isDynamicEntry": true
   },
-  "resources/js/scrollspy.js": {
-    "file": "assets/scrollspy-JOeTI2bx.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/scrollspy.js": {
+    "file": "assets/scrollspy-C3w1ieBB.js",
     "name": "scrollspy",
-    "src": "resources/js/scrollspy.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/scrollspy.js",
     "isDynamicEntry": true
   },
-  "resources/js/stepper.js": {
-    "file": "assets/stepper--6To5QwW.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/stepper.js": {
+    "file": "assets/stepper-B7EYGX6s.js",
     "name": "stepper",
-    "src": "resources/js/stepper.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/stepper.js",
     "isDynamicEntry": true
   },
-  "resources/js/table-kit.js": {
-    "file": "assets/table-kit-oQKuHebv.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/table-kit.js": {
+    "file": "assets/table-kit-BjlMkl-H.js",
     "name": "table-kit",
-    "src": "resources/js/table-kit.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/table-kit.js",
     "isDynamicEntry": true,
     "imports": [
-      "_table-core-TD5eAT0Q.js"
+      "_vendor-C9eSicuq.js"
     ]
   },
-  "resources/js/transfer.js": {
-    "file": "assets/transfer-BWAHdDfh.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/transfer.js": {
+    "file": "assets/transfer-DFzWYOUl.js",
     "name": "transfer",
-    "src": "resources/js/transfer.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/transfer.js",
     "isDynamicEntry": true,
     "imports": [
-      "_vendor-n9O6swcl.js",
-      "_trix-CUvHwtfI.js"
+      "_vendor-C9eSicuq.js"
     ]
   },
-  "resources/js/treeview.js": {
-    "file": "assets/treeview-CLwdMUs8.js",
+  "vendor/art35rennes/laravel-daisy-kit/resources/js/treeview.js": {
+    "file": "assets/treeview-MBJC2PpV.js",
     "name": "treeview",
-    "src": "resources/js/treeview.js",
+    "src": "vendor/art35rennes/laravel-daisy-kit/resources/js/treeview.js",
     "isDynamicEntry": true
   }
 }

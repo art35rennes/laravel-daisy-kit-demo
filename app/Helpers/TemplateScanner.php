@@ -139,7 +139,8 @@ class TemplateScanner extends AbstractScanner
         $categories = [];
 
         foreach ($paths as $path) {
-            $relativePath = str_replace([$templatesPath, '\\'], ['', '/'], $path);
+            $normalizedPath = str_replace('\\', '/', $path);
+            $relativePath = str_replace($templatesPath, '', $normalizedPath);
             $relativePath = ltrim($relativePath, '/');
 
             $relativeWithoutExtension = str_replace('.blade.php', '', $relativePath);

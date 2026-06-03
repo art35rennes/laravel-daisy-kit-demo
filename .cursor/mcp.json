@@ -2,6 +2,7 @@
     "mcpServers": {
         "laravel-boost": {
             "command": "php",
+            "cwd": "C:\\Users\\PPC320\\GitHubLocal\\laravel-daisy-kit\\laravel-daisy-kit-demo",
             "args": [
                 "artisan",
                 "boost:mcp"

@@ -1,11 +1,12 @@
 {
     "agents": [
-        "cursor",
-        "codex"
+        "codex",
+        "cursor"
     ],
+    "cloud": false,
     "guidelines": true,
     "mcp": true,
-    "nightwatch_mcp": false,
+    "nightwatch": false,
     "packages": [
         "art35rennes/laravel-daisy-kit",
         "spatie/guidelines-skills"
