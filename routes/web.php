@@ -70,6 +70,7 @@ Route::prefix('templates')->name('templates.')->group(function () {
     });
 
     Route::prefix('forms')->name('forms.')->group(function () {
+        Route::view('/builder', 'daisy-dev::demo.templates.forms.form-builder')->name('builder');
         Route::view('/wizard', 'daisy-dev::demo.templates.forms.form-wizard')->name('wizard');
         Route::view('/tabs', 'daisy-dev::demo.templates.forms.form-with-tabs')->name('tabs');
         Route::view('/inline', 'daisy-dev::demo.templates.forms.form-inline')->name('inline');

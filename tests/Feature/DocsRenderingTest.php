@@ -157,6 +157,23 @@ it('renders the editable grid documentation', function () {
     $item->assertSee('data-meta=', false);
 });
 
+it('renders the form kit builder and viewer documentation', function () {
+    Config::set('daisy-kit.docs.enabled', true);
+
+    $docs = $this->get('/docs/templates/form/form-builder');
+    $docs->assertSuccessful();
+    $docs->assertSee('Form builder', false);
+    $docs->assertSee('x-daisy::templates.form.builder', false);
+    $docs->assertSee('x-daisy::forms.viewer', false);
+    $docs->assertSee('data-module="form-builder"', false);
+    $docs->assertSee('data-module="form-viewer"', false);
+
+    $template = $this->get('/templates/forms/builder');
+    $template->assertSuccessful();
+    $template->assertSee('data-module="form-builder"', false);
+    $template->assertSee('data-module="form-viewer"', false);
+});
+
 it('renders the ordered list and transfer documentation with the updated API', function () {
     Config::set('daisy-kit.docs.enabled', true);
 
