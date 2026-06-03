@@ -6,6 +6,7 @@
     $sections = [
         ['id' => 'intro', 'label' => 'Introduction'],
         ['id' => 'base', 'label' => 'Exemple de base'],
+        ['id' => 'behavior', 'label' => 'Module JS'],
         ['id' => 'api', 'label' => 'API'],
     ];
     $props = DocsHelper::getComponentProps($category, $name);
@@ -60,6 +61,22 @@ CODE;
             />
         </x-slot:code>
     </x-daisy::docs.sections.example>
+
+    <x-daisy::docs.sections.custom id="behavior" title="Hydratation et données" class="mt-10">
+        <div class="not-prose space-y-3 text-sm text-base-content/80">
+            <p>
+                Racine <code class="kbd kbd-xs">data-module="calendar-full"</code> et <code class="kbd kbd-xs">data-calendar-full="1"</code>.
+                Les options de vue (<code class="kbd kbd-xs">view</code>, plages horaires, <code class="kbd kbd-xs">firstDay</code>, etc.) sont sérialisées en dataset puis consommées par
+                <code class="kbd kbd-xs">resources/js/calendar-full/core.js</code>.
+            </p>
+            <ul class="list-inside list-disc space-y-1">
+                <li><code class="kbd kbd-xs">:events</code> — tableau PHP encodé pour bootstrap rapide.</li>
+                <li><code class="kbd kbd-xs">events-url</code> — fetch JSON avec fenêtre <code class="kbd kbd-xs">start</code>/<code class="kbd kbd-xs">end</code> (voir démo API).</li>
+                <li><code class="kbd kbd-xs">detail</code> — modale intégrée ou événements custom uniquement lorsque désactivée.</li>
+            </ul>
+            <p>Export du module : <code class="kbd kbd-xs">mount(root)</code> / <code class="kbd kbd-xs">mountAllCalendars()</code> depuis <code class="kbd kbd-xs">calendar-full/index.js</code>.</p>
+        </div>
+    </x-daisy::docs.sections.custom>
 
     <x-daisy::docs.sections.api :category="$category" :name="$name" />
 </x-daisy::docs.page>

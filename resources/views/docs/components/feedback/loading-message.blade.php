@@ -7,21 +7,22 @@
         ['id' => 'intro', 'label' => 'Introduction'],
         ['id' => 'base', 'label' => 'Exemple de base'],
         ['id' => 'variants', 'label' => 'Variantes'],
+        ['id' => 'usage', 'label' => 'Intégration'],
         ['id' => 'api', 'label' => 'API'],
     ];
     $props = DocsHelper::getComponentProps($category, $name);
 @endphp
 
-<x-daisy::docs.page 
-    title="Loading Message" 
-    category="feedback" 
+<x-daisy::docs.page
+    title="Message de chargement"
+    category="feedback"
     name="loading-message"
     type="component"
     :sections="$sections"
 >
     <x-slot:intro>
-        <x-daisy::docs.sections.intro 
-            title="Loading Message" 
+        <x-daisy::docs.sections.intro
+            title="Message de chargement"
             subtitle="Message de chargement avec indicateur visuel et texte personnalisable."
         />
     </x-slot:intro>
@@ -106,6 +107,19 @@
             />
         </x-slot:code>
     </x-daisy::docs.sections.variants>
+
+    <x-daisy::docs.sections.custom id="usage" title="Intégration" class="mt-10">
+        <div class="not-prose space-y-3 text-sm text-base-content/80">
+            <p>
+                Affichez le composant dans un slot réservé (carte, ligne de tableau, bannière) et retirez-le dès que les données sont disponibles —
+                évitez de superposer plusieurs instances concurrentes pour une même zone sans animation de transition.
+            </p>
+            <p>
+                Les valeurs <code class="kbd kbd-xs">shape</code> correspondent aux variantes daisyUI <code class="kbd kbd-xs">loading-*</code> ;
+                préférez <code class="kbd kbd-xs">size</code> cohérent avec les boutons adjacents pour un alignement vertical net.
+            </p>
+        </div>
+    </x-daisy::docs.sections.custom>
 
     <x-daisy::docs.sections.api :category="$category" :name="$name" />
 </x-daisy::docs.page>

@@ -226,9 +226,13 @@ class ComponentPropsParser
      */
     public static function parseComponent(string $category, string $name): array
     {
-        $filePath = $category === 'charts'
-            ? resource_path("views/components/charts/{$name}.blade.php")
-            : resource_path("views/components/ui/{$category}/{$name}.blade.php");
+        $base = base_path('vendor/art35rennes/laravel-daisy-kit/resources/views/components');
+
+        $filePath = match ($category) {
+            'charts' => "{$base}/charts/{$name}.blade.php",
+            'forms' => "{$base}/forms/{$name}.blade.php",
+            default => "{$base}/ui/{$category}/{$name}.blade.php",
+        };
 
         return self::parse($filePath);
     }

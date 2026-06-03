@@ -156,9 +156,12 @@ class ComponentScanner extends AbstractScanner
 
             $relativePath = $rootPath !== null ? substr($fullPath, strlen($rootPath)) : $fullPath;
             $pathParts = explode('/', $relativePath);
-            $category = $rootMeta['category'] === 'charts'
-                ? 'charts'
-                : ($pathParts[0] ?? 'misc');
+            $viewPrefix = (string) ($rootMeta['view_prefix'] ?? '');
+            $category = match ($viewPrefix) {
+                'daisy::components.charts' => 'charts',
+                'daisy::components.forms' => 'forms',
+                default => ($pathParts[0] ?? 'misc'),
+            };
             $name = basename($path, '.blade.php');
 
             $content = File::get($path);
@@ -184,9 +187,11 @@ class ComponentScanner extends AbstractScanner
 
             $tags = self::generateTags($category, $jsModule);
 
-            $viewPath = $rootMeta['view_prefix'] === 'daisy::components.charts'
-                ? "daisy::components.charts.{$name}"
-                : "daisy::components.ui.{$category}.{$name}";
+            $viewPath = match ($viewPrefix) {
+                'daisy::components.charts' => "daisy::components.charts.{$name}",
+                'daisy::components.forms' => "daisy::components.forms.{$name}",
+                default => "daisy::components.ui.{$category}.{$name}",
+            };
 
             $components[] = [
                 'name' => $name,
@@ -226,6 +231,7 @@ class ComponentScanner extends AbstractScanner
         return [
             self::packagePath('resources/views/components/ui'),
             self::packagePath('resources/views/components/charts'),
+            self::packagePath('resources/views/components/forms'),
         ];
     }
 
@@ -240,6 +246,13 @@ class ComponentScanner extends AbstractScanner
             return [
                 'category' => 'charts',
                 'view_prefix' => 'daisy::components.charts',
+            ];
+        }
+
+        if (str_ends_with($normalizedPath, '/components/forms')) {
+            return [
+                'category' => 'forms',
+                'view_prefix' => 'daisy::components.forms',
             ];
         }
 
@@ -261,7 +274,7 @@ class ComponentScanner extends AbstractScanner
             $tags[] = 'async';
         }
 
-        if ($category === 'inputs') {
+        if ($category === 'inputs' || $category === 'forms') {
             $tags[] = 'form';
         }
 

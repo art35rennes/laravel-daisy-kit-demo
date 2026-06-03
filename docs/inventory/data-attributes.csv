@@ -1,10 +1,11 @@
 attribute,components
-module,"calendar-full, chart, code-editor, scrollspy, tree-view, chat-input, chat-messages, chat-widget, table, color-picker, file-input, sign, lightbox, media-gallery, menu, sidebar-navigation, sidebar, csrf-keeper"
+module,"builder, viewer, calendar-full, code-editor, scrollspy, tree-view, chat-input, chat-messages, chat-widget, color-picker, file-input, sign, editable-grid, ordered-list, lightbox, media-gallery, menu, sidebar-navigation, sidebar, csrf-keeper"
+submit-mode,viewer
+validate-on,viewer
 calendar-full,calendar-full
 options,calendar-full
 events,calendar-full
 events-url,calendar-full
-chart,chart
 language,code-editor
 readonly,code-editor
 theme,code-editor
@@ -23,9 +24,9 @@ transfer-selectall,transfer
 transfer-count,transfer
 transfer-search,transfer
 transfer-list,transfer
-id,transfer
-label,transfer
-disabled,"transfer, tree-view, color-picker, sign"
+id,"transfer, ordered-list"
+label,"transfer, token-input"
+disabled,"transfer, tree-view, color-picker, sign, ordered-list"
 checked,transfer
 transfer-pager,transfer
 transfer-page,transfer
@@ -33,11 +34,13 @@ transfer-move,transfer
 tip,"transfer, tooltip"
 treeview,tree-view
 selection,tree-view
-persist,tree-view
+persist,"tree-view, ordered-list"
 select-label,tree-view
 control-size,tree-view
 lazy-url,tree-view
 lazy-param,tree-view
+lazy-mode,tree-view
+lazy-reload,tree-view
 search-enabled,tree-view
 search-min,tree-view
 search-debounce,tree-view
@@ -80,10 +83,14 @@ on-filter-change,notification-filters
 notification-id,notification-item
 read,notification-item
 filename,file-preview
-table-select,table
+daisy-table,table
+table-config,table
+table-filter,table
+table-filter-type,table
+table-sort,table
 indeterminate,"checkbox, toggle"
 colorpicker,color-picker
-value,color-picker
+value,"color-picker, token-input"
 dropdown,color-picker
 swatches,color-picker
 swatches-height,color-picker
@@ -97,7 +104,7 @@ preview,file-input
 multiple,file-input
 inputmask,input
 uncheckable,radio
-role,select
+role,"select, token-input"
 sign,sign
 width,sign
 height,sign
@@ -111,6 +118,14 @@ clear-label,sign
 download-label,sign
 download-format,sign
 download-filename,sign
+type,editable-grid-item
+meta,editable-grid-item
+editable-grid,editable-grid
+editable,editable-grid
+static,editable-grid
+ordered-list,ordered-list
+sortable,ordered-list
+ordered-list-input-for,ordered-list
 lightbox,lightbox
 loop,lightbox
 keyboard,lightbox
@@ -120,10 +135,15 @@ index,"lightbox, media-gallery"
 media-gallery,media-gallery
 activation,media-gallery
 auto-height,media-gallery
+target-selector,section-nav
+heading-selector,section-nav
 width-strategy,sidebar
 wide-class,sidebar
 collapsed-class,sidebar
 collapsed,sidebar
+expanded-label,sidebar
+collapsed-label,sidebar
+expand-on-hover,sidebar
 storage-key,sidebar
 step-index,stepper
 popconfirm-modal,popconfirm

@@ -135,7 +135,7 @@ CODE;
 @endphp
 
 <x-daisy::docs.page
-    title="Editable Grid"
+    title="Grille éditable"
     category="layout"
     name="editable-grid"
     type="component"
@@ -143,7 +143,7 @@ CODE;
 >
     <x-slot:intro>
         <x-daisy::docs.sections.intro
-            title="Editable Grid"
+            title="Grille éditable"
             subtitle="Grille éditable pour dashboards ou surfaces builder. Gardez `grid-layout` pour les layouts statiques classiques."
             jsModule="editable-grid"
         />

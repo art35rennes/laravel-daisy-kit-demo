@@ -41,7 +41,7 @@ class DocsHelper
      */
     public static function getTemplateNavigationItems(string $prefix = 'docs'): array
     {
-        $manifest = self::readTemplatesManifest();
+        $manifest = self::templatesManifestMerged();
         $templates = $manifest['templates'] ?? [];
         $grouped = [];
 
@@ -160,7 +160,7 @@ class DocsHelper
      */
     public static function getTemplatesByCategory(): array
     {
-        $manifest = self::readTemplatesManifest();
+        $manifest = self::templatesManifestMerged();
         $grouped = [];
         foreach ($manifest['templates'] ?? [] as $template) {
             $category = (string) ($template['category'] ?? 'misc');
@@ -259,6 +259,40 @@ class DocsHelper
                 previous: $exception
             );
         }
+    }
+
+    /**
+     * Merges package-scanned templates with demo-app documentation-only entries (routes pointing at host views).
+     *
+     * @return array<string, mixed>
+     */
+    private static function templatesManifestMerged(): array
+    {
+        $manifest = self::readTemplatesManifest();
+        $manifest['templates'] = array_merge($manifest['templates'] ?? [], self::demoDocumentationTemplates());
+
+        return $manifest;
+    }
+
+    /**
+     * Host-only templates documented under `/docs/templates/...` without a published `daisy::templates.*` counterpart.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    private static function demoDocumentationTemplates(): array
+    {
+        return [
+            [
+                'name' => 'form-kit',
+                'category' => 'form',
+                'label' => 'Form Kit (démo applicative)',
+                'description' => 'Page hôte dans cette application : viewer et builder interactifs pour valider le flux schéma JSON du package.',
+                'view' => 'daisy-dev::demo.templates.forms.form-kit',
+                'route' => 'templates.forms.form-kit',
+                'type' => 'example',
+                'tags' => ['form', 'demo'],
+            ],
+        ];
     }
 
     private static function labelize(string $slug): string

@@ -13,7 +13,8 @@
         "laravel/boost": "^2.4",
         "laravel/pint": "^1.25",
         "pestphp/pest": "^4.1",
-        "pestphp/pest-plugin-browser": "^4.1"
+        "pestphp/pest-plugin-browser": "^4.1",
+        "spatie/guidelines-skills": "@dev"
     },
     "autoload": {
         "psr-4": {

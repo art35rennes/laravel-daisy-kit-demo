@@ -32,6 +32,17 @@ alwaysApply: true
 - Avoid code duplication between preview and code slots.
 - Prefer exercising the package through its public Blade namespace and documented config, not by duplicating package source code in the docs app.
 
+## Docs maturity (component pages)
+Use this ladder when authoring or reviewing `resources/views/docs/components/**/*.blade.php`:
+- **M0 — Minimal**: `intro`, one `example`, `api` (props list). Enough for trivial atoms with no JS.
+- **M1 — Variants**: add `variants` when multiple prop combinations matter visually (sizes, modes).
+- **M2 — Guides**: add `custom` sections for behaviour, accessibility, or integration notes.
+- **M3 — Integrations**: Laravel/server contracts, `data-*` / JS module init, event tables (`CustomEvent`), and troubleshooting — required for Form Kit, heavy `data-module` surfaces, and dashboards.
+
+## Language
+- **Prose and section labels**: French by default (`sections[].label`, subtitles, alerts).
+- **Public API identifiers**: keep Blade tags, prop names, event names, and code samples in English as in the package.
+
 ## PHPDoc Requirements
 - **Mandatory** for all classes, methods, functions, and properties.
 - **Required tags**: `@param` (with type), `@return` (with type), `@throws` when applicable.
