@@ -67,11 +67,62 @@ it('renders the new charts documentation', function () {
     $sparkline->assertSuccessful();
     $sparkline->assertSee('x-daisy::charts.sparkline', false);
     $sparkline->assertSee('Pipeline', false);
+});
 
-    $legacy = $this->get('/docs/advanced/chart');
-    $legacy->assertSuccessful();
-    $legacy->assertSee('Chart (legacy)', false);
-    $legacy->assertSee('x-daisy::charts.line', false);
+it('renders the form kit and choice card documentation', function () {
+    Config::set('daisy-kit.docs.enabled', true);
+
+    $builder = $this->get('/docs/forms/builder');
+    $builder->assertSuccessful();
+    $builder->assertSee('data-form-builder-livewire', false);
+    $builder->assertSee('data-builder-editor-modal', false);
+    $builder->assertSee('x-daisy::forms.builder', false);
+    $builder->assertSee('FormFieldCatalog', false);
+    $builder->assertSee('lead-capture-docs', false);
+
+    $viewer = $this->get('/docs/forms/viewer');
+    $viewer->assertSuccessful();
+    $viewer->assertSee('data-module="form-viewer"', false);
+    $viewer->assertSee('data-form-schema', false);
+    $viewer->assertSee('Modes de soumission', false);
+    $viewer->assertSee('daisy-form:ready', false);
+    $viewer->assertSee('daisy-form:submit', false);
+
+    $choiceCards = $this->get('/docs/inputs/choice-card-group');
+    $choiceCards->assertSuccessful();
+    $choiceCards->assertSee('name="plan_docs"', false);
+    $choiceCards->assertSee('Choice card group', false);
+});
+
+it('renders the interactive form kit demo pages', function () {
+    $index = $this->get('/templates/forms/form-kit');
+    $index->assertSuccessful();
+    $index->assertSee('Builder + preview', false);
+    $index->assertSee('Viewers autonomes', false);
+
+    $builder = $this->get('/templates/forms/form-kit-builder');
+    $builder->assertSuccessful();
+    $builder->assertSee('data-module="form-viewer"', false);
+    $builder->assertSee('data-form-builder-livewire', false);
+    $builder->assertSee('data-builder-editor-modal', false);
+
+    $viewers = $this->get('/templates/forms/form-kit-viewers');
+    $viewers->assertSuccessful();
+    $viewers->assertSee('Viewer édition autonome', false);
+    $viewers->assertSee('Viewer lecture seule', false);
+    $viewers->assertSee('data-module="form-viewer"', false);
+    $viewers->assertDontSee('data-form-builder-livewire', false);
+});
+
+it('renders the form kit template documentation page', function () {
+    Config::set('daisy-kit.docs.enabled', true);
+
+    $response = $this->get('/docs/templates/form/form-kit');
+
+    $response->assertSuccessful();
+    $response->assertSee('Form Kit (démo applicative)', false);
+    $response->assertSee('resources/views/demo/templates/forms/form-kit-builder.blade.php', false);
+    $response->assertSee('resources/views/demo/templates/forms/form-kit-viewers.blade.php', false);
 });
 
 it('renders the token input and section nav documentation', function () {

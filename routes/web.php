@@ -73,6 +73,9 @@ Route::prefix('templates')->name('templates.')->group(function () {
         Route::view('/wizard', 'daisy-dev::demo.templates.forms.form-wizard')->name('wizard');
         Route::view('/tabs', 'daisy-dev::demo.templates.forms.form-with-tabs')->name('tabs');
         Route::view('/inline', 'daisy-dev::demo.templates.forms.form-inline')->name('inline');
+        Route::view('/form-kit', 'daisy-dev::demo.templates.forms.form-kit')->name('form-kit');
+        Route::view('/form-kit-builder', 'daisy-dev::demo.templates.forms.form-kit-builder')->name('form-kit-builder');
+        Route::view('/form-kit-viewers', 'daisy-dev::demo.templates.forms.form-kit-viewers')->name('form-kit-viewers');
     });
 });
 
