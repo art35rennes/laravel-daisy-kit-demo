@@ -217,7 +217,7 @@ CODE;
                     <tbody>
                         <tr>
                             <td><code class="kbd kbd-xs">daisy-form:ready</code></td>
-                            <td><code class="kbd kbd-xs">schema</code>, <code class="kbd kbd-xs">values</code> après premier <code class="kbd kbd-xs">refresh</code>.</td>
+                            <td><code class="kbd kbd-xs">runtime</code>, <code class="kbd kbd-xs">schema</code>, <code class="kbd kbd-xs">values</code> après premier <code class="kbd kbd-xs">refresh</code>.</td>
                         </tr>
                         <tr>
                             <td><code class="kbd kbd-xs">daisy-form:change</code></td>
@@ -253,18 +253,20 @@ CODE;
                     <code class="kbd kbd-xs">data-form-id</code> / <code class="kbd kbd-xs">id</code> / <code class="kbd kbd-xs">schema.id</code>. L’intégrateur peut récupérer le runtime sans maintenir un état concurrent.
                 </p>
                 <div class="mockup-code mt-3">
-<pre data-prefix=""><code>const registry = window.DaisyFormViewer;
-const runtime = registry.get('quote-viewer');
+<pre data-prefix=""><code>document.getElementById('quote-viewer').addEventListener('daisy-form:ready', async (event) => {
+    const runtime = event.detail.runtime;
+    const registry = window.DaisyFormViewer;
 
-runtime.on('daisy-form:change', (event) => {
-    console.log(event.detail.values);
-});
+    runtime.on('daisy-form:change', (changeEvent) => {
+        console.log(changeEvent.detail.values);
+    });
 
-await runtime.setValue('quantity', 3);
-await runtime.validate();
-await runtime.submit();
+    await runtime.setValue('quantity', 3);
+    await runtime.validate();
+    await runtime.submit();
 
-console.log(runtime.serialize(), registry.all());</code></pre>
+    console.log(runtime.serialize(), registry.get(runtime.id), registry.all());
+});</code></pre>
                 </div>
                 <ul class="mt-3 list-inside list-disc space-y-1 text-base-content/80">
                     <li>Valeurs : <code class="kbd kbd-xs">getValues()</code>, <code class="kbd kbd-xs">getValue()</code>, <code class="kbd kbd-xs">setValue()</code>, <code class="kbd kbd-xs">setValues()</code>, <code class="kbd kbd-xs">reset()</code>, <code class="kbd kbd-xs">serialize()</code>.</li>
