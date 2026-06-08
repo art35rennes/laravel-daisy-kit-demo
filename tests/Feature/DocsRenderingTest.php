@@ -79,12 +79,16 @@ it('renders the form kit and choice card documentation', function () {
     $builder->assertSee('x-daisy::forms.builder', false);
     $builder->assertSee('FormFieldCatalog', false);
     $builder->assertSee('lead-capture-docs', false);
+    $builder->assertSee('Cliquez sur une ligne du plan pour la sélectionner', false);
 
     $viewer = $this->get('/docs/forms/viewer');
     $viewer->assertSuccessful();
     $viewer->assertSee('data-module="form-viewer"', false);
     $viewer->assertSee('data-form-schema', false);
     $viewer->assertSee('Modes de soumission', false);
+    $viewer->assertSee('validate-on', false);
+    $viewer->assertSee('window.DaisyFormViewer', false);
+    $viewer->assertSee('runtime.setValue', false);
     $viewer->assertSee('daisy-form:ready', false);
     $viewer->assertSee('daisy-form:submit', false);
 

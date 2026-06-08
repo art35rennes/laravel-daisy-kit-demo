@@ -181,7 +181,7 @@ CODE;
                     <code class="kbd kbd-xs">[ clé => string|string[] ]</code> déjà compatible avec le viewer.
                 </li>
                 <li>Les trois blocs JSON embarqués (<code class="kbd kbd-xs">data-form-schema</code>, <code class="kbd kbd-xs">data-form-value</code>, <code class="kbd kbd-xs">data-form-errors-payload</code>) servent au module <code class="kbd kbd-xs">form-viewer</code>.</li>
-                <li><code class="kbd kbd-xs">validate-on</code> (défaut <code class="kbd kbd-xs">submit</code>) est exposé sur le formulaire ; étendez le runtime si vous branchez une validation au blur.</li>
+                <li><code class="kbd kbd-xs">validate-on</code> (défaut <code class="kbd kbd-xs">submit</code>) pilote réellement le runtime : <code class="kbd kbd-xs">input</code> valide à chaque saisie, <code class="kbd kbd-xs">change</code> valide au changement, <code class="kbd kbd-xs">submit</code> valide seulement avant finalisation.</li>
                 <li><code class="kbd kbd-xs">readonly</code> empêche l’édition côté Blade (champs rendus en lecture seule).</li>
             </ul>
         </div>
@@ -238,6 +238,31 @@ CODE;
   ?.addEventListener('daisy-form:submit', (event) => {
     console.table(event.detail.values);
   });</code></pre>
+            <div class="rounded-box border border-base-300 bg-base-100 p-4">
+                <p class="font-semibold">API runtime</p>
+                <p class="mt-2 text-base-content/80">
+                    Le module enregistre chaque viewer dans <code class="kbd kbd-xs">window.DaisyFormViewer</code> avec l’identifiant
+                    <code class="kbd kbd-xs">data-form-id</code> / <code class="kbd kbd-xs">id</code> / <code class="kbd kbd-xs">schema.id</code>. L’intégrateur peut récupérer le runtime sans maintenir un état concurrent.
+                </p>
+                <div class="mockup-code mt-3">
+<pre data-prefix=""><code>const runtime = window.DaisyFormViewer.get('quote-viewer');
+
+runtime.on('daisy-form:change', (event) => {
+    console.log(event.detail.values);
+});
+
+await runtime.setValue('quantity', 3);
+await runtime.validate();
+await runtime.submit();</code></pre>
+                </div>
+                <ul class="mt-3 list-inside list-disc space-y-1 text-base-content/80">
+                    <li>Valeurs : <code class="kbd kbd-xs">getValues()</code>, <code class="kbd kbd-xs">getValue()</code>, <code class="kbd kbd-xs">setValue()</code>, <code class="kbd kbd-xs">setValues()</code>, <code class="kbd kbd-xs">reset()</code>.</li>
+                    <li>Validation : <code class="kbd kbd-xs">validate()</code>, <code class="kbd kbd-xs">isValid()</code>, <code class="kbd kbd-xs">getErrors()</code>, <code class="kbd kbd-xs">setErrors()</code>, <code class="kbd kbd-xs">clearErrors()</code>.</li>
+                    <li>Structure : <code class="kbd kbd-xs">getSchema()</code>, <code class="kbd kbd-xs">getField()</code>, <code class="kbd kbd-xs">getInput()</code>, <code class="kbd kbd-xs">getVisibleFields()</code>.</li>
+                    <li>Navigation : <code class="kbd kbd-xs">getStep()</code>, <code class="kbd kbd-xs">setStep()</code>, <code class="kbd kbd-xs">nextStep()</code>, <code class="kbd kbd-xs">previousStep()</code>.</li>
+                    <li>Cycle de vie : <code class="kbd kbd-xs">refresh()</code>, <code class="kbd kbd-xs">submit()</code>, <code class="kbd kbd-xs">destroy()</code>, <code class="kbd kbd-xs">on()</code>, <code class="kbd kbd-xs">off()</code>.</li>
+                </ul>
+            </div>
         </div>
     </x-daisy::docs.sections.custom>
 

@@ -131,7 +131,7 @@
         <x-slot:preview>
             <div class="space-y-3">
                 <p class="text-sm text-base-content/75">
-                    Le builder charge un schéma initial via la prop <code class="kbd kbd-sm">schema</code>. Sans elle, un formulaire minimal « Untitled form » est proposé. Cliquez sur une ligne du plan pour ouvrir le modal d’édition : chaque attribut affiche un libellé métier, une aide courte et la clé JSON correspondante.
+                    Le builder charge un schéma initial via la prop <code class="kbd kbd-sm">schema</code>. Sans elle, un formulaire minimal « Untitled form » est proposé. Cliquez sur une ligne du plan pour la sélectionner ; le bouton modifier ouvre le modal d’édition. Chaque attribut affiche un libellé métier, une aide courte et la clé JSON correspondante.
                 </p>
                 <div class="max-h-[min(72vh,760px)] overflow-auto rounded-box border border-base-300 bg-base-100 p-2">
                     <x-daisy::forms.builder
