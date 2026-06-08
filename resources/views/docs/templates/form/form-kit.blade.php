@@ -88,7 +88,9 @@
 <pre data-prefix="1"><code>$schema = $formDefinition-&gt;schema;</code></pre>
 <pre data-prefix="2"><code>&lt;x-daisy::forms.builder name="schema" :schema="$schema" /&gt;</code></pre>
 <pre data-prefix="3"><code>&lt;x-daisy::forms.viewer id="quote-viewer" :schema="$schema" :value="$draft" validate-on="change" /&gt;</code></pre>
-<pre data-prefix="4"><code>window.DaisyFormViewer.get('quote-viewer').on('daisy-form:submit', handler);</code></pre>
+<pre data-prefix="4"><code>document.getElementById('quote-viewer').addEventListener('daisy-form:ready', (event) => {
+    event.detail.runtime.on('daisy-form:submit', handler);
+});</code></pre>
         </div>
     </section>
 
@@ -100,14 +102,16 @@
             manipuler les valeurs, déclencher validation ou soumission, sans remplacer le rendu Blade du package.
         </p>
         <div class="mockup-code mt-4">
-<pre data-prefix=""><code>const runtime = window.DaisyFormViewer.get('quote-viewer');
+<pre data-prefix=""><code>document.getElementById('quote-viewer').addEventListener('daisy-form:ready', async (event) => {
+    const runtime = event.detail.runtime;
 
-runtime.on('daisy-form:submit', (event) => {
-    console.log(event.detail.values);
-});
+    runtime.on('daisy-form:submit', (submitEvent) => {
+        console.log(submitEvent.detail.values);
+    });
 
-await runtime.setValue('quantity', 3);
-await runtime.validate();</code></pre>
+    await runtime.setValue('quantity', 3);
+    await runtime.validate();
+});</code></pre>
         </div>
         <ul class="mt-4 list-inside list-disc space-y-2 text-sm text-base-content/80">
             <li>Valeurs : <code class="kbd kbd-xs">getValues()</code>, <code class="kbd kbd-xs">getValue()</code>, <code class="kbd kbd-xs">setValue()</code>, <code class="kbd kbd-xs">setValues()</code>, <code class="kbd kbd-xs">reset()</code>, <code class="kbd kbd-xs">serialize()</code>.</li>
