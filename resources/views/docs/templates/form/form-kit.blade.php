@@ -110,11 +110,12 @@ await runtime.setValue('quantity', 3);
 await runtime.validate();</code></pre>
         </div>
         <ul class="mt-4 list-inside list-disc space-y-2 text-sm text-base-content/80">
-            <li>Valeurs : <code class="kbd kbd-xs">getValues()</code>, <code class="kbd kbd-xs">setValue()</code>, <code class="kbd kbd-xs">reset()</code>.</li>
-            <li>Validation : <code class="kbd kbd-xs">validate()</code>, <code class="kbd kbd-xs">isValid()</code>, <code class="kbd kbd-xs">setErrors()</code>.</li>
-            <li>Navigation : <code class="kbd kbd-xs">getStep()</code>, <code class="kbd kbd-xs">nextStep()</code>, <code class="kbd kbd-xs">previousStep()</code>.</li>
-            <li>Lecture seule : <code class="kbd kbd-xs">data-readonly="true"</code> et <code class="kbd kbd-xs">isReadonly()</code>.</li>
-            <li>Cycle de vie : <code class="kbd kbd-xs">daisy-form:ready</code>, <code class="kbd kbd-xs">daisy-form:change</code>, <code class="kbd kbd-xs">daisy-form:submit</code>, <code class="kbd kbd-xs">destroy()</code>.</li>
+            <li>Valeurs : <code class="kbd kbd-xs">getValues()</code>, <code class="kbd kbd-xs">getValue()</code>, <code class="kbd kbd-xs">setValue()</code>, <code class="kbd kbd-xs">setValues()</code>, <code class="kbd kbd-xs">reset()</code>, <code class="kbd kbd-xs">serialize()</code>.</li>
+            <li>Validation : <code class="kbd kbd-xs">validate()</code>, <code class="kbd kbd-xs">isValid()</code>, <code class="kbd kbd-xs">getErrors()</code>, <code class="kbd kbd-xs">setErrors()</code>, <code class="kbd kbd-xs">clearErrors()</code>, <code class="kbd kbd-xs">getValidateOn()</code>.</li>
+            <li>Structure : <code class="kbd kbd-xs">getSchema()</code>, <code class="kbd kbd-xs">getField()</code>, <code class="kbd kbd-xs">getInput()</code>, <code class="kbd kbd-xs">getVisibleFields()</code>.</li>
+            <li>Soumission et lecture seule : <code class="kbd kbd-xs">getSubmitMode()</code>, <code class="kbd kbd-xs">submit()</code>, <code class="kbd kbd-xs">data-readonly="true"</code>, <code class="kbd kbd-xs">isReadonly()</code>.</li>
+            <li>Navigation : <code class="kbd kbd-xs">getStep()</code>, <code class="kbd kbd-xs">setStep()</code>, <code class="kbd kbd-xs">nextStep()</code>, <code class="kbd kbd-xs">previousStep()</code>.</li>
+            <li>Cycle de vie : <code class="kbd kbd-xs">daisy-form:ready</code>, <code class="kbd kbd-xs">daisy-form:change</code>, <code class="kbd kbd-xs">daisy-form:invalid</code>, <code class="kbd kbd-xs">daisy-form:submit</code>, <code class="kbd kbd-xs">daisy-form:step-change</code>, <code class="kbd kbd-xs">daisy-form:destroy</code>.</li>
         </ul>
     </section>
 

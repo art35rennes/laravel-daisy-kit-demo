@@ -231,6 +231,14 @@ CODE;
                             <td><code class="kbd kbd-xs">daisy-form:submit</code></td>
                             <td><code class="kbd kbd-xs">values</code> sérialisés (champs visibles), <code class="kbd kbd-xs">schema</code> canonique — mode <code class="kbd kbd-xs">event</code> ou après <code class="kbd kbd-xs">fetch</code>.</td>
                         </tr>
+                        <tr>
+                            <td><code class="kbd kbd-xs">daisy-form:step-change</code></td>
+                            <td><code class="kbd kbd-xs">currentStep</code> après navigation dans un schéma multi-étapes.</td>
+                        </tr>
+                        <tr>
+                            <td><code class="kbd kbd-xs">daisy-form:destroy</code></td>
+                            <td><code class="kbd kbd-xs">schema</code>, <code class="kbd kbd-xs">values</code> lorsque le runtime est détaché.</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -245,7 +253,8 @@ CODE;
                     <code class="kbd kbd-xs">data-form-id</code> / <code class="kbd kbd-xs">id</code> / <code class="kbd kbd-xs">schema.id</code>. L’intégrateur peut récupérer le runtime sans maintenir un état concurrent.
                 </p>
                 <div class="mockup-code mt-3">
-<pre data-prefix=""><code>const runtime = window.DaisyFormViewer.get('quote-viewer');
+<pre data-prefix=""><code>const registry = window.DaisyFormViewer;
+const runtime = registry.get('quote-viewer');
 
 runtime.on('daisy-form:change', (event) => {
     console.log(event.detail.values);
@@ -253,14 +262,18 @@ runtime.on('daisy-form:change', (event) => {
 
 await runtime.setValue('quantity', 3);
 await runtime.validate();
-await runtime.submit();</code></pre>
+await runtime.submit();
+
+console.log(runtime.serialize(), registry.all());</code></pre>
                 </div>
                 <ul class="mt-3 list-inside list-disc space-y-1 text-base-content/80">
-                    <li>Valeurs : <code class="kbd kbd-xs">getValues()</code>, <code class="kbd kbd-xs">getValue()</code>, <code class="kbd kbd-xs">setValue()</code>, <code class="kbd kbd-xs">setValues()</code>, <code class="kbd kbd-xs">reset()</code>.</li>
-                    <li>Validation : <code class="kbd kbd-xs">validate()</code>, <code class="kbd kbd-xs">isValid()</code>, <code class="kbd kbd-xs">getErrors()</code>, <code class="kbd kbd-xs">setErrors()</code>, <code class="kbd kbd-xs">clearErrors()</code>.</li>
-                    <li>Structure : <code class="kbd kbd-xs">getSchema()</code>, <code class="kbd kbd-xs">getField()</code>, <code class="kbd kbd-xs">getInput()</code>, <code class="kbd kbd-xs">getVisibleFields()</code>.</li>
+                    <li>Valeurs : <code class="kbd kbd-xs">getValues()</code>, <code class="kbd kbd-xs">getValue()</code>, <code class="kbd kbd-xs">setValue()</code>, <code class="kbd kbd-xs">setValues()</code>, <code class="kbd kbd-xs">reset()</code>, <code class="kbd kbd-xs">serialize()</code>.</li>
+                    <li>Validation : <code class="kbd kbd-xs">validate()</code>, <code class="kbd kbd-xs">isValid()</code>, <code class="kbd kbd-xs">getErrors()</code>, <code class="kbd kbd-xs">setErrors()</code>, <code class="kbd kbd-xs">clearErrors()</code>, <code class="kbd kbd-xs">getValidateOn()</code>.</li>
+                    <li>Structure : <code class="kbd kbd-xs">getSchema()</code>, <code class="kbd kbd-xs">getField()</code>, <code class="kbd kbd-xs">getInput()</code>, <code class="kbd kbd-xs">getVisibleFields()</code>, <code class="kbd kbd-xs">isReadonly()</code>.</li>
+                    <li>Soumission : <code class="kbd kbd-xs">getSubmitMode()</code>, <code class="kbd kbd-xs">submit()</code>.</li>
                     <li>Navigation : <code class="kbd kbd-xs">getStep()</code>, <code class="kbd kbd-xs">setStep()</code>, <code class="kbd kbd-xs">nextStep()</code>, <code class="kbd kbd-xs">previousStep()</code>.</li>
-                    <li>Cycle de vie : <code class="kbd kbd-xs">refresh()</code>, <code class="kbd kbd-xs">submit()</code>, <code class="kbd kbd-xs">destroy()</code>, <code class="kbd kbd-xs">on()</code>, <code class="kbd kbd-xs">off()</code>.</li>
+                    <li>Cycle de vie : <code class="kbd kbd-xs">refresh()</code>, <code class="kbd kbd-xs">destroy()</code>, <code class="kbd kbd-xs">on()</code>, <code class="kbd kbd-xs">off()</code>.</li>
+                    <li>Registry global : <code class="kbd kbd-xs">window.DaisyFormViewer.get()</code>, <code class="kbd kbd-xs">getByElement()</code>, <code class="kbd kbd-xs">all()</code>, <code class="kbd kbd-xs">unregister()</code>.</li>
                 </ul>
             </div>
         </div>
