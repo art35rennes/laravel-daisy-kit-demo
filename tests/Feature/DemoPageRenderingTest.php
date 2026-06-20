@@ -9,6 +9,8 @@ it('renders the UI demo page with section anchors and FAB navigator', function (
     $response->assertSee('href="#demo-actions"', false);
     $response->assertSee('data-section-nav', false);
     $response->assertSee('data-section-nav-button', false);
+    $response->assertSee('<svg xmlns=\'http://www.w3.org/2000/svg\'', false);
+    $response->assertDontSee('&lt;svg xmlns=&#039;http://www.w3.org/2000/svg&#039;', false);
     $response->assertSee('Package inventory · Manifest cache', false);
     $response->assertSee('data-sync', false);
     $response->assertSee('data-indeterminate="true"', false);
@@ -32,6 +34,22 @@ it('renders the UI demo page with section anchors and FAB navigator', function (
     $response->assertSee('data-table-filter="team"', false);
     $response->assertSee('data-table-filter="active_only"', false);
     $response->assertSee('"stateKey":"demo-users-table"', false);
+    $response->assertSee('"provider":"cartodb.positron"', false);
+    $response->assertSee('SIG - fonds custom et couches', false);
+    $response->assertSee('SIG - tournée réseau d’eau potable', false);
+    $response->assertSee('Borne incendie', false);
+    $response->assertSee('Conduite AEP', false);
+    $response->assertSee('Zone de travaux', false);
+    $response->assertSee('name="demo_geometry"', false);
+    $response->assertSee('"layerControl":true', false);
+    $response->assertSee('"measure":{"display":"metric","showTooltip":true,"maxLabels":8}', false);
+    $response->assertSee('demo-leaflet-draw-controls', false);
+    $response->assertSee('objectTypes', false);
+    $response->assertSee('hydrant', false);
+    $response->assertSee('water_main', false);
+    $response->assertSee('work_zone', false);
+    $response->assertSee('markerSvg', false);
+    $response->assertSee('groupedToolbar', false);
 });
 
 it('returns table JSON from the demo table endpoint', function () {

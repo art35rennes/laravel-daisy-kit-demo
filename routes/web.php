@@ -29,6 +29,10 @@ Route::post('/demo/api/chat/typing', [DemoApiController::class, 'chatTyping'])->
 Route::get('/demo/api/chat/messages/{conversationId}', [DemoApiController::class, 'chatMessages'])->name('demo.chat.messages');
 
 Route::prefix('templates')->name('templates.')->group(function () {
+    Route::prefix('advanced')->name('advanced.')->group(function () {
+        Route::view('/blueprint', 'daisy-dev::demo.templates.advanced.blueprint')->name('blueprint');
+    });
+
     Route::prefix('auth')->name('auth.')->group(function () {
         Route::view('/login-simple', 'daisy::templates.auth.login-simple')->name('login-simple');
         Route::view('/login-split', 'daisy::templates.auth.login-split')->name('login-split');
@@ -90,6 +94,10 @@ Route::prefix($docsPrefix)->group(function () {
     Route::get('/templates', function () {
         return view('daisy-dev::docs.templates.index');
     })->name('daisy.docs.templates');
+
+    Route::get('/components', function () {
+        return view('daisy-dev::docs.components.index');
+    })->name('daisy.docs.components');
 
     Route::get('/templates/{category}/{template}', function (string $category, string $template) {
         $view = "daisy-dev::docs.templates.$category.$template";

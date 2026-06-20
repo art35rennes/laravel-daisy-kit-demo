@@ -75,9 +75,12 @@
                                 @php
                                     $routeName = $template['route'] ?? null;
                                     $hasRoute = $routeName && \Illuminate\Support\Facades\Route::has($routeName);
+                                    $previewUrl = $hasRoute
+                                        ? route($routeName)
+                                        : (($categoryId === 'advanced' && ($template['name'] ?? null) === 'blueprint') ? url('/templates/advanced/blueprint') : null);
                                 @endphp
-                                @if($hasRoute)
-                                    <a href="{{ route($routeName) }}" class="btn btn-primary btn-sm">Voir</a>
+                                @if($previewUrl)
+                                    <a href="{{ $previewUrl }}" class="btn btn-primary btn-sm">Voir</a>
                                 @endif
                             </div>
                         </div>
@@ -87,5 +90,4 @@
         </section>
     @endforeach
 </x-daisy::layout.docs>
-
 

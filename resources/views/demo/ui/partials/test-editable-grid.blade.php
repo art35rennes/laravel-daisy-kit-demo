@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <x-daisy::ui.layout.editable-grid :columns="12" :cell-height="72" :gap="12" :float="true" :min-row="4" layout="compact">
+        <x-daisy::ui.layout.editable-grid :columns="12" :cell-height="96" :gap="12" :float="true" :min-row="4" layout="compact">
             <x-daisy::ui.layout.editable-grid-item id="eg-revenue" type="stat" :x="0" :y="0" :w="4" :h="2">
                 <x-daisy::ui.layout.card class="h-full border border-primary/10 bg-gradient-to-br from-primary/6 via-base-100 to-base-100 shadow-sm">
                     <div class="card-body gap-3">
