@@ -223,7 +223,7 @@
         </div>
 
         <!-- Carte SIG avec dessin et mesures -->
-        <div class="space-y-3">
+        <div class="space-y-3" data-leaflet-selection-demo>
             <div class="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                     <h3 class="text-lg font-medium">SIG - tournée réseau d’eau potable</h3>
@@ -272,12 +272,35 @@
                     :layerControl="['mode' => 'multiple', 'lockedOverlays' => ['readonly-area']]"
                     :controls="['persist' => true, 'storageKey' => 'demo-leaflet-draw-controls']"
                     :objectTypes="$sigObjectTypes"
-                    :draw="['toolbar' => true, 'groupedToolbar' => true, 'point' => true, 'line' => true, 'polygon' => true, 'rectangle' => true, 'select' => true, 'delete' => true, 'undoRedo' => true]"
+                    :draw="['toolbar' => true, 'groupedToolbar' => true, 'point' => true, 'line' => true, 'polygon' => true, 'rectangle' => true, 'select' => true, 'delete' => true, 'undoRedo' => true, 'selectionDetails' => ['label' => 'Détail de la sélection']]"
                     :measure="['display' => 'metric', 'showTooltip' => true, 'maxLabels' => 8]"
                     name="demo_geometry"
                     :value="$initialDrawing"
                 />
             </div>
+            <x-daisy::ui.overlay.modal
+                id="demo-leaflet-selection-modal"
+                title="Détail de la sélection SIG"
+                size="5xl"
+                :teleport="false"
+                boxClass="space-y-3"
+            >
+                <p class="text-sm text-base-content/70" data-leaflet-selection-summary>
+                    Sélectionnez un ou plusieurs objets, puis cliquez sur Détail de la sélection.
+                </p>
+                <x-daisy::ui.advanced.code-editor
+                    id="demo-leaflet-selection-json"
+                    language="json"
+                    theme="light"
+                    :readonly="true"
+                    :showToolbar="true"
+                    :showFormat="true"
+                    height="360px"
+                    value='{
+  "features": []
+}'
+                />
+            </x-daisy::ui.overlay.modal>
         </div>
 
         <!-- Carte avec clustering -->
