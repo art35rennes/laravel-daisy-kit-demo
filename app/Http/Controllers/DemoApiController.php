@@ -128,7 +128,8 @@ class DemoApiController extends Controller
                 }
 
                 if ($day === 7) {
-                    $events[] = ['id' => "long-$iso", 'title' => 'Long Event', 'start' => $iso, 'end' => $cur->modify('+7 day')->format('Y-m-d')];
+                    $longEventEnd = (clone $cur)->modify('+7 day')->format('Y-m-d');
+                    $events[] = ['id' => "long-$iso", 'title' => 'Long Event', 'start' => $iso, 'end' => $longEventEnd];
                 }
             }
 
