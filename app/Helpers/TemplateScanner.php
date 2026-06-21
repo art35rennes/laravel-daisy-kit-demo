@@ -248,9 +248,24 @@ class TemplateScanner extends AbstractScanner
             return self::routeExists($annotationRoute) ? $annotationRoute : null;
         }
 
-        $guessedRoute = "templates.{$category}.{$name}";
+        $routeCategories = array_unique([
+            $category,
+            match ($category) {
+                'form' => 'forms',
+                'layout' => 'layouts',
+                default => $category,
+            },
+        ]);
 
-        return self::routeExists($guessedRoute) ? $guessedRoute : null;
+        foreach ($routeCategories as $routeCategory) {
+            $guessedRoute = "templates.{$routeCategory}.{$name}";
+
+            if (self::routeExists($guessedRoute)) {
+                return $guessedRoute;
+            }
+        }
+
+        return null;
     }
 
     private static function routeExists(string $routeName): bool

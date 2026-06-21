@@ -57,16 +57,16 @@ Route::prefix('templates')->name('templates.')->group(function () {
     });
 
     Route::prefix('layouts')->name('layouts.')->group(function () {
-        Route::view('/navbar', 'daisy-dev::demo.templates.test-navbar')->name('navbar');
+        Route::view('/navbar', 'daisy::templates.layout.navbar')->name('navbar');
         Route::view('/sidebar', 'daisy-dev::demo.templates.test-sidebar')->name('sidebar');
         Route::view('/navbar-sidebar', 'daisy-dev::demo.templates.test-navbar-sidebar')->name('navbar-sidebar');
         Route::view('/grid-layout', 'daisy-dev::demo.templates.test-grid-layout')->name('grid-layout');
         Route::view('/editable-grid', 'daisy::templates.layout.editable-grid')->name('editable-grid');
         Route::view('/crud-layout', 'daisy-dev::demo.templates.test-crud-layout')->name('crud-layout');
-        Route::view('/footer', 'daisy-dev::demo.templates.test-footer')->name('footer');
-        Route::view('/grid', 'daisy-dev::demo.templates.test-grid')->name('grid');
-        Route::view('/navbar-footer', 'daisy-dev::demo.templates.test-navbar-footer')->name('navbar-footer');
-        Route::view('/navbar-grid-footer', 'daisy-dev::demo.templates.test-navbar-grid-footer')->name('navbar-grid-footer');
+        Route::view('/footer', 'daisy::templates.layout.footer')->name('footer');
+        Route::view('/grid', 'daisy::templates.layout.grid')->name('grid');
+        Route::view('/navbar-footer', 'daisy::templates.layout.navbar-footer')->name('navbar-footer');
+        Route::view('/navbar-grid-footer', 'daisy::templates.layout.navbar-grid-footer')->name('navbar-grid-footer');
     });
 
     Route::prefix('documentation')->name('documentation.')->group(function () {
