@@ -17,8 +17,9 @@
         <h1>Layout avec navbar</h1>
         <p class="text-base-content/70">Barre de navigation fixe ou non, avec slots start/center/end et contenu principal conteneur.</p>
         <div class="mt-4 text-sm space-y-1">
-            <p><strong>Vue :</strong> <code>{{ "view('daisy::templates.layout.navbar')" }}</code></p>
+            <p><strong>Vue package :</strong> <code>{{ "view('daisy::templates.layout.navbar')" }}</code></p>
             <p><strong>Alias composant :</strong> <code>&lt;x-daisy::templates.layout.navbar /&gt;</code></p>
+            <p><strong>Preview :</strong> <code>templates.layouts.navbar</code></p>
         </div>
     </section>
 
@@ -65,4 +66,3 @@
         </div>
     </section>
 </x-daisy::layout.docs>
-

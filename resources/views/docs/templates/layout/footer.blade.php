@@ -17,8 +17,9 @@
         <h1>Layout avec footer</h1>
         <p class="text-base-content/70">Page avec contenu libre et footer riche (colonnes, newsletter, réseaux sociaux).</p>
         <div class="mt-4 text-sm space-y-1">
-            <p><strong>Vue :</strong> <code>{{ "view('daisy::templates.layout.footer')" }}</code></p>
+            <p><strong>Vue package :</strong> <code>{{ "view('daisy::templates.layout.footer')" }}</code></p>
             <p><strong>Alias composant :</strong> <code>&lt;x-daisy::templates.layout.footer /&gt;</code></p>
+            <p><strong>Preview :</strong> <code>templates.layouts.footer</code></p>
         </div>
     </section>
 
@@ -75,4 +76,3 @@
         </div>
     </section>
 </x-daisy::layout.docs>
-

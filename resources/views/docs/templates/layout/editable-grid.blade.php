@@ -20,6 +20,7 @@
         <div class="mt-4 text-sm space-y-1">
             <p><strong>Vue :</strong> <code>{{ "view('daisy::templates.layout.editable-grid')" }}</code></p>
             <p><strong>Alias composant :</strong> <code>&lt;x-daisy::templates.layout.editable-grid /&gt;</code></p>
+            <p><strong>Preview :</strong> <code>templates.layouts.editable-grid</code></p>
         </div>
     </section>
 

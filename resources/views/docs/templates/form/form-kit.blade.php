@@ -18,6 +18,7 @@
         <h1>Form Kit (démo applicative)</h1>
         <p class="text-base-content/70">
             Ce flux n’est pas un template publié sous <code>daisy::templates.*</code> : il vit dans la démo sous
+            <code>daisy-dev::demo.templates.forms.form-kit</code>,
             <code>resources/views/demo/templates/forms/form-kit-builder.blade.php</code> et
             <code>resources/views/demo/templates/forms/form-kit-viewers.blade.php</code>, qui composent les composants package
             <code>x-daisy::forms.viewer</code> et <code>x-daisy::forms.builder</code>.

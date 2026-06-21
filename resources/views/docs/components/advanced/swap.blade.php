@@ -28,19 +28,17 @@
 
     <x-daisy::docs.sections.example name="swap">
         <x-slot:preview>
-            <label class="swap">
-                <input type="checkbox" />
-                <div class="swap-on text-2xl">🌙</div>
-                <div class="swap-off text-2xl">☀️</div>
-            </label>
+            <x-daisy::ui.advanced.swap class="text-2xl">
+                <x-slot:on>🌙</x-slot:on>
+                <x-slot:off>☀️</x-slot:off>
+            </x-daisy::ui.advanced.swap>
         </x-slot:preview>
         <x-slot:code>
             @php
-                $baseCode = '<label class="swap">
-    <input type="checkbox" />
-    <div class="swap-on text-2xl">🌙</div>
-    <div class="swap-off text-2xl">☀️</div>
-</label>';
+                $baseCode = '<x-daisy::ui.advanced.swap class="text-2xl">
+    <x-slot:on>🌙</x-slot:on>
+    <x-slot:off>☀️</x-slot:off>
+</x-daisy::ui.advanced.swap>';
             @endphp
             <x-daisy::ui.advanced.code-editor 
                 language="blade" 
@@ -61,52 +59,50 @@
             <div class="space-y-4">
                 <div>
                     <p class="text-sm font-semibold mb-2">Rotation</p>
-                    <label class="swap swap-rotate">
-                        <input type="checkbox" />
-                        <div class="swap-on text-2xl">✓</div>
-                        <div class="swap-off text-2xl">✗</div>
-                    </label>
+                    <x-daisy::ui.advanced.swap :rotate="true" class="text-2xl">
+                        <x-slot:on>✓</x-slot:on>
+                        <x-slot:off>✗</x-slot:off>
+                    </x-daisy::ui.advanced.swap>
                 </div>
                 <div>
                     <p class="text-sm font-semibold mb-2">Flip</p>
-                    <label class="swap swap-flip">
-                        <input type="checkbox" />
-                        <div class="swap-on text-2xl">ON</div>
-                        <div class="swap-off text-2xl">OFF</div>
-                    </label>
+                    <x-daisy::ui.advanced.swap :flip="true" class="text-2xl">
+                        <x-slot:on>ON</x-slot:on>
+                        <x-slot:off>OFF</x-slot:off>
+                    </x-daisy::ui.advanced.swap>
                 </div>
                 <div>
                     <p class="text-sm font-semibold mb-2">Avec images</p>
-                    <label class="swap">
-                        <input type="checkbox" />
-                        <img src="https://picsum.photos/100/100?random=1" class="swap-on w-20 h-20 object-cover rounded-box" />
-                        <img src="https://picsum.photos/100/100?random=2" class="swap-off w-20 h-20 object-cover rounded-box" />
-                    </label>
+                    <x-daisy::ui.advanced.swap>
+                        <x-slot:on>
+                            <img src="https://picsum.photos/100/100?random=1" class="h-20 w-20 rounded-box object-cover" alt="Image active" />
+                        </x-slot:on>
+                        <x-slot:off>
+                            <img src="https://picsum.photos/100/100?random=2" class="h-20 w-20 rounded-box object-cover" alt="Image inactive" />
+                        </x-slot:off>
+                    </x-daisy::ui.advanced.swap>
                 </div>
             </div>
         </x-slot:preview>
         <x-slot:code>
             @php
                 $variantsCode = '{{-- Rotation --}}
-<label class="swap swap-rotate">
-    <input type="checkbox" />
-    <div class="swap-on">✓</div>
-    <div class="swap-off">✗</div>
-</label>
+<x-daisy::ui.advanced.swap :rotate="true">
+    <x-slot:on>✓</x-slot:on>
+    <x-slot:off>✗</x-slot:off>
+</x-daisy::ui.advanced.swap>
 
 {{-- Flip --}}
-<label class="swap swap-flip">
-    <input type="checkbox" />
-    <div class="swap-on">ON</div>
-    <div class="swap-off">OFF</div>
-</label>
+<x-daisy::ui.advanced.swap :flip="true">
+    <x-slot:on>ON</x-slot:on>
+    <x-slot:off>OFF</x-slot:off>
+</x-daisy::ui.advanced.swap>
 
 {{-- Avec images --}}
-<label class="swap">
-    <input type="checkbox" />
-    <img src="..." class="swap-on w-20 h-20 object-cover rounded-box" />
-    <img src="..." class="swap-off w-20 h-20 object-cover rounded-box" />
-</label>';
+<x-daisy::ui.advanced.swap>
+    <x-slot:on><img src="active.jpg" alt="Image active" /></x-slot:on>
+    <x-slot:off><img src="inactive.jpg" alt="Image inactive" /></x-slot:off>
+</x-daisy::ui.advanced.swap>';
             @endphp
             <x-daisy::ui.advanced.code-editor 
                 language="blade" 

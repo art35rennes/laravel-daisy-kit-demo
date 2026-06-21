@@ -26,9 +26,23 @@
         ],
         [
             'id' => 'terrain',
-            'label' => 'Fond terrain',
+            'label' => 'Plan couleur',
             'type' => 'xyz',
             'url' => 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+            'options' => ['subdomains' => 'abcd', 'maxZoom' => 20],
+        ],
+        [
+            'id' => 'nolabels',
+            'label' => 'Plan sans libellés',
+            'type' => 'xyz',
+            'url' => 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png',
+            'options' => ['subdomains' => 'abcd', 'maxZoom' => 20],
+        ],
+        [
+            'id' => 'dark',
+            'label' => 'Contraste sombre',
+            'type' => 'xyz',
+            'url' => 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
             'options' => ['subdomains' => 'abcd', 'maxZoom' => 20],
         ],
     ];
@@ -352,6 +366,7 @@
                                 'type' => 'geojson',
                                 'data' => $gisReadonlyArea,
                                 'visible' => true,
+                                'locked' => true,
                                 'style' => ['color' => '#2563eb', 'weight' => 2, 'fillOpacity' => 0.08],
                             ],
                             [
@@ -362,10 +377,10 @@
                                 'editable' => true,
                             ],
                         ]"
-                        :layerControl="true"
+                        :layerControl="['mode' => 'multiple', 'lockedOverlays' => ['project-area']]"
                         :controls="['persist' => true, 'storageKey' => 'docs-leaflet-gis-controls']"
                         :objectTypes="$gisObjectTypes"
-                        :draw="['toolbar' => true, 'groupedToolbar' => true, 'point' => true, 'line' => true, 'polygon' => true, 'rectangle' => true, 'select' => true, 'delete' => true, 'undoRedo' => true]"
+                        :draw="['toolbar' => true, 'groupedToolbar' => true, 'actionBadge' => ['label' => 'Outil actif'], 'point' => true, 'line' => true, 'polygon' => true, 'rectangle' => true, 'select' => true, 'delete' => true, 'undoRedo' => true]"
                         :measure="['display' => 'metric', 'showTooltip' => true, 'maxLabels' => 8]"
                         name="geometry"
                         :value="$gisInitialValue"
@@ -380,16 +395,17 @@
                 <div class="overflow-x-auto rounded-box border border-base-300">
                     <table class="table table-sm">
                         <tbody>
-                            <tr><th>Fonds</th><td><code>basemaps</code> XYZ/WMS avec un fond actif.</td></tr>
-                            <tr><th>Couches</th><td><code>overlays</code> GeoJSON/XYZ/WMS, visibles ou masquées.</td></tr>
+                            <tr><th>Fonds</th><td><code>basemaps</code> XYZ/WMS avec un fond actif, affichés dans le menu dédié <code>Couches</code>.</td></tr>
+                            <tr><th>Couches</th><td><code>overlays</code> GeoJSON/XYZ/WMS; <code>layerControl.mode</code> vaut <code>multiple</code> pour empiler ou <code>single</code> pour une seule couche active. Le libellé utilisateur <strong>Couche active</strong> correspond au mode single. <code>locked</code> ou <code>control: false</code> force l'affichage sans toggle utilisateur.</td></tr>
                             <tr><th>Edition</th><td>Seules les couches <code>editable: true</code> et <code>value</code> entrent dans Terra Draw.</td></tr>
                             <tr><th>Objets</th><td><code>objectTypes</code> ajoute des outils métier point, ligne ou polygone avec propriétés GeoJSON prérenseignées.</td></tr>
-                            <tr><th>Icônes</th><td><code>icon</code>, <code>iconSvg</code> ou <code>iconHtml</code> pilotent la toolbar; <code>markerUrl</code> ou <code>markerSvg</code> pilotent les marqueurs ponctuels sur la carte.</td></tr>
+                            <tr><th>Icônes</th><td><code>icon</code>, <code>iconSvg</code> ou <code>iconHtml</code> pilotent la toolbar; <code>markerUrl</code> ou <code>markerSvg</code> pilotent les marqueurs ponctuels sur la carte. Les SVG/HTML custom sont nettoyés côté runtime, mais doivent rester du contenu maîtrisé par l'intégrateur.</td></tr>
                             <tr><th>Styles</th><td><code>draw.styles</code> définit les styles par défaut; <code>objectTypes[].style</code> surcharge par métier avec <code>color</code>, <code>width</code>, <code>dashArray</code>, <code>strokeColor</code>, <code>fillColor</code> ou <code>fillOpacity</code>.</td></tr>
-                            <tr><th>Toolbar</th><td><code>draw.groupedToolbar</code> regroupe les outils en sous-menus; un second clic sur l'outil actif revient à la sélection.</td></tr>
+                            <tr><th>Toolbar</th><td><code>draw.groupedToolbar</code> regroupe les outils en sous-menus; <code>draw.actionBadge</code> affiche l'outil actif en bas de carte avec retour à la sélection.</td></tr>
                             <tr><th>Mesure</th><td>Lignes: longueur; polygones: surface + périmètre; points: coordonnées.</td></tr>
                             <tr><th>Densité</th><td><code>measure.maxLabels</code> limite les libellés visibles sans supprimer les mesures dans les événements.</td></tr>
                             <tr><th>Réglages</th><td><code>controls</code> expose un menu utilisateur, avec persistence optionnelle via <code>storageKey</code>.</td></tr>
+                            <tr><th>API JS</th><td><code>root.daisyLeaflet</code> expose <code>exportGeoJSON()</code>, <code>setMode()</code>, <code>clearSelection()</code>, <code>deleteSelected()</code>, <code>undo()</code>, <code>redo()</code> et <code>destroy()</code>.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -408,14 +424,36 @@
             'label' => 'Plan clair',
             'type' => 'xyz',
             'url' => 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+            'options' => ['subdomains' => 'abcd', 'maxZoom' => 20],
             'active' => true,
+        ],
+        [
+            'id' => 'terrain',
+            'label' => 'Plan couleur',
+            'type' => 'xyz',
+            'url' => 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+            'options' => ['subdomains' => 'abcd', 'maxZoom' => 20],
+        ],
+        [
+            'id' => 'nolabels',
+            'label' => 'Plan sans libellés',
+            'type' => 'xyz',
+            'url' => 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager_nolabels/{z}/{x}/{y}{r}.png',
+            'options' => ['subdomains' => 'abcd', 'maxZoom' => 20],
+        ],
+        [
+            'id' => 'dark',
+            'label' => 'Contraste sombre',
+            'type' => 'xyz',
+            'url' => 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+            'options' => ['subdomains' => 'abcd', 'maxZoom' => 20],
         ],
     ]"
     :overlays="[
-        ['id' => 'sector', 'label' => 'Secteur AEP', 'type' => 'geojson', 'data' => $geojson, 'visible' => true],
+        ['id' => 'sector', 'label' => 'Secteur AEP', 'type' => 'geojson', 'data' => $geojson, 'visible' => true, 'locked' => true],
         ['id' => 'water-main', 'label' => 'Conduite AEP éditable', 'type' => 'geojson', 'data' => $trace, 'editable' => true],
     ]"
-    :layerControl="true"
+    :layerControl="['mode' => 'single', 'lockedOverlays' => ['sector']]"
     :controls="['persist' => true, 'storageKey' => 'project-map-controls']"
     :objectTypes="[
         ['id' => 'hydrant', 'label' => 'Borne incendie', 'geometry' => 'point', 'iconSvg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 21v-7a5 5 0 0 1 10 0v7"/><path d="M5 21h14"/><circle cx="12" cy="14" r="2"/></svg>', 'markerSvg' => '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path fill="#dc2626" d="M16 2c5.5 0 10 4.5 10 10 0 7.5-10 18-10 18S6 19.5 6 12C6 6.5 10.5 2 16 2Z"/><path fill="#fff" d="M13 8h6v4h3v5h-3v4h-6v-4h-3v-5h3z"/></svg>', 'markerWidth' => 30, 'markerHeight' => 30, 'properties' => ['category' => 'water_asset', 'assetType' => 'hydrant']],
@@ -425,6 +463,7 @@
     :draw="[
         'toolbar' => true,
         'groupedToolbar' => true,
+        'actionBadge' => ['label' => 'Outil actif'],
         'styles' => [
             'line' => ['color' => '#2563eb', 'width' => 4, 'dashArray' => [8, 4]],
             'polygon' => ['strokeColor' => '#b45309', 'fillColor' => '#f59e0b', 'fillOpacity' => 0.18],

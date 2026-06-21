@@ -6,6 +6,7 @@
     $name = 'datatable';
     $sections = [
         ['id' => 'intro', 'label' => 'Migration'],
+        ['id' => 'base', 'label' => 'Exemple de migration'],
         ['id' => 'replacement', 'label' => 'Remplacement'],
         ['id' => 'api', 'label' => 'API'],
     ];
@@ -41,6 +42,35 @@ CODE;
             subtitle="L’alias historique a été retiré. Utilisez désormais le composant table."
         />
     </x-slot:intro>
+
+    <x-daisy::docs.sections.example name="datatable-migration">
+        <x-slot:preview>
+            <x-daisy::ui.data-display.table
+                mode="client"
+                :columns="[
+                    ['key' => 'name', 'label' => 'Nom'],
+                    ['key' => 'role', 'label' => 'Rôle'],
+                ]"
+                :rows="[
+                    ['name' => 'Cy Ganderton', 'role' => 'Maintainer'],
+                    ['name' => 'Hart Hagerty', 'role' => 'Reviewer'],
+                ]"
+            />
+        </x-slot:preview>
+        <x-slot:code>
+            <x-daisy::ui.advanced.code-editor
+                language="blade"
+                :value="$migrationCode"
+                :readonly="true"
+                :showToolbar="false"
+                :showFoldAll="false"
+                :showUnfoldAll="false"
+                :showFormat="false"
+                :showCopy="true"
+                height="260px"
+            />
+        </x-slot:code>
+    </x-daisy::docs.sections.example>
 
     <x-daisy::docs.sections.custom id="replacement" title="Remplacement">
         <div class="not-prose space-y-4">

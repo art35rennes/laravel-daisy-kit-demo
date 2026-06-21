@@ -7,6 +7,7 @@
         ['id' => 'intro', 'label' => 'Introduction'],
         ['id' => 'base', 'label' => 'Exemple de base'],
         ['id' => 'variants', 'label' => 'Variantes'],
+        ['id' => 'behavior', 'label' => 'Module JS'],
         ['id' => 'api', 'label' => 'API'],
     ];
     $props = DocsHelper::getComponentProps($category, $name);
@@ -98,6 +99,14 @@
             />
         </x-slot:code>
     </x-daisy::docs.sections.variants>
+
+    <x-daisy::docs.sections.custom id="behavior" title="Module JS" class="mt-10">
+        <div class="rounded-box border border-base-300 bg-base-100 p-4">
+            <p class="text-sm text-base-content/70">
+                Les alertes dismissibles sont hydratées par le module <code class="kbd kbd-xs">alert-dismiss</code>. Laisser le composant rendre ses attributs <code class="kbd kbd-xs">data-*</code> évite de dupliquer la logique de fermeture côté application hôte.
+            </p>
+        </div>
+    </x-daisy::docs.sections.custom>
 
     <x-daisy::docs.sections.api :category="$category" :name="$name" />
 </x-daisy::docs.page>

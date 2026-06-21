@@ -7,6 +7,7 @@
         ['id' => 'intro', 'label' => 'Introduction'],
         ['id' => 'base', 'label' => 'Exemple de base'],
         ['id' => 'variants', 'label' => 'Variantes'],
+        ['id' => 'behavior', 'label' => 'Module JS'],
         ['id' => 'api', 'label' => 'API'],
     ];
     $props = DocsHelper::getComponentProps($category, $name);
@@ -134,6 +135,14 @@ CODE;
             />
         </x-slot:code>
     </x-daisy::docs.sections.variants>
+
+    <x-daisy::docs.sections.custom id="behavior" title="Module JS" class="mt-10">
+        <div class="rounded-box border border-base-300 bg-base-100 p-4">
+            <p class="text-sm text-base-content/70">
+                La recherche de menu est pilotée par le module <code class="kbd kbd-xs">menu-filter</code>. Conserver le rendu du composant permet de garder les attributs <code class="kbd kbd-xs">data-module</code> et le filtrage synchronisés avec les assets du package.
+            </p>
+        </div>
+    </x-daisy::docs.sections.custom>
 
     <x-daisy::docs.sections.api :category="$category" :name="$name" />
 </x-daisy::docs.page>

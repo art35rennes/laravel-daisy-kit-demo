@@ -5,6 +5,7 @@
     $name = 'blueprint';
     $sections = [
         ['id' => 'intro', 'label' => 'Introduction'],
+        ['id' => 'base', 'label' => 'Composant'],
         ['id' => 'template', 'label' => 'Template'],
         ['id' => 'contract', 'label' => 'Contrat JSON'],
         ['id' => 'api', 'label' => 'API'],
@@ -27,6 +28,16 @@ CODE;
     :schema-value="$schemaValue"
     :integration-node-types="$integrationNodeTypes"
     :integration-value="$integrationValue"
+/>
+CODE;
+
+    $componentCode = <<<'CODE'
+<x-daisy::ui.advanced.blueprint
+    name="workflow"
+    mode="workflow"
+    height="520px"
+    :node-types="$nodeTypes"
+    :value="$workflow"
 />
 CODE;
 
@@ -88,6 +99,54 @@ CODE;
             jsModule="blueprint"
         />
     </x-slot:intro>
+
+    <x-daisy::docs.sections.example name="blueprint">
+        <x-slot:preview>
+            <x-daisy::ui.advanced.blueprint
+                name="docs_blueprint_component"
+                mode="workflow"
+                height="420px"
+                :node-types="[
+                    [
+                        'type' => 'source',
+                        'label' => 'Source',
+                        'category' => 'Demo',
+                        'outputs' => [['key' => 'rows', 'label' => 'Rows', 'kind' => 'dataset', 'multiple' => true]],
+                    ],
+                    [
+                        'type' => 'sink',
+                        'label' => 'Destination',
+                        'category' => 'Demo',
+                        'inputs' => [['key' => 'in', 'label' => 'In', 'kind' => 'dataset']],
+                    ],
+                ]"
+                :value="[
+                    'version' => 1,
+                    'nodes' => [
+                        ['id' => 'source-1', 'type' => 'source', 'label' => 'Source', 'position' => ['x' => 80, 'y' => 100], 'data' => []],
+                        ['id' => 'sink-1', 'type' => 'sink', 'label' => 'Destination', 'position' => ['x' => 420, 'y' => 120], 'data' => []],
+                    ],
+                    'edges' => [
+                        ['id' => 'edge-1', 'source' => 'source-1', 'sourcePort' => 'rows', 'target' => 'sink-1', 'targetPort' => 'in', 'data' => []],
+                    ],
+                    'viewport' => ['x' => 0, 'y' => 0, 'zoom' => 1],
+                ]"
+            />
+        </x-slot:preview>
+        <x-slot:code>
+            <x-daisy::ui.advanced.code-editor
+                language="blade"
+                :value="$componentCode"
+                :readonly="true"
+                :showToolbar="false"
+                :showFoldAll="false"
+                :showUnfoldAll="false"
+                :showFormat="false"
+                :showCopy="true"
+                height="220px"
+            />
+        </x-slot:code>
+    </x-daisy::docs.sections.example>
 
     <x-daisy::docs.sections.custom id="template" title="Template d’exemples">
         <div class="not-prose space-y-6">

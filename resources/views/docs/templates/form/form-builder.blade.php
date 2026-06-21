@@ -94,6 +94,12 @@
                 <p class="mt-1 text-sm text-base-content/70">Persiste le schema et exploite les submissions normalisees.</p>
             </div>
         </div>
+
+        <div class="mt-4 flex flex-wrap gap-3">
+            <a href="{{ route('templates.forms.builder') }}" class="btn btn-primary btn-sm">Ouvrir la preview</a>
+            <a href="{{ url('/'.trim(config('daisy-kit.docs.prefix', 'docs'), '/').'/forms/builder') }}" class="btn btn-ghost btn-sm">Composant builder</a>
+            <a href="{{ url('/'.trim(config('daisy-kit.docs.prefix', 'docs'), '/').'/forms/viewer') }}" class="btn btn-ghost btn-sm">Composant viewer</a>
+        </div>
     </x-slot:intro>
 
     <x-daisy::docs.sections.custom id="preview" title="Preview builder + viewer">
@@ -142,6 +148,10 @@
         <div class="space-y-3 text-sm text-base-content/80">
             <p>L application hote garde la responsabilite du stockage, des policies, des routes et de l exploitation des donnees.</p>
             <p>Le package fournit le schema, le builder, le viewer, le mapping de regles Laravel et l evaluation serveur optionnelle des expressions JSONata.</p>
+        </div>
+        <div class="mockup-code mt-4">
+            <pre data-prefix=""><code>view('daisy::templates.form.builder')</code></pre>
+            <pre data-prefix=""><code>route('templates.forms.builder')</code></pre>
         </div>
         <div class="mt-4 rounded-box border border-base-300 bg-base-100 p-4">
             <p class="text-sm"><strong>Flux conseille :</strong> charger le schema depuis la base, afficher le builder, sauvegarder le JSON canonique, puis rendre les submissions avec <code>x-daisy::forms.viewer</code>.</p>
