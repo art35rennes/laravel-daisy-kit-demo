@@ -204,6 +204,7 @@
                             'type' => 'geojson',
                             'data' => $readonlyArea,
                             'visible' => true,
+                            'locked' => true,
                             'style' => ['color' => '#2563eb', 'weight' => 2, 'fillOpacity' => 0.08],
                         ],
                         [
@@ -215,7 +216,7 @@
                             'visible' => false,
                         ],
                     ]"
-                    :layerControl="true"
+                    :layerControl="['mode' => 'multiple', 'lockedOverlays' => ['reference-area']]"
                     :controls="['persist' => true, 'storageKey' => 'demo-leaflet-layers-controls']"
                 />
             </div>
@@ -268,7 +269,7 @@
                             'editable' => true,
                         ],
                     ]"
-                    :layerControl="true"
+                    :layerControl="['mode' => 'multiple', 'lockedOverlays' => ['readonly-area']]"
                     :controls="['persist' => true, 'storageKey' => 'demo-leaflet-draw-controls']"
                     :objectTypes="$sigObjectTypes"
                     :draw="['toolbar' => true, 'groupedToolbar' => true, 'point' => true, 'line' => true, 'polygon' => true, 'rectangle' => true, 'select' => true, 'delete' => true, 'undoRedo' => true]"

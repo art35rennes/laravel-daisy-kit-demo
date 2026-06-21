@@ -13,6 +13,63 @@
         ['id' => 'demo-extensions', 'title' => 'Extensions · External libraries'],
         ['id' => 'demo-js-kit', 'title' => 'JavaScript · Daisy Kit modules'],
     ];
+    /** @var list<array{label: string, title: string, description: string, href: string}> */
+    $demoUseCases = [
+        [
+            'label' => 'Dashboard',
+            'title' => 'Dashboard éditable',
+            'description' => 'Grille Gridstack, cards de statut et blocs priorisés pour un écran produit réel.',
+            'href' => '#demo-layout',
+        ],
+        [
+            'label' => 'Formulaire',
+            'title' => 'Form Kit',
+            'description' => 'Builder, viewer, champs composables et validation côté application hôte.',
+            'href' => route('templates.forms.form-kit'),
+        ],
+        [
+            'label' => 'Table',
+            'title' => 'Table server-side',
+            'description' => 'Tri, pagination, filtres colonne, recherche globale et état persistant.',
+            'href' => '#demo-data-media',
+        ],
+        [
+            'label' => 'Empty state',
+            'title' => 'État vide',
+            'description' => 'Template réutilisable pour onboarding, listes vides et appels à l’action.',
+            'href' => "/{$prefix}/templates/errors/empty-state",
+        ],
+        [
+            'label' => 'Modal',
+            'title' => 'Overlays',
+            'description' => 'Modales responsives, popconfirm et drawers pour confirmer ou inspecter.',
+            'href' => '#demo-actions',
+        ],
+        [
+            'label' => 'Auth',
+            'title' => 'Pages auth',
+            'description' => 'Templates login, register, reset password, two-factor et vérification email.',
+            'href' => route('templates.auth.login-simple'),
+        ],
+        [
+            'label' => 'Stats',
+            'title' => 'KPIs',
+            'description' => 'Stats, badges et statuts pour surfaces de monitoring et reporting.',
+            'href' => '#demo-data-media',
+        ],
+        [
+            'label' => 'Chart',
+            'title' => 'Charts',
+            'description' => 'Lignes, donuts, sparklines, barres et aires pour dashboards analytiques.',
+            'href' => '#demo-extensions',
+        ],
+        [
+            'label' => 'CRUD',
+            'title' => 'CRUD Layout',
+            'description' => 'Layout de fiche d’édition avec sections, inputs, toggles et actions métier.',
+            'href' => route('templates.layouts.crud-layout'),
+        ],
+    ];
 @endphp
 <x-daisy::layout.app title="DaisyUI Kit - Demo" :container="false">
     {{-- Navbar avec navigation Docs/Démo/Template --}}
@@ -61,6 +118,28 @@
                 </ul>
             </div>
         </nav>
+
+        <section id="demo-use-cases" class="mb-10 scroll-mt-8" data-demo-use-cases>
+            <div class="mb-4 flex flex-col gap-2">
+                <h2 class="text-xl font-semibold">Parcours de démo réalistes</h2>
+                <p class="max-w-3xl text-sm text-base-content/70">
+                    Points d’entrée rapides pour valider Daisy Kit dans des écrans applicatifs complets plutôt que dans des exemples isolés.
+                </p>
+            </div>
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                @foreach($demoUseCases as $useCase)
+                    <x-daisy::ui.layout.card :bordered="true" :compact="true" title="{{ $useCase['title'] }}" class="h-full">
+                        <div class="flex h-full flex-col gap-3">
+                            <span class="badge badge-primary badge-outline w-fit">{{ $useCase['label'] }}</span>
+                            <p class="text-sm text-base-content/70">{{ $useCase['description'] }}</p>
+                            <div class="mt-auto">
+                                <a href="{{ $useCase['href'] }}" class="btn btn-primary btn-sm">Ouvrir</a>
+                            </div>
+                        </div>
+                    </x-daisy::ui.layout.card>
+                @endforeach
+            </div>
+        </section>
     
     <!-- Sélecteur de thème flottant -->
     <div id="themePicker" class="fixed top-4 right-4 z-50 hidden md:block">
