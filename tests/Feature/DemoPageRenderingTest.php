@@ -60,7 +60,7 @@ it('renders the UI demo page with section anchors and FAB navigator', function (
     $response->assertSee('name="demo_geometry"', false);
     $response->assertSee('"layerControl":{"mode":"multiple"', false);
     $response->assertSee('"lockedOverlays":["readonly-area"]', false);
-    $response->assertSee('"measure":{"display":"metric","showTooltip":true,"maxLabels":8}', false);
+    $response->assertSee('"measure":{"display":"metric","showTooltip":true,"maxLabels":8,"maxLabelOffsetPx":96}', false);
     $response->assertSee('demo-leaflet-draw-controls', false);
     $response->assertSee('objectTypes', false);
     $response->assertSee('hydrant', false);
@@ -68,6 +68,10 @@ it('renders the UI demo page with section anchors and FAB navigator', function (
     $response->assertSee('work_zone', false);
     $response->assertSee('markerSvg', false);
     $response->assertSee('groupedToolbar', false);
+    $response->assertSee('Détail de la sélection', false);
+    $response->assertSee('demo-leaflet-selection-modal', false);
+    $response->assertSee('demo-leaflet-selection-json', false);
+    $response->assertSee('data-leaflet-selection-demo', false);
 });
 
 it('returns table JSON from the demo table endpoint', function () {

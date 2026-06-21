@@ -235,6 +235,9 @@ it('renders the leaflet GIS and measurement documentation', function () {
     $response->assertSee('daisy:leaflet:measure', false);
     $response->assertSee('daisy:leaflet:object-created', false);
     $response->assertSee('daisy:leaflet:zone-select', false);
+    $response->assertSee('daisy:leaflet:selection-details', false);
+    $response->assertSee('daisy:leaflet:draw-layer-change', false);
+    $response->assertSee('daisy:leaflet:geolocation:success', false);
     $response->assertSee('exportGeoJSON', false);
     $response->assertSee('destroy()', false);
     $response->assertSee('contenu maîtrisé par l', false);
@@ -243,6 +246,11 @@ it('renders the leaflet GIS and measurement documentation', function () {
     $response->assertSee('draw.styles', false);
     $response->assertSee('groupedToolbar', false);
     $response->assertSee('actionBadge', false);
+    $response->assertSee('selectionDetails', false);
+    $response->assertSee('drawLayers', false);
+    $response->assertSee('getSelectionDetails', false);
+    $response->assertSee('showSelectionDetails', false);
+    $response->assertSee('startGeolocation', false);
     $response->assertSee('maxLabels', false);
     $response->assertSee('Borne incendie', false);
     $response->assertSee('Conduite AEP', false);
