@@ -380,7 +380,7 @@
                         :layerControl="['mode' => 'multiple', 'lockedOverlays' => ['project-area']]"
                         :controls="['persist' => true, 'storageKey' => 'docs-leaflet-gis-controls']"
                         :objectTypes="$gisObjectTypes"
-                        :draw="['toolbar' => true, 'groupedToolbar' => true, 'actionBadge' => ['label' => 'Outil actif'], 'point' => true, 'line' => true, 'polygon' => true, 'rectangle' => true, 'select' => true, 'delete' => true, 'undoRedo' => true]"
+                        :draw="['toolbar' => true, 'groupedToolbar' => true, 'actionBadge' => ['label' => 'Outil actif'], 'selectionDetails' => ['label' => 'Détail de la sélection'], 'point' => true, 'line' => true, 'polygon' => true, 'rectangle' => true, 'select' => true, 'delete' => true, 'undoRedo' => true]"
                         :measure="['display' => 'metric', 'showTooltip' => true, 'maxLabels' => 8]"
                         name="geometry"
                         :value="$gisInitialValue"
@@ -398,14 +398,16 @@
                             <tr><th>Fonds</th><td><code>basemaps</code> XYZ/WMS avec un fond actif, affichés dans le menu dédié <code>Couches</code>.</td></tr>
                             <tr><th>Couches</th><td><code>overlays</code> GeoJSON/XYZ/WMS; <code>layerControl.mode</code> vaut <code>multiple</code> pour empiler ou <code>single</code> pour une seule couche active. Le libellé utilisateur <strong>Couche active</strong> correspond au mode single. <code>locked</code> ou <code>control: false</code> force l'affichage sans toggle utilisateur.</td></tr>
                             <tr><th>Edition</th><td>Seules les couches <code>editable: true</code> et <code>value</code> entrent dans Terra Draw.</td></tr>
+                            <tr><th>Couches dessin</th><td><code>drawLayers</code> associe les nouveaux objets à une couche logique, forcée par l'intégrateur, choisie par l'utilisateur, ou explicitement absente.</td></tr>
                             <tr><th>Objets</th><td><code>objectTypes</code> ajoute des outils métier point, ligne ou polygone avec propriétés GeoJSON prérenseignées.</td></tr>
                             <tr><th>Icônes</th><td><code>icon</code>, <code>iconSvg</code> ou <code>iconHtml</code> pilotent la toolbar; <code>markerUrl</code> ou <code>markerSvg</code> pilotent les marqueurs ponctuels sur la carte. Les SVG/HTML custom sont nettoyés côté runtime, mais doivent rester du contenu maîtrisé par l'intégrateur.</td></tr>
                             <tr><th>Styles</th><td><code>draw.styles</code> définit les styles par défaut; <code>objectTypes[].style</code> surcharge par métier avec <code>color</code>, <code>width</code>, <code>dashArray</code>, <code>strokeColor</code>, <code>fillColor</code> ou <code>fillOpacity</code>.</td></tr>
                             <tr><th>Toolbar</th><td><code>draw.groupedToolbar</code> regroupe les outils en sous-menus; <code>draw.actionBadge</code> affiche l'outil actif en bas de carte avec retour à la sélection.</td></tr>
                             <tr><th>Mesure</th><td>Lignes: longueur; polygones: surface + périmètre; points: coordonnées.</td></tr>
+                            <tr><th>Géolocalisation</th><td><code>geolocation</code> expose la localisation sur demande, automatique ou temps réel, avec précision, méthode, timestamp et point GeoJSON.</td></tr>
                             <tr><th>Densité</th><td><code>measure.maxLabels</code> limite les libellés visibles sans supprimer les mesures dans les événements.</td></tr>
                             <tr><th>Réglages</th><td><code>controls</code> expose un menu utilisateur, avec persistence optionnelle via <code>storageKey</code>.</td></tr>
-                            <tr><th>API JS</th><td><code>root.daisyLeaflet</code> expose <code>exportGeoJSON()</code>, <code>setMode()</code>, <code>clearSelection()</code>, <code>deleteSelected()</code>, <code>undo()</code>, <code>redo()</code> et <code>destroy()</code>.</td></tr>
+                            <tr><th>API JS</th><td><code>root.daisyLeaflet</code> expose <code>exportGeoJSON()</code>, <code>setMode()</code>, <code>getDrawLayer()</code>, <code>setDrawLayer()</code>, <code>getSelectionDetails()</code>, <code>showSelectionDetails()</code>, <code>locate()</code>, <code>startGeolocation()</code>, <code>stopGeolocation()</code>, <code>clearSelection()</code>, <code>deleteSelected()</code>, <code>undo()</code>, <code>redo()</code> et <code>destroy()</code>.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -454,6 +456,8 @@
         ['id' => 'water-main', 'label' => 'Conduite AEP éditable', 'type' => 'geojson', 'data' => $trace, 'editable' => true],
     ]"
     :layerControl="['mode' => 'single', 'lockedOverlays' => ['sector']]"
+    :drawLayers="['mode' => 'select', 'allowNone' => true, 'layers' => [['id' => 'survey', 'label' => 'Relevé terrain'], ['id' => 'works', 'label' => 'Travaux']]]"
+    :geolocation="['button' => true, 'setView' => true, 'showAccuracy' => true, 'enableHighAccuracy' => true]"
     :controls="['persist' => true, 'storageKey' => 'project-map-controls']"
     :objectTypes="[
         ['id' => 'hydrant', 'label' => 'Borne incendie', 'geometry' => 'point', 'iconSvg' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 21v-7a5 5 0 0 1 10 0v7"/><path d="M5 21h14"/><circle cx="12" cy="14" r="2"/></svg>', 'markerSvg' => '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path fill="#dc2626" d="M16 2c5.5 0 10 4.5 10 10 0 7.5-10 18-10 18S6 19.5 6 12C6 6.5 10.5 2 16 2Z"/><path fill="#fff" d="M13 8h6v4h3v5h-3v4h-6v-4h-3v-5h3z"/></svg>', 'markerWidth' => 30, 'markerHeight' => 30, 'properties' => ['category' => 'water_asset', 'assetType' => 'hydrant']],
@@ -464,6 +468,7 @@
         'toolbar' => true,
         'groupedToolbar' => true,
         'actionBadge' => ['label' => 'Outil actif'],
+        'selectionDetails' => ['label' => 'Détail de la sélection'],
         'styles' => [
             'line' => ['color' => '#2563eb', 'width' => 4, 'dashArray' => [8, 4]],
             'polygon' => ['strokeColor' => '#b45309', 'fillColor' => '#f59e0b', 'fillOpacity' => 0.18],
@@ -682,20 +687,50 @@ BLADE;
                             <tr>
                                 <td><code>daisy:leaflet:object-created</code></td>
                                 <td>root <code>[data-module]</code></td>
-                                <td><code>{{ '{ feature, featureId, objectType, exportGeoJSON }' }}</code></td>
+                                <td><code>{{ '{ feature, featureId, objectType, drawLayer, drawLayerId, exportGeoJSON }' }}</code></td>
                                 <td>Un objet métier vient d'être dessiné; c'est le point d'entrée prévu pour ouvrir une modale de saisie complémentaire.</td>
                             </tr>
                             <tr>
                                 <td><code>daisy:leaflet:draw-finish</code></td>
                                 <td>root <code>[data-module]</code></td>
-                                <td><code>{{ '{ feature, featureId, objectType, draw }' }}</code></td>
+                                <td><code>{{ '{ feature, featureId, objectType, drawLayer, drawLayerId, draw }' }}</code></td>
                                 <td>Une géométrie dessinée est finalisée, avec ou sans type métier.</td>
+                            </tr>
+                            <tr>
+                                <td><code>daisy:leaflet:draw-layer-change</code></td>
+                                <td>root <code>[data-module]</code></td>
+                                <td><code>{{ '{ layer, layerId, draw, map }' }}</code></td>
+                                <td>La couche logique de dessin courante change dans le sélecteur utilisateur.</td>
                             </tr>
                             <tr>
                                 <td><code>daisy:leaflet:zone-select</code></td>
                                 <td>root <code>[data-module]</code></td>
                                 <td><code>{{ '{ type, featureIds, features, map, draw }' }}</code></td>
                                 <td>Une sélection par rectangle, polygone ou cercle est terminée; tous les identifiants sélectionnés sont exposés.</td>
+                            </tr>
+                            <tr>
+                                <td><code>daisy:leaflet:selection-details</code></td>
+                                <td>root <code>[data-module]</code></td>
+                                <td><code>{{ '{ count, featureIds, features, primaryFeature, exportGeoJSON }' }}</code></td>
+                                <td>Le bouton Détail de la sélection est déclenché pour une sélection simple ou multiple.</td>
+                            </tr>
+                            <tr>
+                                <td><code>daisy:leaflet:geolocation:request</code></td>
+                                <td>root <code>[data-module]</code></td>
+                                <td><code>{{ '{ method, watch, options, map }' }}</code></td>
+                                <td>Une localisation sur demande, automatique ou temps réel est demandée au navigateur.</td>
+                            </tr>
+                            <tr>
+                                <td><code>daisy:leaflet:geolocation:success</code></td>
+                                <td>root <code>[data-module]</code></td>
+                                <td><code>{{ '{ method, lat, lng, accuracy, timestamp, coords, feature, position }' }}</code></td>
+                                <td>La position est reçue avec précision, méthode, coordonnées normalisées, position brute et point GeoJSON.</td>
+                            </tr>
+                            <tr>
+                                <td><code>daisy:leaflet:geolocation:error</code></td>
+                                <td>root <code>[data-module]</code></td>
+                                <td><code>{{ '{ error, method, watch, options, map }' }}</code></td>
+                                <td>La demande de position échoue ou le navigateur ne supporte pas l'API Geolocation.</td>
                             </tr>
                             <tr>
                                 <td><code>daisy:leaflet:layer-toggle</code></td>
@@ -715,22 +750,38 @@ BLADE;
                     $apiCode = <<<'JS'
 // Écouter l'initialisation réussie
 const root = document.querySelector('[data-module="leaflet"]');
-root.addEventListener('daisy:leaflet:init', (e) => {
-    const map = e.detail.map;
-    map.on('click', (ev) => console.log(ev.latlng));
+root.addEventListener('daisy:leaflet:init', (event) => {
+    const api = root.daisyLeaflet;
+
+    event.detail.map.on('click', (leafletEvent) => console.log(leafletEvent.latlng));
+    api.setDrawLayer('survey');
+    api.locate();
 });
 
-root.addEventListener('daisy:leaflet:change', (e) => {
-    console.log(e.detail.value);
+root.addEventListener('daisy:leaflet:change', (event) => {
+    console.log(event.detail.value);
 });
 
-root.addEventListener('daisy:leaflet:measure', (e) => {
-    console.log(e.detail.measurements);
+root.addEventListener('daisy:leaflet:measure', (event) => {
+    console.log(event.detail.measurements);
 });
 
-root.addEventListener('daisy:leaflet:zone-select', (e) => {
-    console.log(e.detail.featureIds);
+root.addEventListener('daisy:leaflet:zone-select', (event) => {
+    console.log(event.detail.featureIds);
 });
+
+root.addEventListener('daisy:leaflet:selection-details', (event) => {
+    console.log(event.detail.count, event.detail.features);
+});
+
+root.addEventListener('daisy:leaflet:geolocation:success', (event) => {
+    console.log(event.detail.method, event.detail.accuracy, event.detail.feature);
+});
+
+const selection = root.daisyLeaflet.getSelectionDetails();
+root.daisyLeaflet.showSelectionDetails();
+root.daisyLeaflet.startGeolocation();
+root.daisyLeaflet.stopGeolocation();
 JS;
                 @endphp
                 <x-daisy::ui.advanced.code-editor 
