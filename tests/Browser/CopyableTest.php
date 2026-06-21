@@ -1,6 +1,6 @@
 <?php
 
-use function Pest\Laravel\visit;
+use Illuminate\Support\Facades\Blade;
 
 it('renders copyable component without errors', function () {
     $page = visit('/demo');
@@ -16,7 +16,7 @@ it('shows clipboard icon on hover', function () {
 </x-daisy::ui.utilities.copyable>
 BLADE;
 
-    $html = \Illuminate\Support\Facades\Blade::render($blade);
+    $html = Blade::render($blade);
 
     $page = visit('/demo');
 

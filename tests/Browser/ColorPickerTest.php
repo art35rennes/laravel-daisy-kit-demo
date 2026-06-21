@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 it('opens color picker dropdown and changes format without errors', function () {
     $page = visit('/demo');
 

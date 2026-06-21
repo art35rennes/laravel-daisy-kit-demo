@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 it('handles inline popconfirm confirm and cancel without errors', function () {
     $page = visit('/demo');
 

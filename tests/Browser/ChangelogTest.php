@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 it('renders changelog template without errors', function () {
     $page = visit('/demo');
 

@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 it('navigates with scrollspy links without errors', function () {
     $page = visit('/demo');
 

@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 it('starts and navigates onboarding without console errors', function () {
     $page = visit('/demo');
 

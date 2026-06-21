@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 it('switches media gallery main image without errors', function () {
     $page = visit('/demo');
 

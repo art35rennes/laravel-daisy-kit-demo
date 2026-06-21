@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 it('selects table rows without errors', function () {
     $page = visit('/demo');
 

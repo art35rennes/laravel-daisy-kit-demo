@@ -7,6 +7,23 @@ it('renders the UI demo page with section anchors and FAB navigator', function (
     $response->assertSee('DaisyUI Kit - Demo', false);
     $response->assertSee('id="demo-actions"', false);
     $response->assertSee('href="#demo-actions"', false);
+    $response->assertSee('data-demo-use-cases', false);
+    $response->assertSee('Parcours de démo réalistes', false);
+    $response->assertSee('Dashboard éditable', false);
+    $response->assertSee('Form Kit', false);
+    $response->assertSee('Table server-side', false);
+    $response->assertSee('État vide', false);
+    $response->assertSee('Overlays', false);
+    $response->assertSee('Pages auth', false);
+    $response->assertSee('KPIs', false);
+    $response->assertSee('Charts', false);
+    $response->assertSee('CRUD Layout', false);
+    $response->assertSee('href="#demo-layout"', false);
+    $response->assertSee('href="#demo-data-media"', false);
+    $response->assertSee('href="#demo-actions"', false);
+    $response->assertSee(route('templates.forms.form-kit'), false);
+    $response->assertSee(route('templates.auth.login-simple'), false);
+    $response->assertSee(route('templates.layouts.crud-layout'), false);
     $response->assertSee('data-section-nav', false);
     $response->assertSee('data-section-nav-button', false);
     $response->assertSee('<svg xmlns=\'http://www.w3.org/2000/svg\'', false);
@@ -41,7 +58,8 @@ it('renders the UI demo page with section anchors and FAB navigator', function (
     $response->assertSee('Conduite AEP', false);
     $response->assertSee('Zone de travaux', false);
     $response->assertSee('name="demo_geometry"', false);
-    $response->assertSee('"layerControl":true', false);
+    $response->assertSee('"layerControl":{"mode":"multiple"', false);
+    $response->assertSee('"lockedOverlays":["readonly-area"]', false);
     $response->assertSee('"measure":{"display":"metric","showTooltip":true,"maxLabels":8}', false);
     $response->assertSee('demo-leaflet-draw-controls', false);
     $response->assertSee('objectTypes', false);
@@ -76,4 +94,63 @@ it('applies column filters on the demo table endpoint', function () {
 
     expect($response->json('rowCount'))->toBe(3);
     expect(collect($response->json('rows'))->pluck('status')->unique()->all())->toBe(['Archived']);
+});
+
+it('returns every expected calendar event without skipping days after long events', function () {
+    $response = $this->getJson('/demo/api/calendar-events?start=2026-01-01&end=2026-02-01');
+
+    $response->assertSuccessful();
+
+    $events = collect($response->json());
+
+    expect($events->pluck('title')->all())->toContain(
+        'All Day Event',
+        'Long Event',
+        'Meeting',
+        'Birthday Party',
+        'Click for Google',
+    );
+    expect($events->firstWhere('title', 'Long Event'))->toMatchArray([
+        'start' => '2026-01-07',
+        'end' => '2026-01-14',
+    ]);
+    expect($events->firstWhere('title', 'Meeting'))->toMatchArray([
+        'start' => '2026-01-12 10:30',
+        'end' => '2026-01-12 12:30',
+    ]);
+});
+
+it('returns JSON payloads for the remaining demo interaction endpoints', function () {
+    $this->getJson('/demo/datatable/api/get?pageIndex=0&pageSize=3')
+        ->assertSuccessful()
+        ->assertJsonPath('state.pageSize', 3);
+
+    $this->getJson('/demo/api/tree-children?node=b')
+        ->assertSuccessful()
+        ->assertJsonFragment(['id' => 'b2']);
+
+    $this->getJson('/demo/api/tree-search?q=b2')
+        ->assertSuccessful()
+        ->assertJsonStructure(['paths']);
+
+    $this->getJson('/demo/api/select-options?q=@')
+        ->assertSuccessful()
+        ->assertJsonStructure(['groups', 'meta' => ['more']]);
+
+    $this->getJson('/demo/api/chat/messages/1')
+        ->assertSuccessful()
+        ->assertJsonPath('success', true)
+        ->assertJsonStructure(['data' => [['id', 'user_id', 'content']]]);
+
+    $this->postJson('/demo/api/chat/typing')
+        ->assertSuccessful()
+        ->assertJsonPath('success', true);
+
+    $this->postJson('/demo/api/chat/send', [
+        'conversation_id' => 1,
+        'content' => 'Message de test',
+    ])
+        ->assertSuccessful()
+        ->assertJsonPath('success', true)
+        ->assertJsonPath('message.content', 'Message de test');
 });

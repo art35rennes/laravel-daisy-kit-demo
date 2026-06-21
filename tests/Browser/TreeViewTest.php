@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 it('expands lazy node and selects items in treeview without errors', function () {
     $page = visit('/demo');
 

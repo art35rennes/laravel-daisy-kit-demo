@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 describe('Communication Components Browser Tests', function () {
     describe('Notification Bell', function () {
         it('renders notification-bell without JavaScript errors', function () {

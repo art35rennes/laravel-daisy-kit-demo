@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 it('opens lightbox and navigates without console errors', function () {
     $page = visit('/demo');
 

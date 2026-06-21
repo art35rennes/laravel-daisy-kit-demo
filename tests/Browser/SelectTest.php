@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 it('enhances select with search and autocomplete without JS errors', function () {
     $page = visit('/demo');
 

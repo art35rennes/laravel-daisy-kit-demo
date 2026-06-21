@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 it('initializes scroll status bars without console errors', function () {
     $page = visit('/demo');
 

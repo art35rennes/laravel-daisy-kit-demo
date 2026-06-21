@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 it('toggles popover on click', function () {
     $page = visit('/demo');
 

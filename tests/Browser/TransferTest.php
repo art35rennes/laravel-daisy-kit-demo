@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 it('moves items between lists in transfer without errors', function () {
     $page = visit('/demo');
 

@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 it('navigates stepper next and prev', function () {
     $page = visit('/demo');
 

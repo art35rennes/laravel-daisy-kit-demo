@@ -1,6 +1,6 @@
 <?php
 
-use function Pest\Laravel\visit;
+use Illuminate\Support\Facades\Blade;
 
 it('renders sign component without errors', function () {
     $page = visit('/demo');
@@ -14,7 +14,7 @@ it('initializes signature pad when component is present', function () {
 <x-daisy::ui.inputs.sign name="signature" />
 BLADE;
 
-    $html = \Illuminate\Support\Facades\Blade::render($blade);
+    $html = Blade::render($blade);
 
     $page = visit('/demo');
 

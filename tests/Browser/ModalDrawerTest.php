@@ -1,7 +1,5 @@
 <?php
 
-use function Pest\Laravel\visit;
-
 it('opens a modal from demo page without console errors', function () {
     $page = visit('/demo');
 
