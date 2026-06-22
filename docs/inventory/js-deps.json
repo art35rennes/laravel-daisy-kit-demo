@@ -1,6 +1,6 @@
 {
-    "builder": "form-builder",
     "viewer": "form-viewer",
+    "blueprint": "blueprint",
     "calendar-full": "calendar-full",
     "code-editor": "code-editor",
     "onboarding": "onboarding",
@@ -9,6 +9,7 @@
     "transfer": "transfer",
     "tree-view": "treeview",
     "wysiwyg": "lazy-editors",
+    "alert": "alert-dismiss",
     "color-picker": "color-picker",
     "file-input": "file-input",
     "sign": "sign",
@@ -18,8 +19,11 @@
     "lightbox": "lightbox",
     "media-gallery": "media-gallery",
     "menu": "menu-filter",
+    "section-nav": "section-nav",
     "sidebar": "menu-filter",
     "stepper": "stepper",
+    "table-of-contents": "table-of-contents",
+    "destructive-confirm": "popconfirm",
     "popconfirm": "popconfirm",
     "popover": "popover"
 }

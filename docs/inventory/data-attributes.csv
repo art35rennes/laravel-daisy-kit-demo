@@ -1,15 +1,19 @@
 attribute,components
-module,"builder, viewer, calendar-full, code-editor, scrollspy, tree-view, chat-input, chat-messages, chat-widget, color-picker, file-input, sign, editable-grid, ordered-list, lightbox, media-gallery, menu, sidebar-navigation, sidebar, csrf-keeper"
+module,"viewer, calendar-full, scrollspy, tree-view, chat-input, chat-messages, chat-widget, alert, color-picker, file-input, sign, editable-grid, ordered-list, lightbox, media-gallery, menu, section-nav, sidebar-navigation, sidebar, table-of-contents, csrf-keeper"
+form-id,viewer
+form-method,viewer
 submit-mode,viewer
 validate-on,viewer
+readonly,viewer
+form-step,viewer
+form-step-index,viewer
+blueprint-add-node,blueprint
+blueprint-action,blueprint
+blueprint-details-panel,blueprint
 calendar-full,calendar-full
 options,calendar-full
 events,calendar-full
 events-url,calendar-full
-language,code-editor
-readonly,code-editor
-theme,code-editor
-tab-size,code-editor
 action,"code-editor, notification-bell, notification-item"
 scrollspy,scrollspy
 container,scrollspy
@@ -31,7 +35,7 @@ checked,transfer
 transfer-pager,transfer
 transfer-page,transfer
 transfer-move,transfer
-tip,"transfer, tooltip"
+tip,"transfer, description-list, icon-button, tooltip, truncate-text"
 treeview,tree-view
 selection,tree-view
 persist,"tree-view, ordered-list"
@@ -76,18 +80,26 @@ message-user-avatar-key,chat-messages
 conversation-id,"chat-sidebar, conversation-view"
 position,"chat-widget, media-gallery"
 minimized,chat-widget
-url,"notification-bell, notification-item, file-preview"
+url,"notification-bell, notification-item"
 key,"notification-bell, notification-list"
 filter-name,notification-filters
 on-filter-change,notification-filters
 notification-id,notification-item
 read,notification-item
-filename,file-preview
+file-preview-type,"file-preview-trigger, file-preview"
+file-preview-renderer,file-preview-trigger
+file-preview-reason,file-preview-trigger
+log-preview-errors,file-preview
 daisy-table,table
+table-layout,table
+table-scroll-x,table
+table-livewire-mode,table
+table-min-width,table
 table-config,table
 table-filter,table
 table-filter-type,table
 table-sort,table
+alert-auto-dismiss,alert
 indeterminate,"checkbox, toggle"
 colorpicker,color-picker
 value,"color-picker, token-input"
@@ -125,6 +137,7 @@ editable,editable-grid
 static,editable-grid
 ordered-list,ordered-list
 sortable,ordered-list
+handle,ordered-list
 ordered-list-input-for,ordered-list
 lightbox,lightbox
 loop,lightbox
@@ -146,9 +159,9 @@ collapsed-label,sidebar
 expand-on-hover,sidebar
 storage-key,sidebar
 step-index,stepper
-popconfirm-modal,popconfirm
-popconfirm-action,popconfirm
-popconfirm-modal-target,popconfirm
+popconfirm-modal,"destructive-confirm, popconfirm"
+popconfirm-action,"destructive-confirm, popconfirm"
+popconfirm-modal-target,"destructive-confirm, popconfirm"
 refresh-interval,csrf-keeper
 endpoint,csrf-keeper
 copy-target,mockup-code

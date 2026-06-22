@@ -7,9 +7,10 @@ pie,daisy::components.charts.pie,charts,charts,,active
 sparkline,daisy::components.charts.sparkline,charts,charts,,active
 stacked-area,daisy::components.charts.stacked-area,charts,charts,,active
 stacked-bar,daisy::components.charts.stacked-bar,charts,charts,,active
-builder,daisy::components.forms.builder,forms,"forms, js, async, form",form-builder,active
+builder,daisy::components.forms.builder,forms,"forms, form",,active
 viewer,daisy::components.forms.viewer,forms,"forms, js, async, form",form-viewer,active
 accordion,daisy::components.ui.advanced.accordion,advanced,"advanced, lazy",,active
+blueprint,daisy::components.ui.advanced.blueprint,advanced,"advanced, js, async, lazy",blueprint,active
 calendar-cally,daisy::components.ui.advanced.calendar-cally,advanced,"advanced, lazy",,active
 calendar-full,daisy::components.ui.advanced.calendar-full,advanced,"advanced, js, async, lazy",calendar-full,active
 calendar-native,daisy::components.ui.advanced.calendar-native,advanced,"advanced, lazy",,active
@@ -56,6 +57,8 @@ notification-list,daisy::components.ui.communication.notification-list,communica
 avatar,daisy::components.ui.data-display.avatar,data-display,"data-display, lazy",,active
 badge,daisy::components.ui.data-display.badge,data-display,"data-display, lazy",,active
 datatable,daisy::components.ui.data-display.datatable,data-display,"data-display, lazy",,active
+description-list,daisy::components.ui.data-display.description-list,data-display,"data-display, lazy",,active
+file-preview-trigger,daisy::components.ui.data-display.file-preview-trigger,data-display,"data-display, lazy",,active
 file-preview,daisy::components.ui.data-display.file-preview,data-display,"data-display, lazy",,active
 kbd,daisy::components.ui.data-display.kbd,data-display,"data-display, lazy",,active
 progress,daisy::components.ui.data-display.progress,data-display,"data-display, lazy",,active
@@ -68,7 +71,7 @@ error-actions,daisy::components.ui.errors.error-actions,errors,errors,,active
 error-content,daisy::components.ui.errors.error-content,errors,errors,,active
 error-header,daisy::components.ui.errors.error-header,errors,errors,,active
 loading-state-content,daisy::components.ui.errors.loading-state-content,errors,errors,,active
-alert,daisy::components.ui.feedback.alert,feedback,feedback,,active
+alert,daisy::components.ui.feedback.alert,feedback,"feedback, js, async",alert-dismiss,active
 callout,daisy::components.ui.feedback.callout,feedback,feedback,,active
 empty-state,daisy::components.ui.feedback.empty-state,feedback,feedback,,active
 loading-message,daisy::components.ui.feedback.loading-message,feedback,feedback,,active
@@ -80,6 +83,7 @@ checkbox,daisy::components.ui.inputs.checkbox,inputs,"inputs, form",,active
 choice-card-group,daisy::components.ui.inputs.choice-card-group,inputs,"inputs, form",,active
 color-picker,daisy::components.ui.inputs.color-picker,inputs,"inputs, js, async, form",color-picker,active
 file-input,daisy::components.ui.inputs.file-input,inputs,"inputs, js, async, form",file-input,active
+icon-button,daisy::components.ui.inputs.icon-button,inputs,"inputs, form",,active
 input,daisy::components.ui.inputs.input,inputs,"inputs, form",,active
 radio,daisy::components.ui.inputs.radio,inputs,"inputs, form",,active
 range,daisy::components.ui.inputs.range,inputs,"inputs, form",,active
@@ -113,13 +117,14 @@ floating-menu,daisy::components.ui.navigation.floating-menu,navigation,navigatio
 menu,daisy::components.ui.navigation.menu,navigation,"navigation, js, async",menu-filter,active
 navbar,daisy::components.ui.navigation.navbar,navigation,navigation,,active
 pagination,daisy::components.ui.navigation.pagination,navigation,navigation,,active
-section-nav,daisy::components.ui.navigation.section-nav,navigation,navigation,,active
+section-nav,daisy::components.ui.navigation.section-nav,navigation,"navigation, js, async",section-nav,active
 sidebar-navigation,daisy::components.ui.navigation.sidebar-navigation,navigation,navigation,,active
 sidebar,daisy::components.ui.navigation.sidebar,navigation,"navigation, js, async",menu-filter,active
 stepper,daisy::components.ui.navigation.stepper,navigation,"navigation, js, async",stepper,active
 steps,daisy::components.ui.navigation.steps,navigation,navigation,,active
-table-of-contents,daisy::components.ui.navigation.table-of-contents,navigation,navigation,,active
+table-of-contents,daisy::components.ui.navigation.table-of-contents,navigation,"navigation, js, async",table-of-contents,active
 tabs,daisy::components.ui.navigation.tabs,navigation,navigation,,active
+destructive-confirm,daisy::components.ui.overlay.destructive-confirm,overlay,"overlay, js, async, a11y",popconfirm,active
 drawer,daisy::components.ui.overlay.drawer,overlay,"overlay, a11y",,active
 dropdown,daisy::components.ui.overlay.dropdown,overlay,"overlay, a11y",,active
 modal,daisy::components.ui.overlay.modal,overlay,"overlay, a11y",,active
@@ -135,3 +140,4 @@ mockup-browser,daisy::components.ui.utilities.mockup-browser,utilities,utilities
 mockup-code,daisy::components.ui.utilities.mockup-code,utilities,utilities,,active
 mockup-phone,daisy::components.ui.utilities.mockup-phone,utilities,utilities,,active
 mockup-window,daisy::components.ui.utilities.mockup-window,utilities,utilities,,active
+truncate-text,daisy::components.ui.utilities.truncate-text,utilities,utilities,,active
