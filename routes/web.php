@@ -82,6 +82,10 @@ Route::prefix('templates')->name('templates.')->group(function () {
         Route::view('/form-kit-builder', 'daisy-dev::demo.templates.forms.form-kit-builder')->name('form-kit-builder');
         Route::view('/form-kit-viewers', 'daisy-dev::demo.templates.forms.form-kit-viewers')->name('form-kit-viewers');
     });
+
+    Route::prefix('reporting')->name('reporting.')->group(function () {
+        Route::view('/operations-dashboard', 'daisy::templates.reporting.operations-dashboard')->name('operations-dashboard');
+    });
 });
 
 $docsPrefix = (string) config('daisy-kit.docs.prefix', 'docs');

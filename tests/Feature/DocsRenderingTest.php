@@ -339,6 +339,29 @@ it('renders the blueprint template preview with layout assets', function () {
     $template->assertDontSee('TypeError', false);
 });
 
+it('renders the reporting operations dashboard docs and preview', function () {
+    Config::set('daisy-kit.docs.enabled', true);
+
+    $docs = $this->get('/docs/templates/reporting/operations-dashboard');
+    $docs->assertSuccessful();
+    $docs->assertSee('Operations dashboard', false);
+    $docs->assertSee('x-daisy::templates.reporting.operations-dashboard', false);
+    $docs->assertSee('templates.reporting.operations-dashboard', false);
+    $docs->assertSee('Terrain', false);
+    $docs->assertSee('data-reporting-chart="donut"', false);
+    $docs->assertDontSee('No data available', false);
+
+    $preview = $this->get('/templates/reporting/operations-dashboard');
+    $preview->assertSuccessful();
+    $preview->assertSee('<html', false);
+    $preview->assertSee('Terrain', false);
+    $preview->assertSee('Bureau', false);
+    $preview->assertSee('Gestion', false);
+    $preview->assertSee('data-reporting-chart="line"', false);
+    $preview->assertDontSee('No data available', false);
+    $preview->assertDontSee('Internal Server Error', false);
+});
+
 it('renders the form kit template documentation page', function () {
     Config::set('daisy-kit.docs.enabled', true);
 
@@ -358,6 +381,12 @@ it('renders the token input and section nav documentation', function () {
     $tokenInput->assertSee('data-module="token-input"', false);
     $tokenInput->assertSee('name="recipients[]"', false);
     $tokenInput->assertSee('data-suggestions=', false);
+
+    $multiSelect = $this->get('/docs/inputs/multi-select');
+    $multiSelect->assertSuccessful();
+    $multiSelect->assertSee('data-module="multi-select"', false);
+    $multiSelect->assertSee('name="countries[]"', false);
+    $multiSelect->assertSee(route('demo.select.options'), false);
 
     $sectionNav = $this->get('/docs/navigation/section-nav');
     $sectionNav->assertSuccessful();
