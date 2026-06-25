@@ -8,6 +8,7 @@
         ['id' => 'intro', 'label' => 'Introduction'],
         ['id' => 'client', 'label' => 'Mode client'],
         ['id' => 'filters', 'label' => 'Filtres'],
+        ['id' => 'selection', 'label' => 'Sélection'],
         ['id' => 'variants', 'label' => 'Variantes'],
         ['id' => 'server', 'label' => 'Mode serveur'],
         ['id' => 'api', 'label' => 'API'],
@@ -68,6 +69,23 @@ CODE;
         ['id' => 'active_only', 'label' => 'Actifs', 'type' => 'boolean', 'filterKey' => 'active_only'],
     ]"
 />
+CODE;
+
+    $selectionCode = <<<'CODE'
+<x-daisy::ui.data-display.table
+    mode="server"
+    endpoint="{{ route('demo.table.api.get') }}"
+    selection="multiple"
+    row-key="id"
+    :columns="$columns"
+    :filters="$filters"
+>
+    <x-slot:bulkActions>
+        <button type="button" class="btn btn-xs btn-primary" data-table-bulk-action="export">
+            Exporter la sélection
+        </button>
+    </x-slot:bulkActions>
+</x-daisy::ui.data-display.table>
 CODE;
 
     $variantsCode = <<<'CODE'
@@ -242,6 +260,66 @@ CODE;
                 :showFormat="false"
                 :showCopy="true"
                 height="380px"
+            />
+        </div>
+    </x-daisy::docs.sections.custom>
+
+    <x-daisy::docs.sections.custom id="selection" title="Sélection">
+        <div class="not-prose space-y-4">
+            <div class="alert alert-info alert-soft">
+                <span>
+                    Activez <code>selection="multiple"</code> avec un <code>row-key</code> stable. La sélection persiste
+                    entre les pages et le tri. Une modification de filtre ou de recherche réinitialise la sélection.
+                    Après “tous les résultats filtrés”, décocher une ligne l’ajoute à <code>excludedIds</code> et le
+                    feedback revient aux compteurs de page et hors page. Le bandeau d’actions reste visible; les actions
+                    indisponibles sont désactivées. Une barre custom peut écouter <code>daisy:table-selection-changed</code>
+                    ou utiliser <code>window.DaisyTable.table(...).selection()</code>.
+                </span>
+            </div>
+
+            <div class="rounded-box border border-base-content/5 bg-base-100 p-4">
+                <x-daisy::ui.data-display.table
+                    mode="server"
+                    size="sm"
+                    endpoint="{{ route('demo.table.api.get') }}"
+                    selection="multiple"
+                    row-key="id"
+                    caption="Annuaire avec actions de masse"
+                    :columns="[
+                        ['key' => 'name', 'label' => 'Nom', 'sortable' => true],
+                        ['key' => 'email', 'label' => 'Email'],
+                        ['key' => 'status', 'label' => 'Statut', 'filterable' => true, 'filterKey' => 'status', 'filter' => [
+                            'type' => 'select',
+                            'options' => [
+                                ['value' => 'Active', 'label' => 'Active'],
+                                ['value' => 'Invited', 'label' => 'Invited'],
+                                ['value' => 'Archived', 'label' => 'Archived'],
+                            ],
+                        ]],
+                    ]"
+                    :initial-state="[
+                        'pagination' => ['pageSize' => 5],
+                    ]"
+                    :page-size-options="[5, 10]"
+                >
+                    <x-slot:bulkActions>
+                        <button type="button" class="btn btn-xs btn-primary" data-table-bulk-action="export">
+                            Exporter la sélection
+                        </button>
+                    </x-slot:bulkActions>
+                </x-daisy::ui.data-display.table>
+            </div>
+
+            <x-daisy::ui.advanced.code-editor
+                language="blade"
+                :value="$selectionCode"
+                :readonly="true"
+                :showToolbar="false"
+                :showFoldAll="false"
+                :showUnfoldAll="false"
+                :showFormat="false"
+                :showCopy="true"
+                height="340px"
             />
         </div>
     </x-daisy::docs.sections.custom>
