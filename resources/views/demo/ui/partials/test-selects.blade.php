@@ -28,6 +28,36 @@
             </x-daisy::ui.inputs.select>
         </div>
         <div class="grid md:grid-cols-2 gap-3">
+            <div class="space-y-2">
+                <div class="label"><span class="label-text text-xs">Multiple</span></div>
+                <x-daisy::ui.inputs.multi-select
+                    name="demo_countries"
+                    placeholder="Select countries..."
+                    :values="['fr', 'ca']"
+                    :options="[
+                        ['value' => 'fr', 'label' => 'France'],
+                        ['value' => 'be', 'label' => 'Belgium'],
+                        ['value' => 'ca', 'label' => 'Canada'],
+                        ['value' => 'ch', 'label' => 'Switzerland'],
+                    ]"
+                />
+            </div>
+            <div class="space-y-2">
+                <div class="label"><span class="label-text text-xs">Multiple bordered</span></div>
+                <x-daisy::ui.inputs.multi-select
+                    name="demo_segments"
+                    placeholder="Select segments..."
+                    :values="['growth', 'ops']"
+                    :options="[
+                        ['value' => 'enterprise', 'label' => 'Enterprise'],
+                        ['value' => 'growth', 'label' => 'Growth'],
+                        ['value' => 'support', 'label' => 'Support'],
+                        ['value' => 'ops', 'label' => 'Operations'],
+                    ]"
+                />
+            </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-3">
             <!-- Mode Search (filtrage local des options) -->
             <div class="space-y-2">
                 <div class="label"><span class="label-text text-xs">Search (local)</span></div>
@@ -74,5 +104,3 @@
         </div>
     </div>
 </section>
-
-

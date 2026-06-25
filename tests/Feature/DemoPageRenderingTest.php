@@ -34,6 +34,11 @@ it('renders the UI demo page with section anchors and FAB navigator', function (
     $response->assertSee('data-module="token-input"', false);
     $response->assertSee('data-module="editable-grid"', false);
     $response->assertSee('data-module="ordered-list"', false);
+    $response->assertSee('data-module="multi-select"', false);
+    $response->assertSee('daisy-multi-select', false);
+    $response->assertSee('name="demo_countries[]"', false);
+    $response->assertSee('name="demo_segments[]"', false);
+    $response->assertSee('Multiple bordered', false);
     $response->assertSee('Roadmap éditoriale', false);
     $response->assertSee('Charts (ECharts)', false);
     $response->assertSee('Trafic d&#039;acquisition', false);
@@ -41,7 +46,14 @@ it('renders the UI demo page with section anchors and FAB navigator', function (
     $response->assertSee('Mix de revenus', false);
     $response->assertSee('Charge support', false);
     $response->assertSee('Pipeline équipe produit', false);
-    $response->assertSee('Annuaire synchronisé', false);
+    $response->assertSee('Annuaire synchronisé avec sélection', false);
+    $response->assertSee('Sélection multipage', false);
+    $response->assertSee('data-table-selection-feedback', false);
+    $response->assertSee('data-table-select-filtered', false);
+    $response->assertSee('data-table-bulk-actions', false);
+    $response->assertSee('Exporter la sélection', false);
+    $response->assertSee('"selection":{"enabled":true,"mode":"multiple","rowKey":"id"}', false);
+    $response->assertSee('"selectedIds":["1","8"]', false);
     $response->assertSee('Checklist support', false);
     $response->assertSee('Editable Grid', false);
     $response->assertSee('data-transfer-handle', false);
@@ -98,6 +110,24 @@ it('applies column filters on the demo table endpoint', function () {
 
     expect($response->json('rowCount'))->toBe(3);
     expect(collect($response->json('rows'))->pluck('status')->unique()->all())->toBe(['Archived']);
+});
+
+it('paginates demo table rows across multiple pages', function () {
+    $response = $this->getJson('/demo/table/api/get?pageIndex=1&pageSize=5');
+
+    $response->assertSuccessful();
+    $response->assertJson([
+        'rowCount' => 12,
+        'pageCount' => 3,
+        'state' => [
+            'pageIndex' => 1,
+            'pageSize' => 5,
+        ],
+    ]);
+
+    expect($response->json('rows'))->toHaveCount(5);
+    expect($response->json('rows.0.id'))->toBe(6);
+    expect($response->json('rows.4.id'))->toBe(10);
 });
 
 it('returns every expected calendar event without skipping days after long events', function () {

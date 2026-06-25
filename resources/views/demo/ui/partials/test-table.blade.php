@@ -62,10 +62,11 @@
                     <span class="badge badge-outline">Pagination distante</span>
                     <span class="badge badge-outline">Recherche</span>
                     <span class="badge badge-outline">État persistant</span>
+                    <span class="badge badge-outline">Sélection multipage</span>
                 </div>
                 <div>
-                    <h3 class="text-sm font-semibold">Annuaire synchronisé</h3>
-                    <p class="text-sm opacity-70">Le composant délègue ici tri, pagination, filtres et recherche à l’endpoint de démo <code>/demo/table/api/get</code>, avec persistance de l’état dans l’URL.</p>
+                    <h3 class="text-sm font-semibold">Annuaire synchronisé avec sélection</h3>
+                    <p class="text-sm opacity-70">Le composant délègue ici tri, pagination, filtres, recherche et sélection de lignes à l’endpoint de démo <code>/demo/table/api/get</code>. La sélection initiale contient une ligne visible et une ligne située sur une autre page.</p>
                 </div>
 
                 <x-daisy::ui.data-display.table
@@ -74,8 +75,10 @@
                     pin-cols
                     persist-state="url"
                     state-key="demo-users-table"
-                    caption="Annuaire synchronisé"
+                    caption="Annuaire synchronisé avec sélection"
                     endpoint="{{ route('demo.table.api.get') }}"
+                    selection="multiple"
+                    row-key="id"
                     :columns="[
                         ['key' => 'name', 'label' => 'Nom', 'sortable' => true, 'width' => '14rem'],
                         ['key' => 'email', 'label' => 'Email', 'sortable' => true],
@@ -96,10 +99,23 @@
                         'sorting' => [
                             ['id' => 'name', 'desc' => false],
                         ],
+                        'selection' => [
+                            'selectedIds' => [1, 8],
+                            'selectionScope' => 'page',
+                        ],
                     ]"
                     :page-size-options="[5, 10, 25]"
                     column-visibility
-                />
+                >
+                    <x-slot:bulkActions>
+                        <button type="button" class="btn btn-xs btn-primary" data-table-bulk-action="export">
+                            Exporter la sélection
+                        </button>
+                        <button type="button" class="btn btn-xs btn-ghost" data-table-bulk-action="assign">
+                            Assigner
+                        </button>
+                    </x-slot:bulkActions>
+                </x-daisy::ui.data-display.table>
             </div>
         </div>
 
@@ -146,6 +162,7 @@
                 <ul class="space-y-2 text-sm opacity-70">
                     <li>Tri initial via <code>initialState.sorting</code></li>
                     <li>Pagination multi-page en client et serveur</li>
+                    <li>Sélection de lignes avec conservation entre pages</li>
                     <li>Filtres texte, select et booléen via <code>filter</code> et <code>filters</code></li>
                     <li>Masquage dynamique avec <code>column-visibility</code></li>
                     <li>Persistance de l’état avec <code>persist-state</code> et <code>state-key</code></li>
