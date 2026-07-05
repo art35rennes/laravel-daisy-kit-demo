@@ -22,6 +22,7 @@
         <x-daisy::docs.sections.intro 
             title="Notification" 
             subtitle="Notification toast."
+            jsModule="notify"
         />
     </x-slot:intro>
 
