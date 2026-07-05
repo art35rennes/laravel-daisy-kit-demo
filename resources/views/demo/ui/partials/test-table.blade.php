@@ -1,7 +1,7 @@
 <!-- Table -->
 <section class="space-y-4 bg-base-200 p-6 rounded-box">
     <h2 class="text-lg font-medium">Table</h2>
-    <p class="opacity-70">Composant tabulaire client/serveur piloté par <code>table-kit</code>. La démo montre ici des cas concrets: tri initial, visibilité de colonnes, cellules HTML, table compacte et endpoint distant.</p>
+    <p class="opacity-70">Composant tabulaire client/serveur piloté par <code>table-kit</code>. La démo montre ici des cas concrets: tri initial, visibilité de colonnes, cellules HTML, sélection, détails, sous-lignes, liens, resize, édition inline et endpoint distant.</p>
 
     <div class="grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_minmax(18rem,0.8fr)]">
         <div class="space-y-6">
@@ -117,6 +117,118 @@
                     </x-slot:bulkActions>
                 </x-daisy::ui.data-display.table>
             </div>
+
+            <div class="space-y-3">
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="badge badge-info badge-soft">Hiérarchie</span>
+                    <span class="badge badge-outline">Détails inline</span>
+                    <span class="badge badge-outline">Liens sûrs</span>
+                    <span class="badge badge-outline">Resize</span>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold">Programmes avec sous-lignes</h3>
+                    <p class="text-sm opacity-70">Table locale avec recherche <code>includes</code>, détail de ligne inline, sous-lignes via <code>sub-rows-key</code>, colonnes redimensionnables et cellules lien protégées par <code>link-policy</code>.</p>
+                </div>
+
+                <x-daisy::ui.data-display.table
+                    mode="client"
+                    size="sm"
+                    row-key="id"
+                    sub-rows-key="children"
+                    row-detail="inline"
+                    search-mode="includes"
+                    table-layout="fixed"
+                    min-width="900px"
+                    scroll-x="always"
+                    toolbar-layout="split"
+                    column-resizing
+                    caption="Programmes avec sous-lignes"
+                    :link-policy="['allowedSchemes' => ['https', 'mailto']]"
+                    :columns="[
+                        ['key' => 'name', 'label' => 'Programme', 'sortable' => true, 'size' => 220, 'minSize' => 160, 'truncate' => 'line'],
+                        ['key' => 'owner', 'label' => 'Owner', 'type' => 'link', 'size' => 180],
+                        ['key' => 'status', 'label' => 'Statut', 'html' => true, 'size' => 140],
+                        ['key' => 'actions', 'label' => 'Actions', 'type' => 'actions', 'html' => true],
+                    ]"
+                    :rows="[
+                        [
+                            'id' => 'release',
+                            'name' => 'Release unifiée',
+                            'owner' => ['href' => 'mailto:release@example.com', 'label' => 'release@example.com'],
+                            'status' => '<span class=\'badge badge-success badge-soft\'>Ready</span>',
+                            'detail' => 'Détail inline: jalons, risques et dépendances du programme.',
+                            'actions' => '<button type=\'button\' class=\'btn btn-xs btn-ghost\'>Ouvrir</button>',
+                            'children' => [
+                                ['id' => 'release-api', 'name' => 'API publique', 'owner' => ['href' => 'https://example.com/api', 'label' => 'API'], 'status' => '<span class=\'badge badge-info badge-soft\'>In progress</span>', 'actions' => '<button type=\'button\' class=\'btn btn-xs btn-ghost\'>Voir</button>'],
+                                ['id' => 'release-docs', 'name' => 'Documentation', 'owner' => ['href' => 'https://example.com/docs', 'label' => 'Docs'], 'status' => '<span class=\'badge badge-warning badge-soft\'>Review</span>', 'actions' => '<button type=\'button\' class=\'btn btn-xs btn-ghost\'>Voir</button>'],
+                            ],
+                        ],
+                        [
+                            'id' => 'security',
+                            'name' => 'Durcissement sécurité',
+                            'owner' => ['href' => 'https://example.com/security', 'label' => 'Security'],
+                            'status' => '<span class=\'badge badge-error badge-soft\'>Blocked</span>',
+                            'detail' => 'Détail inline: validation des politiques de lien et des rendus HTML.',
+                            'actions' => '<button type=\'button\' class=\'btn btn-xs btn-ghost\'>Ouvrir</button>',
+                            'children' => [
+                                ['id' => 'security-links', 'name' => 'Politique de liens', 'owner' => ['href' => 'https://example.com/security/links', 'label' => 'Links'], 'status' => '<span class=\'badge badge-success badge-soft\'>Ready</span>', 'actions' => '<button type=\'button\' class=\'btn btn-xs btn-ghost\'>Voir</button>'],
+                            ],
+                        ],
+                    ]"
+                    :initial-state="[
+                        'pagination' => ['pageSize' => 4],
+                        'expanded' => ['release' => true],
+                        'columnSizing' => ['name' => 240],
+                    ]"
+                    :page-size-options="[4, 8]"
+                />
+            </div>
+
+            <div class="space-y-3">
+                <div class="flex flex-wrap items-center gap-2">
+                    <span class="badge badge-success badge-soft">Édition</span>
+                    <span class="badge badge-outline">Filtres date</span>
+                    <span class="badge badge-outline">Mode row</span>
+                </div>
+                <div>
+                    <h3 class="text-sm font-semibold">Planning éditable</h3>
+                    <p class="text-sm opacity-70">Table locale avec cellules éditables, sauvegarde PATCH, filtres <code>date</code> et <code>date-range</code>, et colonnes éditables limitées.</p>
+                </div>
+
+                <x-daisy::ui.data-display.table
+                    mode="client"
+                    size="sm"
+                    row-key="id"
+                    editable
+                    edit-endpoint="{{ route('demo.table.api.update') }}"
+                    edit-method="PATCH"
+                    edit-mode="row"
+                    :editable-columns="['name', 'status', 'joined_at']"
+                    caption="Planning éditable"
+                    :columns="[
+                        ['key' => 'name', 'label' => 'Nom', 'sortable' => true],
+                        ['key' => 'status', 'label' => 'Statut', 'filterable' => true, 'filter' => ['type' => 'select', 'options' => [
+                            ['value' => 'Active', 'label' => 'Active'],
+                            ['value' => 'Invited', 'label' => 'Invited'],
+                            ['value' => 'Archived', 'label' => 'Archived'],
+                        ]]],
+                        ['key' => 'joined_at', 'label' => 'Entrée', 'sortable' => true, 'filterable' => true, 'filter' => ['type' => 'date']],
+                    ]"
+                    :filters="[
+                        ['id' => 'joined_period', 'label' => 'Période', 'type' => 'date-range', 'filterKeyFrom' => 'joined_after', 'filterKeyTo' => 'joined_before'],
+                    ]"
+                    :rows="[
+                        ['id' => 1, 'name' => 'Cy Ganderton', 'status' => 'Active', 'joined_at' => '2026-01-08'],
+                        ['id' => 2, 'name' => 'Hart Hagerty', 'status' => 'Invited', 'joined_at' => '2026-01-16'],
+                        ['id' => 3, 'name' => 'Brice Swyre', 'status' => 'Archived', 'joined_at' => '2026-02-03'],
+                        ['id' => 4, 'name' => 'Jolie Winters', 'status' => 'Active', 'joined_at' => '2026-02-11'],
+                    ]"
+                    :initial-state="[
+                        'pagination' => ['pageSize' => 4],
+                    ]"
+                    :page-size-options="[4, 8]"
+                />
+            </div>
         </div>
 
         <div class="space-y-6">
@@ -163,6 +275,9 @@
                     <li>Tri initial via <code>initialState.sorting</code></li>
                     <li>Pagination multi-page en client et serveur</li>
                     <li>Sélection de lignes avec conservation entre pages</li>
+                    <li>Détails inline, sous-lignes et liens sécurisés</li>
+                    <li>Resize de colonnes, recherche <code>fuzzy</code>/<code>includes</code> et layout fixe</li>
+                    <li>Édition inline avec endpoint PATCH et filtres <code>date</code>/<code>date-range</code></li>
                     <li>Filtres texte, select et booléen via <code>filter</code> et <code>filters</code></li>
                     <li>Masquage dynamique avec <code>column-visibility</code></li>
                     <li>Persistance de l’état avec <code>persist-state</code> et <code>state-key</code></li>

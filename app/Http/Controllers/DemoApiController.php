@@ -4,25 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Validation\Rule;
 
 class DemoApiController extends Controller
 {
     public function tableUsers(Request $request): JsonResponse
     {
-        $rows = collect([
-            ['id' => 1, 'name' => 'Cy Ganderton', 'email' => 'cy@example.com', 'status' => 'Active'],
-            ['id' => 2, 'name' => 'Hart Hagerty', 'email' => 'hart@example.com', 'status' => 'Invited'],
-            ['id' => 3, 'name' => 'Brice Swyre', 'email' => 'brice@example.com', 'status' => 'Archived'],
-            ['id' => 4, 'name' => 'Jolie Winters', 'email' => 'jolie@example.com', 'status' => 'Active'],
-            ['id' => 5, 'name' => 'Nico Bernard', 'email' => 'nico@example.com', 'status' => 'Invited'],
-            ['id' => 6, 'name' => 'Lina Carter', 'email' => 'lina@example.com', 'status' => 'Archived'],
-            ['id' => 7, 'name' => 'Mia Holmes', 'email' => 'mia@example.com', 'status' => 'Active'],
-            ['id' => 8, 'name' => 'Theo Bishop', 'email' => 'theo@example.com', 'status' => 'Invited'],
-            ['id' => 9, 'name' => 'Emma Stone', 'email' => 'emma@example.com', 'status' => 'Active'],
-            ['id' => 10, 'name' => 'Lucas Ford', 'email' => 'lucas@example.com', 'status' => 'Archived'],
-            ['id' => 11, 'name' => 'Nina Ross', 'email' => 'nina@example.com', 'status' => 'Active'],
-            ['id' => 12, 'name' => 'Owen Reed', 'email' => 'owen@example.com', 'status' => 'Invited'],
-        ]);
+        $rows = $this->demoTableRows();
 
         $pageIndex = max(0, (int) $request->integer('pageIndex', 0));
         $pageSize = max(1, (int) $request->integer('pageSize', 10));
@@ -66,6 +55,26 @@ class DemoApiController extends Controller
                 'active_only' => filter_var($filterValue, FILTER_VALIDATE_BOOLEAN)
                     ? $rows->filter(fn (array $row): bool => strcasecmp((string) $row['status'], 'Active') === 0)->values()
                     : $rows,
+                'joined_at' => filled($filterValue)
+                    ? $rows->filter(fn (array $row): bool => (string) $row['joined_at'] === (string) $filterValue)->values()
+                    : $rows,
+                'joined_period' => is_array($filterValue)
+                    ? $rows->filter(function (array $row) use ($filterValue): bool {
+                        $joinedAt = (string) $row['joined_at'];
+                        $from = filled($filterValue['from'] ?? null) ? (string) $filterValue['from'] : null;
+                        $to = filled($filterValue['to'] ?? null) ? (string) $filterValue['to'] : null;
+
+                        if ($from !== null && $joinedAt < $from) {
+                            return false;
+                        }
+
+                        if ($to !== null && $joinedAt > $to) {
+                            return false;
+                        }
+
+                        return true;
+                    })->values()
+                    : $rows,
                 default => $rows,
             };
         }
@@ -95,6 +104,58 @@ class DemoApiController extends Controller
     public function datatableUsers(Request $request): JsonResponse
     {
         return $this->tableUsers($request);
+    }
+
+    public function tableUserUpdate(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'rowId' => ['required', 'integer', 'between:1,12'],
+            'column' => ['required', 'string', Rule::in(['name', 'status', 'joined_at'])],
+            'value' => ['nullable', 'string', 'max:120'],
+            'dirty' => ['array'],
+        ]);
+
+        $row = $this->demoTableRows()
+            ->firstWhere('id', (int) $validated['rowId']);
+
+        if ($row === null) {
+            return response()->json(['message' => 'Demo row not found.'], 404);
+        }
+
+        $column = (string) $validated['column'];
+        $row[$column] = (string) ($validated['value'] ?? '');
+
+        return response()->json([
+            'row' => $row,
+            'dirty' => $validated['dirty'] ?? [],
+        ]);
+    }
+
+    /**
+     * @return Collection<int, array{
+     *     id: int,
+     *     name: string,
+     *     email: string,
+     *     status: string,
+     *     joined_at: string,
+     * }>
+     */
+    private function demoTableRows(): Collection
+    {
+        return collect([
+            ['id' => 1, 'name' => 'Cy Ganderton', 'email' => 'cy@example.com', 'status' => 'Active', 'joined_at' => '2026-01-08'],
+            ['id' => 2, 'name' => 'Hart Hagerty', 'email' => 'hart@example.com', 'status' => 'Invited', 'joined_at' => '2026-01-16'],
+            ['id' => 3, 'name' => 'Brice Swyre', 'email' => 'brice@example.com', 'status' => 'Archived', 'joined_at' => '2026-02-03'],
+            ['id' => 4, 'name' => 'Jolie Winters', 'email' => 'jolie@example.com', 'status' => 'Active', 'joined_at' => '2026-02-11'],
+            ['id' => 5, 'name' => 'Nico Bernard', 'email' => 'nico@example.com', 'status' => 'Invited', 'joined_at' => '2026-02-26'],
+            ['id' => 6, 'name' => 'Lina Carter', 'email' => 'lina@example.com', 'status' => 'Archived', 'joined_at' => '2026-03-07'],
+            ['id' => 7, 'name' => 'Mia Holmes', 'email' => 'mia@example.com', 'status' => 'Active', 'joined_at' => '2026-03-14'],
+            ['id' => 8, 'name' => 'Theo Bishop', 'email' => 'theo@example.com', 'status' => 'Invited', 'joined_at' => '2026-03-21'],
+            ['id' => 9, 'name' => 'Emma Stone', 'email' => 'emma@example.com', 'status' => 'Active', 'joined_at' => '2026-04-02'],
+            ['id' => 10, 'name' => 'Lucas Ford', 'email' => 'lucas@example.com', 'status' => 'Archived', 'joined_at' => '2026-04-09'],
+            ['id' => 11, 'name' => 'Nina Ross', 'email' => 'nina@example.com', 'status' => 'Active', 'joined_at' => '2026-04-18'],
+            ['id' => 12, 'name' => 'Owen Reed', 'email' => 'owen@example.com', 'status' => 'Invited', 'joined_at' => '2026-04-26'],
+        ]);
     }
 
     public function calendarEvents(Request $request): JsonResponse
