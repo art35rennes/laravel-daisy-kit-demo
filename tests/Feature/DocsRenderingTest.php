@@ -25,8 +25,8 @@ it('renders docs index page', function () {
     $res->assertSee('x-daisy::layout.app', false);
     $res->assertSee('x-daisy::ui.feedback.alert', false);
     $res->assertSee('Livewire 3', false);
-    $res->assertSee('139', false);
-    $res->assertSee('32', false);
+    $res->assertSee('144', false);
+    $res->assertSee('33', false);
     $res->assertSee('Parcours rapides', false);
     $res->assertSee('Démo UI', false);
     $res->assertSee('/docs/data-display/table', false);
@@ -65,12 +65,12 @@ it('renders the component index page linked from the docs home', function () {
     $res->assertSee('Contrat public', false);
     $res->assertSee('Alias publics', false);
     $res->assertSee('Entrées recommandées', false);
-    $res->assertSee('active · 139', false);
+    $res->assertSee('active · 144', false);
     $res->assertSee('Modules JS', false);
-    $res->assertSee('26', false);
+    $res->assertSee('28', false);
     $res->assertSee('Rechercher dans les composants', false);
     $res->assertSee('Filtre par nom, alias public, catégorie, tag ou module JS.', false);
-    $res->assertSee('139 composants affichés sur 139.', false);
+    $res->assertSee('144 composants affichés sur 144.', false);
     $res->assertSee('x-daisy::ui.data-display.table', false);
     $res->assertSee('x-daisy::forms.builder', false);
     $res->assertSee('Alias public :', false);
@@ -87,7 +87,7 @@ it('filters the component index by name alias category tag or js module', functi
     $filtered->assertSuccessful();
     $filtered->assertSee('value="alert-dismiss"', false);
     $filtered->assertSee('Module JS : <code>alert-dismiss</code>', false);
-    $filtered->assertSee('1 composant affiché sur 139.', false);
+    $filtered->assertSee('1 composant affiché sur 144.', false);
     $filtered->assertSee('/docs/feedback/alert', false);
     $filtered->assertDontSee('Alias public : <code>x-daisy::ui.data-display.table</code>', false);
 
@@ -95,7 +95,7 @@ it('filters the component index by name alias category tag or js module', functi
 
     $missing->assertSuccessful();
     $missing->assertSee('value="aucun-composant"', false);
-    $missing->assertSee('0 composant affiché sur 139.', false);
+    $missing->assertSee('0 composant affiché sur 144.', false);
     $missing->assertSee('Aucun composant trouvé', false);
 });
 
@@ -113,10 +113,10 @@ it('renders the template index page with public contracts and previews', functio
     $res->assertSee('Previews', false);
     $res->assertSee('Les templates layout du package se rendent maintenant directement via <code>view()</code>', false);
     $res->assertSee('Les boutons <code>Voir</code> pointent donc vers les routes de preview officielles de la démo.', false);
-    $res->assertSee('32', false);
-    $res->assertSee('13', false);
+    $res->assertSee('33', false);
+    $res->assertSee('14', false);
     $res->assertSee('19', false);
-    $res->assertSee('20', false);
+    $res->assertSee('21', false);
     $res->assertSee('x-daisy::templates.auth.login-simple', false);
     $res->assertSee('daisy::templates.form.builder', false);
     $res->assertSee('templates.forms.builder', false);
@@ -155,7 +155,7 @@ it('links every previewable template card to an accessible preview route', funct
         ->values()
         ->all();
 
-    expect($previewLinks)->toHaveCount(20);
+    expect($previewLinks)->toHaveCount(21);
     expect($brokenLinks)->toBeEmpty('Broken template preview links: '.implode(', ', $brokenLinks));
 });
 
@@ -187,6 +187,18 @@ it('renders the table documentation with the current component API', function ()
     $res->assertSee('endpoint=&quot;{{ route(', false);
     $res->assertSee('persist-state=&quot;url&quot;', false);
     $res->assertSee('data-table-filter="active_only"', false);
+    $res->assertSee('Détails, sous-lignes et liens', false);
+    $res->assertSee('Édition inline et filtres dates', false);
+    $res->assertSee('row-detail=&quot;inline&quot;', false);
+    $res->assertSee('sub-rows-key=&quot;children&quot;', false);
+    $res->assertSee('column-resizing', false);
+    $res->assertSee('edit-endpoint=&quot;{{ route(', false);
+    $res->assertSee('edit-mode=&quot;row&quot;', false);
+    $res->assertSee('date-range', false);
+    $res->assertSee('<code>searchMode</code>', false);
+    $res->assertSee('<code>rowDetail</code>', false);
+    $res->assertSee('<code>editable</code>', false);
+    $res->assertSee('<code>linkPolicy</code>', false);
     $res->assertDontSee('x-daisy::ui.advanced.table', false);
 });
 
@@ -348,7 +360,8 @@ it('renders the reporting operations dashboard docs and preview', function () {
     $docs->assertSee('x-daisy::templates.reporting.operations-dashboard', false);
     $docs->assertSee('templates.reporting.operations-dashboard', false);
     $docs->assertSee('Terrain', false);
-    $docs->assertSee('data-reporting-chart="donut"', false);
+    $docs->assertSee('data-daisy-chart="1"', false);
+    $docs->assertDontSee('data-reporting-chart', false);
     $docs->assertDontSee('No data available', false);
 
     $preview = $this->get('/templates/reporting/operations-dashboard');
@@ -357,7 +370,8 @@ it('renders the reporting operations dashboard docs and preview', function () {
     $preview->assertSee('Terrain', false);
     $preview->assertSee('Bureau', false);
     $preview->assertSee('Gestion', false);
-    $preview->assertSee('data-reporting-chart="line"', false);
+    $preview->assertSee('data-daisy-chart="1"', false);
+    $preview->assertDontSee('data-reporting-chart', false);
     $preview->assertDontSee('No data available', false);
     $preview->assertDontSee('Internal Server Error', false);
 });

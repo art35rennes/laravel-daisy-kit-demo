@@ -54,6 +54,18 @@ it('renders the UI demo page with section anchors and FAB navigator', function (
     $response->assertSee('Exporter la sélection', false);
     $response->assertSee('"selection":{"enabled":true,"mode":"multiple","rowKey":"id"}', false);
     $response->assertSee('"selectedIds":["1","8"]', false);
+    $response->assertSee('Programmes avec sous-lignes', false);
+    $response->assertSee('Planning éditable', false);
+    $response->assertSee('data-table-row-detail', false);
+    $response->assertSee('data-table-resize="name"', false);
+    $response->assertSee('data-table-edit-cell', false);
+    $response->assertSee('data-table-filter-type="date"', false);
+    $response->assertSee('data-table-filter-type="date-range"', false);
+    $response->assertSee('"searchMode":"includes"', false);
+    $response->assertSee('"subRowsKey":"children"', false);
+    $response->assertSee('"columnResizing":true', false);
+    $response->assertSee('"editable":{"enabled":true', false);
+    $response->assertSee('demo\\/table\\/api\\/update', false);
     $response->assertSee('Checklist support', false);
     $response->assertSee('Editable Grid', false);
     $response->assertSee('data-transfer-handle', false);
@@ -110,6 +122,49 @@ it('applies column filters on the demo table endpoint', function () {
 
     expect($response->json('rowCount'))->toBe(3);
     expect(collect($response->json('rows'))->pluck('status')->unique()->all())->toBe(['Archived']);
+});
+
+it('applies date range filters on the demo table endpoint', function () {
+    $query = http_build_query([
+        'pageIndex' => 0,
+        'pageSize' => 10,
+        'columnFilters' => json_encode([
+            [
+                'id' => 'joined_period',
+                'value' => [
+                    'from' => '2026-03-01',
+                    'to' => '2026-03-31',
+                ],
+            ],
+        ]),
+    ]);
+
+    $response = $this->getJson("/demo/table/api/get?{$query}");
+
+    $response->assertSuccessful();
+
+    expect($response->json('rowCount'))->toBe(3);
+    expect(collect($response->json('rows'))->pluck('joined_at')->all())->toBe([
+        '2026-03-07',
+        '2026-03-14',
+        '2026-03-21',
+    ]);
+});
+
+it('accepts demo table edit payloads', function () {
+    $response = $this->patchJson('/demo/table/api/update', [
+        'rowId' => 2,
+        'column' => 'status',
+        'value' => 'Active',
+        'dirty' => [
+            'status' => 'Active',
+        ],
+    ]);
+
+    $response->assertSuccessful();
+    $response->assertJsonPath('row.id', 2);
+    $response->assertJsonPath('row.status', 'Active');
+    $response->assertJsonPath('dirty.status', 'Active');
 });
 
 it('paginates demo table rows across multiple pages', function () {
