@@ -167,6 +167,20 @@ it('accepts demo table edit payloads', function () {
     $response->assertJsonPath('dirty.status', 'Active');
 });
 
+it('accepts demo table creation payloads', function () {
+    $response = $this->postJson('/demo/table/api/create', [
+        'values' => [
+            'name' => 'New demo project',
+            'status' => 'Invited',
+            'joined_at' => '2026-05-01',
+        ],
+    ]);
+
+    $response->assertCreated();
+    $response->assertJsonPath('row.id', 13);
+    $response->assertJsonPath('row.name', 'New demo project');
+});
+
 it('paginates demo table rows across multiple pages', function () {
     $response = $this->getJson('/demo/table/api/get?pageIndex=1&pageSize=5');
 
