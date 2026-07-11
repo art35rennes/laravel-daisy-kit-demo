@@ -5,97 +5,42 @@
     $name = 'blueprint';
     $sections = [
         ['id' => 'intro', 'label' => 'Introduction'],
-        ['id' => 'base', 'label' => 'Composant'],
-        ['id' => 'template', 'label' => 'Template'],
-        ['id' => 'contract', 'label' => 'Contrat JSON'],
+        ['id' => 'example', 'label' => 'Exemple'],
+        ['id' => 'contract', 'label' => 'Contrat'],
         ['id' => 'api', 'label' => 'API'],
     ];
     $props = DocsHelper::getComponentProps($category, $name);
 
-    $templateCode = <<<'CODE'
-<x-daisy::templates.advanced.blueprint
-    name-prefix="demo"
-    workflow-height="560px"
-    example-height="420px"
-/>
-CODE;
-
-    $customTemplateCode = <<<'CODE'
-<x-daisy::templates.advanced.blueprint
-    :workflow-node-types="$workflowNodeTypes"
-    :workflow-value="$workflowValue"
-    :schema-node-types="$schemaNodeTypes"
-    :schema-value="$schemaValue"
-    :integration-node-types="$integrationNodeTypes"
-    :integration-value="$integrationValue"
-/>
-CODE;
-
     $componentCode = <<<'CODE'
 <x-daisy::ui.advanced.blueprint
-    name="workflow"
-    mode="workflow"
-    height="520px"
-    :node-types="$nodeTypes"
+    name="publication_workflow"
+    direction="TB"
+    :node-categories="$nodeCategories"
+    :transition-categories="$transitionCategories"
     :value="$workflow"
 />
 CODE;
 
-    $contractCode = json_encode([
+    $workflow = [
         'version' => 1,
         'nodes' => [
-            [
-                'id' => 'source-1',
-                'type' => 'source',
-                'label' => 'Source',
-                'position' => ['x' => 40, 'y' => 80],
-                'data' => ['connector' => 'Stripe'],
-            ],
+            ['id' => 'draft', 'label' => 'Brouillon', 'description' => 'Contenu en préparation.', 'category' => 'draft', 'position' => ['x' => 160, 'y' => 50], 'data' => []],
+            ['id' => 'review', 'label' => 'Relecture', 'description' => 'Contrôle éditorial.', 'category' => 'review', 'position' => ['x' => 160, 'y' => 210], 'data' => []],
+            ['id' => 'published', 'label' => 'Publié', 'description' => 'Contenu diffusé.', 'category' => 'published', 'position' => ['x' => 160, 'y' => 370], 'data' => []],
         ],
-        'edges' => [
-            [
-                'id' => 'edge-1',
-                'source' => 'source-1',
-                'sourcePort' => 'rows',
-                'target' => 'sink-1',
-                'targetPort' => 'in',
-                'data' => [],
-            ],
+        'transitions' => [
+            ['id' => 'submit', 'source' => 'draft', 'target' => 'review', 'label' => 'Soumettre', 'description' => '', 'category' => 'progress', 'data' => []],
+            ['id' => 'publish', 'source' => 'review', 'target' => 'published', 'label' => 'Publier', 'description' => '', 'category' => 'progress', 'data' => []],
         ],
         'viewport' => ['x' => 0, 'y' => 0, 'zoom' => 1],
-    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-
-    $nodeTypesCode = json_encode([
-        [
-            'type' => 'source',
-            'label' => 'Source',
-            'category' => 'Integration',
-            'description' => 'Reads rows from an external connector.',
-            'outputs' => [['key' => 'rows', 'label' => 'Rows', 'kind' => 'dataset', 'multiple' => true]],
-            'defaults' => ['connector' => 'Stripe'],
-        ],
-        [
-            'type' => 'sink',
-            'label' => 'Sink',
-            'category' => 'Integration',
-            'description' => 'Writes rows to a target system.',
-            'inputs' => [['key' => 'in', 'label' => 'In', 'kind' => 'dataset']],
-            'defaults' => ['target' => 'warehouse.orders'],
-        ],
-    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    ];
 @endphp
 
-<x-daisy::docs.page
-    title="Blueprint"
-    category="advanced"
-    name="blueprint"
-    type="component"
-    :sections="$sections"
->
+<x-daisy::docs.page title="Blueprint" category="advanced" name="blueprint" type="component" :sections="$sections">
     <x-slot:intro>
         <x-daisy::docs.sections.intro
             title="Blueprint"
-            subtitle="Éditeur visuel de graphes et workflows basé sur Rete.js v2."
+            subtitle="Éditeur visuel de workflows orientés, avec nœuds, transitions et inspection contextuelle."
             jsModule="blueprint"
         />
     </x-slot:intro>
@@ -103,125 +48,32 @@ CODE;
     <x-daisy::docs.sections.example name="blueprint">
         <x-slot:preview>
             <x-daisy::ui.advanced.blueprint
-                name="docs_blueprint_component"
-                mode="workflow"
-                height="420px"
-                :node-types="[
-                    [
-                        'type' => 'source',
-                        'label' => 'Source',
-                        'category' => 'Demo',
-                        'outputs' => [['key' => 'rows', 'label' => 'Rows', 'kind' => 'dataset', 'multiple' => true]],
-                    ],
-                    [
-                        'type' => 'sink',
-                        'label' => 'Destination',
-                        'category' => 'Demo',
-                        'inputs' => [['key' => 'in', 'label' => 'In', 'kind' => 'dataset']],
-                    ],
+                name="docs_blueprint"
+                direction="TB"
+                height="440px"
+                :node-categories="[
+                    ['value' => 'draft', 'label' => 'Préparation'],
+                    ['value' => 'review', 'label' => 'Relecture'],
+                    ['value' => 'published', 'label' => 'Publication'],
                 ]"
-                :value="[
-                    'version' => 1,
-                    'nodes' => [
-                        ['id' => 'source-1', 'type' => 'source', 'label' => 'Source', 'position' => ['x' => 80, 'y' => 100], 'data' => []],
-                        ['id' => 'sink-1', 'type' => 'sink', 'label' => 'Destination', 'position' => ['x' => 420, 'y' => 120], 'data' => []],
-                    ],
-                    'edges' => [
-                        ['id' => 'edge-1', 'source' => 'source-1', 'sourcePort' => 'rows', 'target' => 'sink-1', 'targetPort' => 'in', 'data' => []],
-                    ],
-                    'viewport' => ['x' => 0, 'y' => 0, 'zoom' => 1],
-                ]"
+                :transition-categories="[['value' => 'progress', 'label' => 'Progression']]"
+                :value="$workflow"
             />
         </x-slot:preview>
         <x-slot:code>
-            <x-daisy::ui.advanced.code-editor
-                language="blade"
-                :value="$componentCode"
-                :readonly="true"
-                :showToolbar="false"
-                :showFoldAll="false"
-                :showUnfoldAll="false"
-                :showFormat="false"
-                :showCopy="true"
-                height="220px"
-            />
+            <x-daisy::ui.advanced.code-editor language="blade" :value="$componentCode" :readonly="true" :showToolbar="false" :showFoldAll="false" :showUnfoldAll="false" :showFormat="false" :showCopy="true" height="220px" />
         </x-slot:code>
     </x-daisy::docs.sections.example>
 
-    <x-daisy::docs.sections.custom id="template" title="Template d’exemples">
-        <div class="not-prose space-y-6">
-            <div class="alert alert-info alert-soft">
-                <span>Le smoke Blueprint est maintenant disponible comme template public. Il couvre workflow éditable, workflow readonly, schéma de données et pipeline d’intégration.</span>
-            </div>
-
-            <x-daisy::templates.advanced.blueprint
-                name-prefix="docs_blueprint"
-                workflow-height="560px"
-                example-height="420px"
-            />
-
-            <div class="grid gap-4 lg:grid-cols-2">
-                <div>
-                    <p class="mb-2 text-sm font-semibold">Utilisation rapide</p>
-                    <x-daisy::ui.advanced.code-editor
-                        language="blade"
-                        :value="$templateCode"
-                        :readonly="true"
-                        :showToolbar="false"
-                        :showFoldAll="false"
-                        :showUnfoldAll="false"
-                        :showFormat="false"
-                        :showCopy="true"
-                        height="180px"
-                    />
-                </div>
-                <div>
-                    <p class="mb-2 text-sm font-semibold">Graphes personnalisés</p>
-                    <x-daisy::ui.advanced.code-editor
-                        language="blade"
-                        :value="$customTemplateCode"
-                        :readonly="true"
-                        :showToolbar="false"
-                        :showFoldAll="false"
-                        :showUnfoldAll="false"
-                        :showFormat="false"
-                        :showCopy="true"
-                        height="180px"
-                    />
-                </div>
-            </div>
-        </div>
-    </x-daisy::docs.sections.custom>
-
-    <x-daisy::docs.sections.custom id="contract" title="Contrat JSON">
+    <x-daisy::docs.sections.custom id="contract" title="Contrat de données">
         <div class="not-prose grid gap-4 lg:grid-cols-2">
-            <div>
-                <p class="mb-2 text-sm font-semibold">Graphe sérialisé</p>
-                <x-daisy::ui.advanced.code-editor
-                    language="json"
-                    :value="$contractCode"
-                    :readonly="true"
-                    :showToolbar="false"
-                    :showFoldAll="false"
-                    :showUnfoldAll="false"
-                    :showFormat="false"
-                    :showCopy="true"
-                    height="360px"
-                />
+            <div class="rounded-box border border-base-300 bg-base-100 p-4">
+                <h3 class="font-semibold">Workflow</h3>
+                <p class="mt-2 text-sm text-base-content/70"><code>value</code> contient <code>nodes</code>, <code>transitions</code> et un <code>viewport</code>. Chaque nœud possède un identifiant, un libellé, une catégorie et une position.</p>
             </div>
-            <div>
-                <p class="mb-2 text-sm font-semibold">Catalogue de nœuds</p>
-                <x-daisy::ui.advanced.code-editor
-                    language="json"
-                    :value="$nodeTypesCode"
-                    :readonly="true"
-                    :showToolbar="false"
-                    :showFoldAll="false"
-                    :showUnfoldAll="false"
-                    :showFormat="false"
-                    :showCopy="true"
-                    height="360px"
-                />
+            <div class="rounded-box border border-base-300 bg-base-100 p-4">
+                <h3 class="font-semibold">Synchronisation</h3>
+                <p class="mt-2 text-sm text-base-content/70">Donnez un <code>name</code> pour récupérer le JSON mis à jour à la soumission d’un formulaire. Les événements <code>daisy:blueprint:change</code> et <code>daisy:blueprint:select</code> permettent de brancher votre logique métier.</p>
             </div>
         </div>
     </x-daisy::docs.sections.custom>

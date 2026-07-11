@@ -5,31 +5,26 @@
     $navItems = DocsHelper::getTemplateNavigationItems($prefix);
     $sections = [
         ['id' => 'intro', 'label' => 'Introduction'],
-        ['id' => 'preview', 'label' => 'Preview'],
-        ['id' => 'usage', 'label' => 'Usage'],
+        ['id' => 'preview', 'label' => 'Aperçu'],
+        ['id' => 'usage', 'label' => 'Utilisation'],
     ];
 
     $basicUsage = <<<'CODE'
 <x-daisy::templates.advanced.blueprint
-    name-prefix="demo"
-    workflow-height="560px"
-    example-height="420px"
+    name-prefix="publication"
 />
 CODE;
 
-    $customUsage = <<<'CODE'
+    $compactUsage = <<<'CODE'
 <x-daisy::templates.advanced.blueprint
-    :workflow-node-types="$workflowNodeTypes"
-    :workflow-value="$workflowValue"
-    :schema-node-types="$schemaNodeTypes"
-    :schema-value="$schemaValue"
-    :integration-node-types="$integrationNodeTypes"
-    :integration-value="$integrationValue"
+    :show-header="false"
+    :show-contract="false"
+    name-prefix="workflow_examples"
 />
 CODE;
 @endphp
 
-<x-daisy::layout.docs title="Blueprint examples" :sidebarItems="$navItems" :sections="$sections" :currentRoute="request()->path()">
+<x-daisy::layout.docs title="Blueprint workflows" :sidebarItems="$navItems" :sections="$sections" :currentRoute="request()->path()">
     <x-slot:navbar>
         <x-daisy::ui.overlay.dropdown label="Templates" buttonClass="btn btn-sm btn-ghost" end>
             <li><a href="/{{ $prefix }}">Docs</a></li>
@@ -39,10 +34,9 @@ CODE;
     </x-slot:navbar>
 
     <section id="intro">
-        <h1>Blueprint examples</h1>
+        <h1>Blueprint workflows</h1>
         <p class="text-base-content/70">
-            Template avancé pour exposer plusieurs graphes Blueprint prêts à adapter : workflow éditable,
-            workflow readonly, schéma de données et pipeline d’intégration.
+            Trois scénarios prêts à explorer : un circuit de validation, un workflow avec retours et un graphe dense organisé automatiquement.
         </p>
         <div class="mt-4 grid gap-3 md:grid-cols-2">
             <div class="rounded-box border border-base-300 bg-base-100 p-4">
@@ -58,31 +52,23 @@ CODE;
 
     <section id="preview" class="mt-10">
         <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <h2>Preview</h2>
+            <h2>Aperçu</h2>
             <a href="{{ route('templates.advanced.blueprint') }}" class="btn btn-primary btn-sm">Voir en pleine page</a>
         </div>
 
-        <x-daisy::templates.advanced.blueprint
-            name-prefix="docs_template_blueprint"
-            workflow-height="560px"
-            example-height="420px"
-        />
+        <x-daisy::templates.advanced.blueprint name-prefix="docs_template_blueprint" />
     </section>
 
     <section id="usage" class="mt-10">
-        <h2>Usage</h2>
+        <h2>Utilisation</h2>
         <div class="grid gap-4 lg:grid-cols-2">
             <div>
-                <h3 class="text-base font-semibold">Utilisation rapide</h3>
-                <div class="mockup-code mt-3">
-                    <pre data-prefix=""><code>{{ $basicUsage }}</code></pre>
-                </div>
+                <h3 class="text-base font-semibold">Exemples complets</h3>
+                <div class="mockup-code mt-3"><pre data-prefix=""><code>{{ $basicUsage }}</code></pre></div>
             </div>
             <div>
-                <h3 class="text-base font-semibold">Graphes personnalisés</h3>
-                <div class="mockup-code mt-3">
-                    <pre data-prefix=""><code>{{ $customUsage }}</code></pre>
-                </div>
+                <h3 class="text-base font-semibold">Mode compact</h3>
+                <div class="mockup-code mt-3"><pre data-prefix=""><code>{{ $compactUsage }}</code></pre></div>
             </div>
         </div>
     </section>
