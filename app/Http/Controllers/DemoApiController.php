@@ -131,6 +131,25 @@ class DemoApiController extends Controller
         ]);
     }
 
+    public function tableUserCreate(Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'values' => ['required', 'array'],
+            'values.name' => ['required', 'string', 'max:120'],
+            'values.status' => ['required', 'string', Rule::in(['Active', 'Invited', 'Archived'])],
+            'values.joined_at' => ['required', 'date_format:Y-m-d'],
+        ]);
+
+        return response()->json([
+            'row' => [
+                'id' => 13,
+                'name' => $validated['values']['name'],
+                'status' => $validated['values']['status'],
+                'joined_at' => $validated['values']['joined_at'],
+            ],
+        ], 201);
+    }
+
     /**
      * @return Collection<int, array{
      *     id: int,

@@ -199,20 +199,31 @@
                     mode="client"
                     size="sm"
                     row-key="id"
-                    editable
-                    edit-endpoint="{{ route('demo.table.api.update') }}"
-                    edit-method="PATCH"
-                    edit-mode="row"
-                    :editable-columns="['name', 'status', 'joined_at']"
+                    :editable="[
+                        'enabled' => true,
+                        'mode' => 'row',
+                        'columns' => ['name', 'status', 'joined_at'],
+                        'update' => ['strategy' => 'remote', 'endpoint' => ['url' => route('demo.table.api.update'), 'method' => 'PATCH']],
+                        'create' => [
+                            'enabled' => true,
+                            'strategy' => 'remote',
+                            'endpoint' => ['url' => route('demo.table.api.create'), 'method' => 'POST'],
+                            'defaults' => ['status' => 'Invited', 'joined_at' => '2026-05-01'],
+                        ],
+                    ]"
                     caption="Planning éditable"
                     :columns="[
-                        ['key' => 'name', 'label' => 'Nom', 'sortable' => true],
+                        ['key' => 'name', 'label' => 'Nom', 'sortable' => true, 'editor' => ['type' => 'text', 'required' => true]],
                         ['key' => 'status', 'label' => 'Statut', 'filterable' => true, 'filter' => ['type' => 'select', 'options' => [
                             ['value' => 'Active', 'label' => 'Active'],
                             ['value' => 'Invited', 'label' => 'Invited'],
                             ['value' => 'Archived', 'label' => 'Archived'],
+                        ]], 'editor' => ['type' => 'select', 'required' => true, 'options' => [
+                            ['value' => 'Active', 'label' => 'Active'],
+                            ['value' => 'Invited', 'label' => 'Invited'],
+                            ['value' => 'Archived', 'label' => 'Archived'],
                         ]]],
-                        ['key' => 'joined_at', 'label' => 'Entrée', 'sortable' => true, 'filterable' => true, 'filter' => ['type' => 'date']],
+                        ['key' => 'joined_at', 'label' => 'Entrée', 'sortable' => true, 'filterable' => true, 'filter' => ['type' => 'date'], 'editor' => ['type' => 'date', 'required' => true]],
                     ]"
                     :filters="[
                         ['id' => 'joined_period', 'label' => 'Période', 'type' => 'date-range', 'filterKeyFrom' => 'joined_after', 'filterKeyTo' => 'joined_before'],
