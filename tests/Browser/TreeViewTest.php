@@ -7,10 +7,11 @@ it('expands lazy node and selects items in treeview without errors', function ()
         ->assertNoJavascriptErrors();
 
     // Développe le dossier B (lazy) via le bouton dédié de la démo
-    $page->click('#btnExpandB');
+    $page->click('#btnExpandB')
+        ->waitForText('Fichier B1');
 
     // Clique sur un élément pour sélectionner (dans l’arbre single)
-    $page->click('#demoTreeSingle [role="tree"] li[role="treeitem"] [data-label]');
+    $page->click('#demoTreeSingle [role="tree"] li[role="treeitem"] [data-tree-label]');
 
     // Dans l’arbre multi, clique sur une checkbox
     $page->click('#demoTreeMulti input[type="checkbox"]');

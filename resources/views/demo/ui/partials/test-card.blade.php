@@ -26,6 +26,20 @@
             Texte sur image full
         </x-daisy::ui.layout.card>
     </div>
+    <fieldset class="grid gap-4 md:grid-cols-2">
+        <legend class="text-sm font-semibold">Cartes sélectionnables</legend>
+        <label>
+            <x-daisy::ui.layout.card title="Plan Starter" :bordered="true" :selectable="true" :checked="true" role="radio">
+                <input type="radio" name="demo-plan" value="starter" class="sr-only" checked />
+                10 projets et 5 membres inclus.
+            </x-daisy::ui.layout.card>
+        </label>
+        <label>
+            <x-daisy::ui.layout.card title="Plan Pro" :bordered="true" :selectable="true" :checked="false" role="radio">
+                <input type="radio" name="demo-plan" value="pro" class="sr-only" />
+                Projets et membres illimités.
+            </x-daisy::ui.layout.card>
+        </label>
+    </fieldset>
 </section>
-
 

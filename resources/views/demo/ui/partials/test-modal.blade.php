@@ -68,6 +68,16 @@
             </x-daisy::ui.overlay.modal>
         </div>
 
+        <div class="space-y-2">
+            <x-daisy::ui.inputs.button popovertarget="demo-modal-popover">Ouvrir avec Popover API</x-daisy::ui.inputs.button>
+            <x-daisy::ui.overlay.modal id="demo-modal-popover" title="Modal Popover" method="popover">
+                Cette modal exploite la Popover API native du navigateur.
+                <x-slot:actions>
+                    <x-daisy::ui.inputs.button popovertarget="demo-modal-popover" popovertargetaction="hide">Fermer</x-daisy::ui.inputs.button>
+                </x-slot:actions>
+            </x-daisy::ui.overlay.modal>
+        </div>
+
         <!-- Largeur personnalisée via boxClass -->
         <div class="space-y-2">
             <x-daisy::ui.inputs.button onclick="document.getElementById('demo-modal-lg').showModal()">Large</x-daisy::ui.inputs.button>
@@ -114,5 +124,4 @@
         </div>
     </div>
 </section>
-
 

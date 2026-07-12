@@ -19,6 +19,16 @@
             <x-daisy::ui.inputs.button>Right</x-daisy::ui.inputs.button>
         </x-daisy::ui.overlay.tooltip>
 
+        <x-daisy::ui.overlay.tooltip open position="top" alignment="start" text="Top start">
+            <x-daisy::ui.inputs.button>Top start</x-daisy::ui.inputs.button>
+        </x-daisy::ui.overlay.tooltip>
+        <x-daisy::ui.overlay.tooltip open position="bottom" alignment="center" text="Bottom center">
+            <x-daisy::ui.inputs.button>Bottom center</x-daisy::ui.inputs.button>
+        </x-daisy::ui.overlay.tooltip>
+        <x-daisy::ui.overlay.tooltip open position="left" alignment="end" text="Left end">
+            <x-daisy::ui.inputs.button>Left end</x-daisy::ui.inputs.button>
+        </x-daisy::ui.overlay.tooltip>
+
         <x-daisy::ui.overlay.tooltip open color="neutral" text="neutral">
             <x-daisy::ui.inputs.button color="neutral">neutral</x-daisy::ui.inputs.button>
         </x-daisy::ui.overlay.tooltip>

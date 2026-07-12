@@ -247,7 +247,7 @@ class DemoApiController extends Controller
             ],
         };
 
-        return response()->json($data);
+        return response()->json(['items' => $data]);
     }
 
     public function treeSearch(Request $request): JsonResponse

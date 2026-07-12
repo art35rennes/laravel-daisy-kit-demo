@@ -2,13 +2,13 @@
 <section class="space-y-4 bg-base-200 p-6 rounded-box">
     <h2 class="text-lg font-medium">TreeView</h2>
     <p class="text-sm opacity-70">
-        Démo du lazy-loading: lorsqu'un nœud marqué <code>lazy</code> est ouvert, l'événement <code>tree:lazy</code> est émis.
-        On intercepte cet événement pour appeler une route REST (<code>/demo/api/tree-children?node=...</code>) et on remplace le placeholder par les enfants retournés.
+        Contrôle de formulaire accessible avec sélection hiérarchique, recherche locale ou distante et chargement différé.
+        Un nœud <code>lazy</code> appelle automatiquement l’endpoint configuré, qui doit retourner <code>{ items: [...] }</code>.
     </p>
     <div class="grid md:grid-cols-2 gap-6 items-start">
         <div class="space-y-3">
             <div class="text-sm opacity-70">Sélection simple</div>
-            <x-daisy::ui.advanced.tree-view id="demoTreeSingle" selection="single" :persist="true" controlSize="xs" lazyUrl="/demo/api/tree-children" lazyParam="node" :search="true" :searchAuto="false" searchMin="1" searchDebounce="150" searchUrl="/demo/api/tree-search" searchParam="q" :data="[
+            <x-daisy::ui.advanced.tree-view id="demoTreeSingle" name="demo_tree_single" selection="single" :persist="true" controlSize="xs" lazyUrl="/demo/api/tree-children" lazyParam="node" :search="true" :searchAuto="false" searchMin="1" searchDebounce="150" searchUrl="/demo/api/tree-search" searchParam="q" :data="[
                 ['id' => 'root', 'label' => 'Racine', 'expanded' => true, 'children' => [
                     ['id' => 'a', 'label' => 'Dossier A', 'children' => [
                         ['id' => 'a1', 'label' => 'Fichier A1'],
@@ -18,12 +18,12 @@
                     ['id' => 'c', 'label' => 'Fichier C'],
                 ]],
             ]" />
-            <div class="text-xs opacity-70">Événements: <code>tree:select</code>, <code>tree:lazy</code></div>
+            <div class="text-xs opacity-70">Événements: <code>daisy:tree-change</code>, <code>daisy:tree-load</code>, <code>daisy:tree-error</code></div>
         </div>
 
         <div class="space-y-3">
             <div class="text-sm opacity-70">Sélection multiple</div>
-            <x-daisy::ui.advanced.tree-view id="demoTreeMulti" selection="multiple" :persist="true" controlSize="xs" lazyUrl="/demo/api/tree-children" lazyParam="node" :search="true" :searchAuto="true" searchMin="2" searchDebounce="250" :data="[
+            <x-daisy::ui.advanced.tree-view id="demoTreeMulti" name="demo_tree_multi" selection="multiple" :persist="true" controlSize="xs" lazyUrl="/demo/api/tree-children" lazyParam="node" :search="true" :searchAuto="true" searchMin="2" searchDebounce="250" :data="[
                 [
                     'id' => '1',
                     'label' => 'Projet Alpha',
@@ -93,8 +93,8 @@
     <div class="divider"></div>
     <div class="space-y-2">
         <div class="flex gap-2">
-            <button id="btnReadSelected" class="btn btn-primary btn-sm">Lire la sélection (multi)</button>
-            <button id="btnExpandB" class="btn btn-ghost btn-sm">Développer B (lazy)</button>
+            <button id="btnReadSelected" type="button" class="btn btn-primary btn-sm">Lire la sélection (multi)</button>
+            <button id="btnExpandB" type="button" class="btn btn-ghost btn-sm">Développer B (lazy)</button>
         </div>
         <pre id="selectedOutput" class="mockup-code w-full"><code></code></pre>
     </div>
@@ -128,7 +128,7 @@ Route::get('/demo/api/tree-children', function (\Illuminate\Http\Request $reques
             ['id' => $node.'-2', 'label' => 'Fichier '.$node.'-2'],
         ],
     };
-    return response()->json($data);
+    return response()->json(['items' => $data]);
 })->name('demo.tree.children');</code></pre>
     </div>
 
@@ -137,32 +137,36 @@ Route::get('/demo/api/tree-children', function (\Illuminate\Http\Request $reques
         document.addEventListener('DOMContentLoaded', () => {
             const single = document.getElementById('demoTreeSingle');
             const multi = document.getElementById('demoTreeMulti');
-            const out = document.getElementById('selectedOutput')?.querySelector('code');
+            const output = document.getElementById('selectedOutput')?.querySelector('code');
+
+            function writeSelection(value) {
+                if (output) {
+                    output.textContent = JSON.stringify(value);
+                }
+            }
 
             if (single) {
-                single.addEventListener('tree:select', () => {});
-                // Le lazy-loading est désormais géré automatiquement par le composant via data-lazy-url
+                single.addEventListener('daisy:tree-load', ({ detail }) => writeSelection(detail));
             }
 
             if (multi) {
-                multi.addEventListener('tree:select', () => {
-                    const ids = window.DaisyTreeView.getSelected(multi);
-                    if (out) out.textContent = JSON.stringify(ids);
-                });
+                multi.addEventListener('daisy:tree-change', ({ detail }) => writeSelection(detail));
             }
 
             const btnRead = document.getElementById('btnReadSelected');
-            if (btnRead && multi) btnRead.addEventListener('click', () => {
-                const ids = window.DaisyTreeView.getSelected(multi);
-                if (out) out.textContent = JSON.stringify(ids);
-            });
+            if (btnRead && multi) {
+                btnRead.addEventListener('click', () => {
+                    writeSelection(window.DaisyTreeView.get(multi)?.getValue() ?? []);
+                });
+            }
 
             const btnExpandB = document.getElementById('btnExpandB');
-            if (btnExpandB && single) btnExpandB.addEventListener('click', () => {
-                if (single.__treeApi) single.__treeApi.expand('b');
-            });
+            if (btnExpandB && single) {
+                btnExpandB.addEventListener('click', () => {
+                    window.DaisyTreeView.get(single)?.expand('b');
+                });
+            }
         });
     })();
     </script>
 </section>
-

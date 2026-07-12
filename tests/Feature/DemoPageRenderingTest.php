@@ -8,6 +8,22 @@ it('renders the UI demo page with section anchors and FAB navigator', function (
     $response->assertSee('id="demo-actions"', false);
     $response->assertSee('href="#demo-actions"', false);
     $response->assertSee('data-demo-use-cases', false);
+    $response->assertSee('daisy:tree-change', false);
+    $response->assertSee('name="demo_tree_single"', false);
+    $response->assertSee('name="demo_tree_multi"', false);
+    $response->assertSee('Aura', false);
+    $response->assertSee('aura-rainbow', false);
+    $response->assertSee('Megamenu', false);
+    $response->assertSee('megamenu-wide', false);
+    $response->assertSee('demo-megamenu-products', false);
+    $response->assertSee('Sur desktop, les entrées restent visibles.', false);
+    $response->assertSee('OTP', false);
+    $response->assertSee('name="demo_otp"', false);
+    $response->assertSee('otp-joined', false);
+    $response->assertSee('range-vertical', false);
+    $response->assertSee('tooltip-start', false);
+    $response->assertSee('popover="popover"', false);
+    $response->assertSee('Cartes sélectionnables', false);
     $response->assertSee('Parcours de démo réalistes', false);
     $response->assertSee('Dashboard éditable', false);
     $response->assertSee('Form Kit', false);
@@ -52,7 +68,7 @@ it('renders the UI demo page with section anchors and FAB navigator', function (
     $response->assertSee('data-table-select-filtered', false);
     $response->assertSee('data-table-bulk-actions', false);
     $response->assertSee('Exporter la sélection', false);
-    $response->assertSee('"selection":{"enabled":true,"mode":"multiple","rowKey":"id"}', false);
+    $response->assertSee('"selection":{"enabled":true,"mode":"multiple","rowKey":"id","selectFiltered":true,"readOnly":false}', false);
     $response->assertSee('"selectedIds":["1","8"]', false);
     $response->assertSee('Programmes avec sous-lignes', false);
     $response->assertSee('Planning éditable', false);
@@ -230,7 +246,7 @@ it('returns JSON payloads for the remaining demo interaction endpoints', functio
 
     $this->getJson('/demo/api/tree-children?node=b')
         ->assertSuccessful()
-        ->assertJsonFragment(['id' => 'b2']);
+        ->assertJsonPath('items.1.id', 'b2');
 
     $this->getJson('/demo/api/tree-search?q=b2')
         ->assertSuccessful()

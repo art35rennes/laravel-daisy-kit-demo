@@ -29,8 +29,17 @@
                 <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
             </div>
         </div>
+        <div class="flex h-48 items-center gap-8">
+            <label class="flex h-full flex-col items-center gap-2 text-sm">
+                Volume
+                <x-daisy::ui.inputs.range value="65" color="primary" :vertical="true" aria-label="Volume vertical" />
+            </label>
+            <label class="flex h-full flex-col items-center gap-2 text-sm">
+                Luminosité
+                <x-daisy::ui.inputs.range value="35" color="secondary" size="lg" :vertical="true" aria-label="Luminosité verticale" />
+            </label>
+        </div>
         <x-daisy::ui.inputs.range value="40" class="text-blue-300" :noFill="true" bg="orange" thumb="blue" />
     </div>
 </section>
-
 
