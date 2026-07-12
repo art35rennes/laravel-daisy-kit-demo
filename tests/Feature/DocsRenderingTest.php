@@ -25,7 +25,7 @@ it('renders docs index page', function () {
     $res->assertSee('x-daisy::layout.app', false);
     $res->assertSee('x-daisy::ui.feedback.alert', false);
     $res->assertSee('Livewire 3', false);
-    $res->assertSee('144', false);
+    $res->assertSee('147', false);
     $res->assertSee('33', false);
     $res->assertSee('Parcours rapides', false);
     $res->assertSee('Démo UI', false);
@@ -65,12 +65,12 @@ it('renders the component index page linked from the docs home', function () {
     $res->assertSee('Contrat public', false);
     $res->assertSee('Alias publics', false);
     $res->assertSee('Entrées recommandées', false);
-    $res->assertSee('active · 144', false);
+    $res->assertSee('active · 147', false);
     $res->assertSee('Modules JS', false);
-    $res->assertSee('28', false);
+    $res->assertSee('27', false);
     $res->assertSee('Rechercher dans les composants', false);
     $res->assertSee('Filtre par nom, alias public, catégorie, tag ou module JS.', false);
-    $res->assertSee('144 composants affichés sur 144.', false);
+    $res->assertSee('147 composants affichés sur 147.', false);
     $res->assertSee('x-daisy::ui.data-display.table', false);
     $res->assertSee('x-daisy::forms.builder', false);
     $res->assertSee('Alias public :', false);
@@ -87,7 +87,7 @@ it('filters the component index by name alias category tag or js module', functi
     $filtered->assertSuccessful();
     $filtered->assertSee('value="alert-dismiss"', false);
     $filtered->assertSee('Module JS : <code>alert-dismiss</code>', false);
-    $filtered->assertSee('1 composant affiché sur 144.', false);
+    $filtered->assertSee('1 composant affiché sur 147.', false);
     $filtered->assertSee('/docs/feedback/alert', false);
     $filtered->assertDontSee('Alias public : <code>x-daisy::ui.data-display.table</code>', false);
 
@@ -95,7 +95,7 @@ it('filters the component index by name alias category tag or js module', functi
 
     $missing->assertSuccessful();
     $missing->assertSee('value="aucun-composant"', false);
-    $missing->assertSee('0 composant affiché sur 144.', false);
+    $missing->assertSee('0 composant affiché sur 147.', false);
     $missing->assertSee('Aucun composant trouvé', false);
 });
 
@@ -674,4 +674,23 @@ it('does not return 404 for any component documentation page', function () {
     }
 
     expect($failedComponents)->toBeEmpty();
+})->group('docs');
+
+it('renders documentation for the newly inventoried components', function () {
+    $this->get('/docs/advanced/aura')
+        ->assertSuccessful()
+        ->assertSee('x-daisy::ui.advanced.aura', false)
+        ->assertSee('aura-rainbow', false);
+
+    $this->get('/docs/inputs/otp')
+        ->assertSuccessful()
+        ->assertSee('x-daisy::ui.inputs.otp', false)
+        ->assertSee('autocomplete="one-time-code"', false);
+
+    $this->get('/docs/navigation/megamenu')
+        ->assertSuccessful()
+        ->assertSee('x-daisy::ui.navigation.megamenu', false)
+        ->assertSee('megamenu-wide', false)
+        ->assertSee('docs-megamenu-products', false)
+        ->assertSee('Produits', false);
 })->group('docs');
