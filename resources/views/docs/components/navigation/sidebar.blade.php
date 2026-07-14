@@ -23,7 +23,7 @@
     <x-slot:intro>
         <x-daisy::docs.sections.intro 
             title="Barre latérale" 
-            subtitle="Barre latérale de navigation."
+            subtitle="Navigation repliable, persistante et filtrable, avec sous-menus accessibles."
         />
     </x-slot:intro>
 
@@ -36,13 +36,20 @@
                         'items' => [
                             ['label' => 'Dashboard', 'href' => '#', 'icon' => 'house'],
                             ['label' => 'Utilisateurs', 'href' => '#', 'icon' => 'people'],
-                            ['label' => 'Paramètres', 'href' => '#', 'icon' => 'gear'],
+                            [
+                                'label' => 'Projets',
+                                'icon' => 'folder',
+                                'children' => [
+                                    ['label' => 'Site vitrine', 'href' => '#site'],
+                                    ['label' => 'Application mobile', 'href' => '#mobile'],
+                                ],
+                            ],
                         ],
                     ],
                 ];
             @endphp
             <div class="h-64 border border-base-300 rounded-box overflow-hidden">
-                <x-daisy::ui.navigation.sidebar :sections="$sidebarSections" brand="Mon App" />
+                <x-daisy::ui.navigation.sidebar :sections="$sidebarSections" brand="Mon App" :searchable="true" storageKey="docs-sidebar" collapseAt="sm" />
             </div>
         </x-slot:preview>
         <x-slot:code>
@@ -54,10 +61,17 @@
         'items' => [
             ['label' => 'Dashboard', 'href' => '#', 'icon' => 'house'],
             ['label' => 'Utilisateurs', 'href' => '#', 'icon' => 'people'],
-            ['label' => 'Paramètres', 'href' => '#', 'icon' => 'gear'],
+            [
+                'label' => 'Projets',
+                'icon' => 'folder',
+                'children' => [
+                    ['label' => 'Site vitrine', 'href' => '#site'],
+                    ['label' => 'Application mobile', 'href' => '#mobile'],
+                ],
+            ],
         ],
     ],
-]" brand="Mon App" />
+]" brand="Mon App" :searchable="true" storage-key="docs-sidebar" collapse-at="sm" />
 CODE;
             @endphp
             <x-daisy::ui.advanced.code-editor 
@@ -136,10 +150,18 @@ CODE;
         </x-slot:code>
     </x-daisy::docs.sections.variants>
 
+    <x-daisy::docs.sections.custom id="responsive" title="Réduction et recherche" class="mt-10">
+        <div class="not-prose space-y-3 rounded-box border border-base-300 bg-base-100 p-4 text-sm text-base-content/70">
+            <p><code>collapse-at</code> définit le breakpoint où le bouton de réduction apparaît. <code>storage-key</code> mémorise la préférence dans le navigateur.</p>
+            <p><code>searchable</code> active la recherche dans les éléments et ouvre les sous-menus contenant un résultat. Les entrées peuvent aussi fournir <code>activeRoute</code> ou <code>activeRoutes</code>.</p>
+            <p>Les layouts <code>sidebar-layout</code> et <code>navbar-sidebar-layout</code> transmettent ces options, avec <code>logo</code>, <code>logo-alt</code>, <code>end</code> et <code>fallback-icon</code>.</p>
+        </div>
+    </x-daisy::docs.sections.custom>
+
     <x-daisy::docs.sections.custom id="behavior" title="Module JS" class="mt-10">
         <div class="rounded-box border border-base-300 bg-base-100 p-4">
             <p class="text-sm text-base-content/70">
-                La recherche de menu est pilotée par le module <code class="kbd kbd-xs">menu-filter</code>. Conserver le rendu du composant permet de garder les attributs <code class="kbd kbd-xs">data-module</code> et le filtrage synchronisés avec les assets du package.
+                Le module <code class="kbd kbd-xs">sidebar</code> gère la réduction, la persistance, la recherche et les sous-menus. Conserver le rendu du composant préserve les attributs <code class="kbd kbd-xs">data-sidebar-*</code> requis.
             </p>
         </div>
     </x-daisy::docs.sections.custom>
