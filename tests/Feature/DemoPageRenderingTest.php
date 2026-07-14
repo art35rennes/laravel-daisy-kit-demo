@@ -112,6 +112,10 @@ it('renders the UI demo page with section anchors and FAB navigator', function (
     $response->assertSee('demo-leaflet-selection-modal', false);
     $response->assertSee('demo-leaflet-selection-json', false);
     $response->assertSee('data-leaflet-selection-demo', false);
+    $response->assertSee('Vanilla Calendar Pro', false);
+    $response->assertSee('data-calendar-vanilla="1"', false);
+    $response->assertSee('Sidebar repliable et recherchable', false);
+    $response->assertSee('data-sidebar-search', false);
 });
 
 it('returns table JSON from the demo table endpoint', function () {

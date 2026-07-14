@@ -677,6 +677,18 @@ it('does not return 404 for any component documentation page', function () {
 })->group('docs');
 
 it('renders documentation for the newly inventoried components', function () {
+    $this->get('/docs/advanced/calendar-vanilla')
+        ->assertSuccessful()
+        ->assertSee('x-daisy::ui.advanced.calendar-vanilla', false)
+        ->assertSee('data-calendar-vanilla="1"', false)
+        ->assertSee('value-separator', false);
+
+    $this->get('/docs/navigation/sidebar')
+        ->assertSuccessful()
+        ->assertSee('Réduction et recherche', false)
+        ->assertSee('storage-key', false)
+        ->assertSee('searchable', false);
+
     $this->get('/docs/advanced/aura')
         ->assertSuccessful()
         ->assertSee('x-daisy::ui.advanced.aura', false)
