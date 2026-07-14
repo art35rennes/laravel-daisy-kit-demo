@@ -498,6 +498,7 @@
                 @include('daisy-dev::demo.ui.partials.test-join')
                 @include('daisy-dev::demo.ui.partials.test-mask')
                 @include('daisy-dev::demo.ui.partials.test-stack')
+                @include('daisy-dev::demo.ui.partials.test-sidebar')
                 @include('daisy-dev::demo.ui.partials.test-grid-layout')
                 @include('daisy-dev::demo.ui.partials.test-editable-grid')
                 @include('daisy-dev::demo.ui.partials.test-ordered-list')
