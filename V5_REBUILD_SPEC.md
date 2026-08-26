@@ -96,3 +96,69 @@ to a database or external service.
 6. `composer run test:release` runs every test without TIA. `composer run test:tia`
    first records the full suite, then replays unaffected results as fast, non-release
    feedback; its graph and cached results live in ignored `.pest/tia`.
+
+## Corrective product-parity phase
+
+### Objective
+
+Restore the differentiated product journeys that the v4 demo proved, while keeping
+the v5 boundary intact: the package owns module behavior and presentation; this
+application owns deterministic documentation data, thin read-only endpoints,
+native DaisyUI shell controls, and executable acceptance coverage. This phase
+starts from the published `v5.0.0` baseline and is integrated only after a package
+prerelease exposes the verified public contracts. It must not simulate a missing
+package feature in Blade, JavaScript, a proxy, or a copied vendor asset.
+
+### Delivery plan
+
+1. Keep a comparison baseline: `legacy/4.x` supplies the user needs; current v5
+   supplies the public-boundary baseline. Record retained, retired, and ported
+   needs below before changing a page.
+2. Add host-owned deterministic fixture data and safe read-only endpoints with
+   Feature coverage. Restore `/demo` as a documented redirect to the v5 overview.
+3. Add RED Feature and Browser tests for observable package behavior. They assert
+   visible outcomes, network activity, keyboard/focus, computed presentation,
+   console cleanliness, CSP, accessibility, and responsive widths; they do not
+   assert an internal `ready` flag as the sole outcome.
+4. When the package prerelease tag is supplied, install it from the configured
+   VCS repository, read its released contract, and make only the smallest
+   configuration/data changes needed to exercise it.
+5. Run the complete non-TIA release suite, then a fresh and controlled TIA run,
+   Vite build, Pint, Composer/npm validation and audits. Only a green result may
+   be proposed for promotion.
+
+### v4 to v5 product matrix
+
+| Module | Retained in v5 | Retired intentionally | Ported acceptance need |
+| --- | --- | --- | --- |
+| Forms | Viewer and optional Livewire builder | v4 Form Kit aliases and generic wrappers | Rich schema validation/errors, visible and computed JSONata values, steps/submission; builder add/remove/reorder, options/rules, JSON/preview, undo/redo and synchronization |
+| Table | Published table module and host DaisyUI shell | v4 table wrapper namespace | Deterministic server data; typed filter, sort/page, column controls, persistent bulk selection, details/actions and editing |
+| Tree | Published tree module | v4 tree-view alias | Real hierarchy; multiple and indeterminate selection, lazy and remote/local search, persistence and keyboard navigation |
+| Blueprint | Published blueprint module | v4 template route | Editorial workflow of five or more nodes/edges, inspector, edit/create/link, undo/redo, organization, synchronized JSON and read-only view |
+| File Preview | Sandboxed published file-preview module | v4 document wrapper | Local text/image/PDF/DOCX and proportionate video fixtures; preview/open/download/modal; deterministic MIME, size and authorization failures under CSP |
+| Map | Published map module | Leaflet demo route and unsupported providers | Deterministic test provider; markers/layers/GeoJSON, draw/edit/select/measure, undo/redo and export |
+| Documentation | Native DaisyUI host navigation and six focused pages | v4 catalogue, auth, CRUD, charts and calendar | Every page exposes success, empty, loading and error states, copyable usage/imports/API/events, and standard-control links to DaisyUI |
+
+### Browser and deployment parity gate
+
+- Test all six pages at 320, 768, 1024 and 1440 pixels. Each flow asserts an
+  observable user result plus `assertNoJavaScriptErrors()`, console/network
+  cleanliness, keyboard/focus behavior, CSP and accessibility.
+- Keep loopback Browser coverage, and add a trusted-HTTPS smoke environment (or a
+  no-Web-Crypto origin fixture) for the Forms Viewer and File Preview. The current
+  defect is specifically that an HTTP `.test` origin lacks `crypto.randomUUID()`;
+  a `127.0.0.1` pass alone is not release evidence. Do not bypass an invalid Herd
+  certificate.
+- Maintain a reproducible legacy-versus-v5 comparison checklist for the matrix.
+  It is a product gate, not a request to restore generic DaisyUI wrappers.
+
+### Boundaries for the corrective phase
+
+- Always: use published package Blade/ESM/CSS contracts only; keep fixtures local,
+  deterministic and escaped; test invalid fixture states without weakening CSP.
+- Ask first: introduce a package API not present in the prerelease, persistence,
+  authentication, an external map provider, or promotion to `dev`, `main` or a
+  release.
+- Never: copy or patch vendor assets, add a local component/proxy/compatibility
+  layer, skip/exclude a quality gate, or treat an internal mount state as proof of
+  user-visible behavior.
