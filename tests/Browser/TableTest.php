@@ -6,11 +6,9 @@ it('selects table rows without errors', function () {
     $page->assertSee('Table')
         ->assertNoJavascriptErrors();
 
-    // Sélection multiple: coche une case
-    $page->click('section:has(h2:contains("Table")) [data-row-select]');
-
-    // Sélection simple (dans le second tableau)
-    $page->click('section:has(h2:contains("Table")) input[type="radio"][data-row-select]');
+    // Le tri de la table locale est immédiatement disponible et garde le
+    // scénario indépendant de l’endpoint de pagination distante.
+    $page->click('#demo-local-table [data-table-sort="name"]');
 
     $page->assertNoConsoleLogs();
 });

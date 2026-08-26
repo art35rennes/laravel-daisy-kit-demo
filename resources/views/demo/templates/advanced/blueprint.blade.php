@@ -144,13 +144,18 @@ CODE;
         </x-daisy::ui.feedback.alert>
 
         <x-daisy::ui.advanced.blueprint
+            id="demo-blueprint-release"
             name="demo_blueprint_release"
             direction="TB"
             height="760px"
             :node-categories="$nodeCategories"
             :transition-categories="$transitionCategories"
             :value="$workflow"
-        />
+        >
+            <x-slot:inspector>
+                @include('demo.templates.advanced.partials.blueprint-inspector')
+            </x-slot:inspector>
+        </x-daisy::ui.advanced.blueprint>
 
         <section class="space-y-3" aria-labelledby="blueprint-secondary-title">
             <div class="space-y-1">
@@ -159,12 +164,17 @@ CODE;
             </div>
 
             <x-daisy::ui.advanced.blueprint
+                id="demo-blueprint-autosave"
                 name="demo_blueprint_autosave"
                 height="420px"
                 :node-categories="$nodeCategories"
                 :transition-categories="$transitionCategories"
                 :value="$workflow"
-            />
+            >
+                <x-slot:inspector>
+                    @include('demo.templates.advanced.partials.blueprint-inspector')
+                </x-slot:inspector>
+            </x-daisy::ui.advanced.blueprint>
         </section>
 
         <section class="space-y-3" aria-labelledby="blueprint-view-title">

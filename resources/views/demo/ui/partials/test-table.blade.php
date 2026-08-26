@@ -18,6 +18,7 @@
                 </div>
 
                 <x-daisy::ui.data-display.table
+                    id="demo-local-table"
                     mode="client"
                     zebra
                     size="sm"
