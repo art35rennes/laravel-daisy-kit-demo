@@ -10,10 +10,12 @@ stacked-bar,daisy::components.charts.stacked-bar,charts,charts,,active
 builder,daisy::components.forms.builder,forms,"forms, form",,active
 viewer,daisy::components.forms.viewer,forms,"forms, js, async, form",form-viewer,active
 accordion,daisy::components.ui.advanced.accordion,advanced,"advanced, lazy",,active
-blueprint,daisy::components.ui.advanced.blueprint,advanced,"advanced, js, async, lazy",blueprint,active
+aura,daisy::components.ui.advanced.aura,advanced,"advanced, lazy",,active
+blueprint,daisy::components.ui.advanced.blueprint,advanced,"advanced, lazy",,active
 calendar-cally,daisy::components.ui.advanced.calendar-cally,advanced,"advanced, lazy",,active
 calendar-full,daisy::components.ui.advanced.calendar-full,advanced,"advanced, js, async, lazy",calendar-full,active
 calendar-native,daisy::components.ui.advanced.calendar-native,advanced,"advanced, lazy",,active
+calendar-vanilla,daisy::components.ui.advanced.calendar-vanilla,advanced,"advanced, js, async, lazy",calendar-vanilla,active
 calendar,daisy::components.ui.advanced.calendar,advanced,"advanced, lazy",,active
 code-editor,daisy::components.ui.advanced.code-editor,advanced,"advanced, js, async, lazy",code-editor,active
 collapse,daisy::components.ui.advanced.collapse,advanced,"advanced, lazy",,active
@@ -36,7 +38,7 @@ swap,daisy::components.ui.advanced.swap,advanced,"advanced, lazy",,active
 text-rotate,daisy::components.ui.advanced.text-rotate,advanced,"advanced, lazy",,active
 theme-controller,daisy::components.ui.advanced.theme-controller,advanced,"advanced, lazy",,active
 transfer,daisy::components.ui.advanced.transfer,advanced,"advanced, js, async, lazy",transfer,active
-tree-view,daisy::components.ui.advanced.tree-view,advanced,"advanced, js, async, lazy",treeview,active
+tree-view,daisy::components.ui.advanced.tree-view,advanced,"advanced, lazy",,active
 validator,daisy::components.ui.advanced.validator,advanced,"advanced, lazy",,active
 wysiwyg,daisy::components.ui.advanced.wysiwyg,advanced,"advanced, js, async, lazy",lazy-editors,active
 changelog-change-item,daisy::components.ui.changelog.changelog-change-item,changelog,changelog,,active
@@ -65,7 +67,7 @@ progress,daisy::components.ui.data-display.progress,data-display,"data-display, 
 radial-progress,daisy::components.ui.data-display.radial-progress,data-display,"data-display, lazy",,active
 stat,daisy::components.ui.data-display.stat,data-display,"data-display, lazy",,active
 status,daisy::components.ui.data-display.status,data-display,"data-display, lazy",,active
-table,daisy::components.ui.data-display.table,data-display,"data-display, lazy",,active
+table,daisy::components.ui.data-display.table,data-display,"data-display, js, async, lazy",table,active
 timeline,daisy::components.ui.data-display.timeline,data-display,"data-display, lazy",,active
 error-actions,daisy::components.ui.errors.error-actions,errors,errors,,active
 error-content,daisy::components.ui.errors.error-content,errors,errors,,active
@@ -77,7 +79,7 @@ empty-state,daisy::components.ui.feedback.empty-state,feedback,feedback,,active
 loading-message,daisy::components.ui.feedback.loading-message,feedback,feedback,,active
 loading,daisy::components.ui.feedback.loading,feedback,feedback,,active
 skeleton,daisy::components.ui.feedback.skeleton,feedback,feedback,,active
-toast,daisy::components.ui.feedback.toast,feedback,feedback,,active
+toast,daisy::components.ui.feedback.toast,feedback,"feedback, js, async",notify,active
 button,daisy::components.ui.inputs.button,inputs,"inputs, form",,active
 checkbox,daisy::components.ui.inputs.checkbox,inputs,"inputs, form",,active
 choice-card-group,daisy::components.ui.inputs.choice-card-group,inputs,"inputs, form",,active
@@ -85,6 +87,8 @@ color-picker,daisy::components.ui.inputs.color-picker,inputs,"inputs, js, async,
 file-input,daisy::components.ui.inputs.file-input,inputs,"inputs, js, async, form",file-input,active
 icon-button,daisy::components.ui.inputs.icon-button,inputs,"inputs, form",,active
 input,daisy::components.ui.inputs.input,inputs,"inputs, form",,active
+multi-select,daisy::components.ui.inputs.multi-select,inputs,"inputs, form",,active
+otp,daisy::components.ui.inputs.otp,inputs,"inputs, form",,active
 radio,daisy::components.ui.inputs.radio,inputs,"inputs, form",,active
 range,daisy::components.ui.inputs.range,inputs,"inputs, form",,active
 select,daisy::components.ui.inputs.select,inputs,"inputs, form",,active
@@ -109,17 +113,19 @@ stack,daisy::components.ui.layout.stack,layout,layout,,active
 carousel,daisy::components.ui.media.carousel,media,media,,active
 embed,daisy::components.ui.media.embed,media,media,,active
 hover-gallery,daisy::components.ui.media.hover-gallery,media,media,,active
+iptv-player,daisy::components.ui.media.iptv-player,media,media,,active
 leaflet,daisy::components.ui.media.leaflet,media,"media, js, async",leaflet,active
 lightbox,daisy::components.ui.media.lightbox,media,"media, js, async",lightbox,active
 media-gallery,daisy::components.ui.media.media-gallery,media,"media, js, async",media-gallery,active
 breadcrumbs,daisy::components.ui.navigation.breadcrumbs,navigation,navigation,,active
 floating-menu,daisy::components.ui.navigation.floating-menu,navigation,navigation,,active
+megamenu,daisy::components.ui.navigation.megamenu,navigation,navigation,,active
 menu,daisy::components.ui.navigation.menu,navigation,"navigation, js, async",menu-filter,active
 navbar,daisy::components.ui.navigation.navbar,navigation,navigation,,active
 pagination,daisy::components.ui.navigation.pagination,navigation,navigation,,active
 section-nav,daisy::components.ui.navigation.section-nav,navigation,"navigation, js, async",section-nav,active
 sidebar-navigation,daisy::components.ui.navigation.sidebar-navigation,navigation,navigation,,active
-sidebar,daisy::components.ui.navigation.sidebar,navigation,"navigation, js, async",menu-filter,active
+sidebar,daisy::components.ui.navigation.sidebar,navigation,navigation,,active
 stepper,daisy::components.ui.navigation.stepper,navigation,"navigation, js, async",stepper,active
 steps,daisy::components.ui.navigation.steps,navigation,navigation,,active
 table-of-contents,daisy::components.ui.navigation.table-of-contents,navigation,"navigation, js, async",table-of-contents,active

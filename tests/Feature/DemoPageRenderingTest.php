@@ -68,7 +68,7 @@ it('renders the UI demo page with section anchors and FAB navigator', function (
     $response->assertSee('data-table-select-filtered', false);
     $response->assertSee('data-table-bulk-actions', false);
     $response->assertSee('Exporter la sélection', false);
-    $response->assertSee('"selection":{"enabled":true,"mode":"multiple","rowKey":"id","selectFiltered":true,"readOnly":false}', false);
+    $response->assertSee('"selection":{"enabled":true,"mode":"multiple","rowKey":"id","selectFiltered":true,"readOnly":false,"subRowSelection":"independent"}', false);
     $response->assertSee('"selectedIds":["1","8"]', false);
     $response->assertSee('Programmes avec sous-lignes', false);
     $response->assertSee('Planning éditable', false);

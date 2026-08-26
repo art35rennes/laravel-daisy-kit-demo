@@ -32,7 +32,7 @@
                 ['value' => 'Growth', 'label' => 'Growth'],
             ],
         ]],
-        ['key' => 'status', 'label' => 'Statut', 'html' => true, 'filterable' => true, 'filter' => ['type' => 'text']],
+        ['key' => 'status', 'label' => 'Statut', 'cell' => ['renderer' => 'trusted-html'], 'filterable' => true, 'filter' => ['type' => 'text']],
     ]"
     :rows="[
         ['name' => 'Cy Ganderton', 'team' => 'Platform', 'status' => '<span class=\'badge badge-primary badge-soft\'>Active</span>'],
@@ -106,7 +106,7 @@ CODE;
     :columns="[
         ['key' => 'name', 'label' => 'Programme', 'size' => 220],
         ['key' => 'owner', 'label' => 'Owner', 'type' => 'link'],
-        ['key' => 'actions', 'label' => 'Actions', 'type' => 'actions', 'html' => true],
+        ['key' => 'actions', 'label' => 'Actions', 'type' => 'actions'],
     ]"
     :rows="$rows"
     :initial-state="[
@@ -230,7 +230,7 @@ CODE;
                             ['value' => 'Growth', 'label' => 'Growth'],
                         ],
                     ]],
-                    ['key' => 'status', 'label' => 'Statut', 'html' => true, 'filterable' => true, 'filter' => ['type' => 'text']],
+                    ['key' => 'status', 'label' => 'Statut', 'cell' => ['renderer' => 'trusted-html'], 'filterable' => true, 'filter' => ['type' => 'text']],
                 ]"
                 :rows="[
                     ['name' => 'Cy Ganderton', 'team' => 'Platform', 'status' => '<span class=\'badge badge-primary badge-soft\'>Active</span>'],
@@ -402,8 +402,8 @@ CODE;
                     :columns="[
                         ['key' => 'name', 'label' => 'Programme', 'sortable' => true, 'size' => 220, 'minSize' => 160],
                         ['key' => 'owner', 'label' => 'Owner', 'type' => 'link', 'size' => 180],
-                        ['key' => 'status', 'label' => 'Statut', 'html' => true, 'size' => 140],
-                        ['key' => 'actions', 'label' => 'Actions', 'type' => 'actions', 'html' => true],
+                        ['key' => 'status', 'label' => 'Statut', 'cell' => ['renderer' => 'trusted-html'], 'size' => 140],
+                        ['key' => 'actions', 'label' => 'Actions', 'type' => 'actions'],
                     ]"
                     :rows="[
                         [
@@ -412,9 +412,9 @@ CODE;
                             'owner' => ['href' => 'mailto:release@example.com', 'label' => 'release@example.com'],
                             'status' => '<span class=\'badge badge-success badge-soft\'>Ready</span>',
                             'detail' => 'Détail inline rendu par la ligne extensible.',
-                            'actions' => '<button type=\'button\' class=\'btn btn-xs btn-ghost\'>Ouvrir</button>',
+                            'actions' => ['action' => 'open', 'label' => 'Ouvrir'],
                             'children' => [
-                                ['id' => 'release-api', 'name' => 'API publique', 'owner' => ['href' => 'https://example.com/api', 'label' => 'API'], 'status' => '<span class=\'badge badge-info badge-soft\'>In progress</span>', 'actions' => '<button type=\'button\' class=\'btn btn-xs btn-ghost\'>Voir</button>'],
+                                ['id' => 'release-api', 'name' => 'API publique', 'owner' => ['href' => 'https://example.com/api', 'label' => 'API'], 'status' => '<span class=\'badge badge-info badge-soft\'>In progress</span>', 'actions' => ['action' => 'view', 'label' => 'Voir']],
                             ],
                         ],
                         [
@@ -423,7 +423,7 @@ CODE;
                             'owner' => ['href' => 'https://example.com/security', 'label' => 'Security'],
                             'status' => '<span class=\'badge badge-warning badge-soft\'>Review</span>',
                             'detail' => 'Détail inline avec lien externe autorisé.',
-                            'actions' => '<button type=\'button\' class=\'btn btn-xs btn-ghost\'>Ouvrir</button>',
+                            'actions' => ['action' => 'open', 'label' => 'Ouvrir'],
                             'children' => [],
                         ],
                     ]"

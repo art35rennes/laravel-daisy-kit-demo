@@ -34,13 +34,12 @@
                     [
                         'id' => 1,
                         'label' => 'Dossier racine',
-                        'state' => 'mixed',
                         'children' => [
                             [
                                 'id' => 2,
                                 'label' => 'Sous-dossier',
                                 'children' => [
-                                    ['id' => 3, 'label' => 'Fichier 1', 'checked' => true],
+                                    ['id' => 3, 'label' => 'Fichier 1'],
                                     ['id' => 4, 'label' => 'Fichier 2'],
                                 ],
                             ],
@@ -49,29 +48,32 @@
                     ],
                 ];
             @endphp
-            <x-daisy::ui.advanced.tree-view selection="multiple" :data="$data" />
+            <x-daisy::ui.advanced.tree-view selection="multiple" :value="[3]" :data="$data" />
         </x-slot:preview>
         <x-slot:code>
             @php
                 $baseCode = <<<'CODE'
-<x-daisy::ui.advanced.tree-view :data="[
+<x-daisy::ui.advanced.tree-view
+    selection="multiple"
+    :value="[3]"
+    :data="[
     [
         'id' => 1,
         'label' => 'Dossier racine',
-        'state' => 'mixed',
         'children' => [
             [
                 'id' => 2,
                 'label' => 'Sous-dossier',
                 'children' => [
-                    ['id' => 3, 'label' => 'Fichier 1', 'checked' => true],
+                    ['id' => 3, 'label' => 'Fichier 1'],
                     ['id' => 4, 'label' => 'Fichier 2'],
                 ],
             ],
             ['id' => 5, 'label' => 'Fichier 3'],
         ],
     ],
-]" />
+]"
+/>
 CODE;
             @endphp
             <x-daisy::ui.advanced.code-editor 
@@ -92,8 +94,8 @@ CODE;
         <div class="not-prose space-y-4">
             <div class="alert alert-info alert-soft">
                 <span>
-                    Le composant reconnaît désormais l’état mixte explicite via <code>state =&gt; 'mixed'</code> et les alias <code>checked</code>
-                    souvent renvoyés par des APIs. Le rendu sérialise alors l’état en <code>data-indeterminate="true"</code>.
+                    La sélection appartient à la prop <code>value</code>, et non aux nœuds. Lorsqu’une partie des descendants est
+                    sélectionnée, le parent expose automatiquement <code>data-indeterminate="true"</code>.
                 </span>
             </div>
 
@@ -104,22 +106,21 @@ CODE;
                         [
                             'id' => 'docs',
                             'label' => 'Documentation',
-                            'checked' => true,
                             'children' => [
-                                ['id' => 'readme', 'label' => 'README.md', 'checked' => true],
+                                ['id' => 'readme', 'label' => 'README.md'],
                                 ['id' => 'notes', 'label' => 'Notes.md'],
                             ],
                         ],
                         [
                             'id' => 'sandbox',
                             'label' => 'Sandbox',
-                            'state' => 'mixed',
                             'children' => [
-                                ['id' => 'draft', 'label' => 'Draft.md', 'checked' => true],
+                                ['id' => 'draft', 'label' => 'Draft.md'],
                                 ['id' => 'todo', 'label' => 'Todo.md'],
                             ],
                         ],
                     ]"
+                    :value="['readme', 'draft']"
                 />
             </div>
 
@@ -131,22 +132,21 @@ CODE;
         [
             'id' => 'docs',
             'label' => 'Documentation',
-            'checked' => true,
             'children' => [
-                ['id' => 'readme', 'label' => 'README.md', 'checked' => true],
+                ['id' => 'readme', 'label' => 'README.md'],
                 ['id' => 'notes', 'label' => 'Notes.md'],
             ],
         ],
         [
             'id' => 'sandbox',
             'label' => 'Sandbox',
-            'state' => 'mixed',
             'children' => [
-                ['id' => 'draft', 'label' => 'Draft.md', 'checked' => true],
+                ['id' => 'draft', 'label' => 'Draft.md'],
                 ['id' => 'todo', 'label' => 'Todo.md'],
             ],
         ],
     ]"
+    :value="['readme', 'draft']"
 />
 CODE;
             @endphp

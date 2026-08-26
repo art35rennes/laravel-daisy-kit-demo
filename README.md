@@ -30,19 +30,16 @@ Use the package repository when you need to work on:
 
 ## Requirements
 
-- PHP 8.2+
+- PHP 8.3+
 - Composer
 - Node.js and npm
 - SQLite for local development
 
 ## Local Development
 
-Clone both repositories side by side:
+The demo resolves Laravel Daisy Kit from its GitHub VCS repository. The package is not published on Packagist; Composer is constrained to the legacy continuity line `^4.0` and the lock file records the resolved tag and commit.
 
-- `laravel-daisy-kit`
-- `laravel-daisy-kit-demo`
-
-This demo app uses a Composer `path` repository pointing to `../laravel-daisy-kit` during local package development.
+Because this host rebuilds the Daisy Kit asset sources, install the npm dependencies recorded in `package-lock.json` after updating Composer dependencies.
 
 ```bash
 composer install
@@ -90,7 +87,7 @@ This project follows **Semantic Versioning (SemVer)** for releases: `MAJOR.MINOR
 - `MINOR`: backward-compatible features and enhancements
 - `PATCH`: backward-compatible fixes and documentation corrections
 
-During day-to-day development, this demo application may point to `dev-main` of `art35rennes/laravel-daisy-kit` through a local Composer path repository. Published releases and tags should still follow SemVer so compatibility expectations remain explicit for GitHub and Packagist consumers.
+This demo is intentionally pinned to the `^4.0` legacy continuity line of `art35rennes/laravel-daisy-kit`, resolved from GitHub through Composer VCS metadata. Published package tags follow SemVer so compatibility expectations remain explicit for existing integrators.
 
 ## Release Notes
 

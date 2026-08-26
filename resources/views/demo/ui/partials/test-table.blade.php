@@ -31,7 +31,7 @@
                             ['value' => 'Legal', 'label' => 'Legal'],
                         ]]],
                         ['key' => 'priority', 'label' => 'Priorité', 'sortable' => true, 'headerClass' => 'text-right', 'cellClass' => 'text-right font-medium'],
-                        ['key' => 'status', 'label' => 'Statut', 'html' => true, 'filterable' => true, 'filter' => ['type' => 'text']],
+                        ['key' => 'status', 'label' => 'Statut', 'cell' => ['renderer' => 'trusted-html'], 'filterable' => true, 'filter' => ['type' => 'text']],
                         ['key' => 'owner', 'label' => 'Owner', 'visible' => false],
                     ]"
                     :rows="[
@@ -147,8 +147,8 @@
                     :columns="[
                         ['key' => 'name', 'label' => 'Programme', 'sortable' => true, 'size' => 220, 'minSize' => 160, 'truncate' => 'line'],
                         ['key' => 'owner', 'label' => 'Owner', 'type' => 'link', 'size' => 180],
-                        ['key' => 'status', 'label' => 'Statut', 'html' => true, 'size' => 140],
-                        ['key' => 'actions', 'label' => 'Actions', 'type' => 'actions', 'html' => true],
+                        ['key' => 'status', 'label' => 'Statut', 'cell' => ['renderer' => 'trusted-html'], 'size' => 140],
+                        ['key' => 'actions', 'label' => 'Actions', 'type' => 'actions'],
                     ]"
                     :rows="[
                         [
@@ -157,10 +157,10 @@
                             'owner' => ['href' => 'mailto:release@example.com', 'label' => 'release@example.com'],
                             'status' => '<span class=\'badge badge-success badge-soft\'>Ready</span>',
                             'detail' => 'Détail inline: jalons, risques et dépendances du programme.',
-                            'actions' => '<button type=\'button\' class=\'btn btn-xs btn-ghost\'>Ouvrir</button>',
+                            'actions' => ['action' => 'open', 'label' => 'Ouvrir'],
                             'children' => [
-                                ['id' => 'release-api', 'name' => 'API publique', 'owner' => ['href' => 'https://example.com/api', 'label' => 'API'], 'status' => '<span class=\'badge badge-info badge-soft\'>In progress</span>', 'actions' => '<button type=\'button\' class=\'btn btn-xs btn-ghost\'>Voir</button>'],
-                                ['id' => 'release-docs', 'name' => 'Documentation', 'owner' => ['href' => 'https://example.com/docs', 'label' => 'Docs'], 'status' => '<span class=\'badge badge-warning badge-soft\'>Review</span>', 'actions' => '<button type=\'button\' class=\'btn btn-xs btn-ghost\'>Voir</button>'],
+                                ['id' => 'release-api', 'name' => 'API publique', 'owner' => ['href' => 'https://example.com/api', 'label' => 'API'], 'status' => '<span class=\'badge badge-info badge-soft\'>In progress</span>', 'actions' => ['action' => 'view', 'label' => 'Voir']],
+                                ['id' => 'release-docs', 'name' => 'Documentation', 'owner' => ['href' => 'https://example.com/docs', 'label' => 'Docs'], 'status' => '<span class=\'badge badge-warning badge-soft\'>Review</span>', 'actions' => ['action' => 'view', 'label' => 'Voir']],
                             ],
                         ],
                         [
@@ -169,9 +169,9 @@
                             'owner' => ['href' => 'https://example.com/security', 'label' => 'Security'],
                             'status' => '<span class=\'badge badge-error badge-soft\'>Blocked</span>',
                             'detail' => 'Détail inline: validation des politiques de lien et des rendus HTML.',
-                            'actions' => '<button type=\'button\' class=\'btn btn-xs btn-ghost\'>Ouvrir</button>',
+                            'actions' => ['action' => 'open', 'label' => 'Ouvrir'],
                             'children' => [
-                                ['id' => 'security-links', 'name' => 'Politique de liens', 'owner' => ['href' => 'https://example.com/security/links', 'label' => 'Links'], 'status' => '<span class=\'badge badge-success badge-soft\'>Ready</span>', 'actions' => '<button type=\'button\' class=\'btn btn-xs btn-ghost\'>Voir</button>'],
+                                ['id' => 'security-links', 'name' => 'Politique de liens', 'owner' => ['href' => 'https://example.com/security/links', 'label' => 'Links'], 'status' => '<span class=\'badge badge-success badge-soft\'>Ready</span>', 'actions' => ['action' => 'view', 'label' => 'Voir']],
                             ],
                         ],
                     ]"

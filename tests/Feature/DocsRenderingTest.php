@@ -1,11 +1,13 @@
 <?php
 
+use App\Helpers\ComponentScanner;
 use App\Helpers\DocsHelper;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 
 it('renders docs index page', function () {
     Config::set('daisy-kit.docs.enabled', true);
+    $componentCount = count(ComponentScanner::readCached()['components'] ?? []);
     $res = $this->get('/docs');
     $res->assertSuccessful();
     $res->assertSee('Documentation', false);
@@ -24,8 +26,8 @@ it('renders docs index page', function () {
     $res->assertSee('php artisan vendor:publish --tag=daisy-assets', false);
     $res->assertSee('x-daisy::layout.app', false);
     $res->assertSee('x-daisy::ui.feedback.alert', false);
-    $res->assertSee('Livewire 3', false);
-    $res->assertSee('147', false);
+    $res->assertSee('Livewire 4.3', false);
+    $res->assertSee((string) $componentCount, false);
     $res->assertSee('33', false);
     $res->assertSee('Parcours rapides', false);
     $res->assertSee('Démo UI', false);
@@ -57,6 +59,7 @@ it('renders docs index page', function () {
 
 it('renders the component index page linked from the docs home', function () {
     Config::set('daisy-kit.docs.enabled', true);
+    $componentCount = count(ComponentScanner::readCached()['components'] ?? []);
 
     $res = $this->get('/docs/components');
 
@@ -65,12 +68,12 @@ it('renders the component index page linked from the docs home', function () {
     $res->assertSee('Contrat public', false);
     $res->assertSee('Alias publics', false);
     $res->assertSee('Entrées recommandées', false);
-    $res->assertSee('active · 147', false);
+    $res->assertSee("active · {$componentCount}", false);
     $res->assertSee('Modules JS', false);
     $res->assertSee('27', false);
     $res->assertSee('Rechercher dans les composants', false);
     $res->assertSee('Filtre par nom, alias public, catégorie, tag ou module JS.', false);
-    $res->assertSee('147 composants affichés sur 147.', false);
+    $res->assertSee("{$componentCount} composants affichés sur {$componentCount}.", false);
     $res->assertSee('x-daisy::ui.data-display.table', false);
     $res->assertSee('x-daisy::forms.builder', false);
     $res->assertSee('Alias public :', false);
@@ -81,13 +84,14 @@ it('renders the component index page linked from the docs home', function () {
 
 it('filters the component index by name alias category tag or js module', function () {
     Config::set('daisy-kit.docs.enabled', true);
+    $componentCount = count(ComponentScanner::readCached()['components'] ?? []);
 
     $filtered = $this->get('/docs/components?q=alert-dismiss');
 
     $filtered->assertSuccessful();
     $filtered->assertSee('value="alert-dismiss"', false);
     $filtered->assertSee('Module JS : <code>alert-dismiss</code>', false);
-    $filtered->assertSee('1 composant affiché sur 147.', false);
+    $filtered->assertSee("1 composant affiché sur {$componentCount}.", false);
     $filtered->assertSee('/docs/feedback/alert', false);
     $filtered->assertDontSee('Alias public : <code>x-daisy::ui.data-display.table</code>', false);
 
@@ -95,7 +99,7 @@ it('filters the component index by name alias category tag or js module', functi
 
     $missing->assertSuccessful();
     $missing->assertSee('value="aucun-composant"', false);
-    $missing->assertSee('0 composant affiché sur 147.', false);
+    $missing->assertSee("0 composant affiché sur {$componentCount}.", false);
     $missing->assertSee('Aucun composant trouvé', false);
 });
 
@@ -348,14 +352,13 @@ it('renders the blueprint template preview with layout assets', function () {
     $template->assertSee('data-mode="edit"', false);
     $template->assertSee('data-direction="TB"', false);
     $template->assertSee('data-blueprint-node-categories', false);
-    $template->assertSee('"key":"eligibility_rule"', false);
-    $template->assertSee('"type":"code-editor"', false);
-    $template->assertSee('"type":"wysiwyg"', false);
-    $template->assertSee('"type":"multiselect"', false);
+    $template->assertSee('"eligibility_rule":"$exists(content.title)"', false);
+    $template->assertSee('data-blueprint-inspector', false);
+    $template->assertSee('data-blueprint-inspector-content', false);
     $template->assertSee('"opaque_reference":"EDITORIAL-42"', false);
     $template->assertSee('Soumettre une version', false);
     $template->assertSee('name="demo_blueprint_autosave"', false);
-    $template->assertSee('data-autosave="true"', false);
+    $template->assertSee('Seconde instance synchronisée', false);
     $template->assertSee('Aperçu lecture seule', false);
     $template->assertSee('name="demo_blueprint_release_view"', false);
     $template->assertSee('data-mode="view"', false);

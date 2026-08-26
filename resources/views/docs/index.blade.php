@@ -240,7 +240,7 @@
                 <div class="mt-3 flex flex-col gap-2 text-sm text-base-content/70">
                     <span>Publier les assets après chaque mise à jour du package.</span>
                     <span>Utiliser <code>x-daisy::ui.*</code>, <code>x-daisy::layout.*</code>, <code>x-daisy::charts.*</code> et <code>x-daisy::templates.*</code> avant d’écrire du markup hôte.</span>
-                    <span>Si le builder Form Kit est rendu, fournir Livewire 3 dans l’application hôte.</span>
+                    <span>Si le builder Form Kit est rendu, fournir Livewire 4.3 ou supérieur dans l’application hôte.</span>
                 </div>
             </div>
         </div>

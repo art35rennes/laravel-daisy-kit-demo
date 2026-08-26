@@ -152,15 +152,14 @@ CODE;
             :value="$workflow"
         />
 
-        <section class="space-y-3" aria-labelledby="blueprint-autosave-title">
+        <section class="space-y-3" aria-labelledby="blueprint-secondary-title">
             <div class="space-y-1">
-                <h2 id="blueprint-autosave-title" class="text-xl font-semibold">Inspecteur avec sauvegarde automatique</h2>
-                <p class="text-sm text-base-content/70">Cette seconde instance valide le même schéma avec une sauvegarde temporisée du brouillon.</p>
+                <h2 id="blueprint-secondary-title" class="text-xl font-semibold">Seconde instance synchronisée</h2>
+                <p class="text-sm text-base-content/70">Cette seconde instance expose le même workflow dans un espace d’édition indépendant.</p>
             </div>
 
             <x-daisy::ui.advanced.blueprint
                 name="demo_blueprint_autosave"
-                autosave
                 height="420px"
                 :node-categories="$nodeCategories"
                 :transition-categories="$transitionCategories"

@@ -23,7 +23,7 @@
 
         <div class="space-y-3">
             <div class="text-sm opacity-70">Sélection multiple</div>
-            <x-daisy::ui.advanced.tree-view id="demoTreeMulti" name="demo_tree_multi" selection="multiple" :persist="true" controlSize="xs" lazyUrl="/demo/api/tree-children" lazyParam="node" :search="true" :searchAuto="true" searchMin="2" searchDebounce="250" :data="[
+            <x-daisy::ui.advanced.tree-view id="demoTreeMulti" name="demo_tree_multi" selection="multiple" :value="['1-3-1', '2-1-1']" :persist="true" controlSize="xs" lazyUrl="/demo/api/tree-children" lazyParam="node" :search="true" :searchAuto="true" searchMin="2" searchDebounce="250" :data="[
                 [
                     'id' => '1',
                     'label' => 'Projet Alpha',
@@ -48,10 +48,9 @@
                         ],
                         [
                             'id' => '1-3',
-                            'label' => 'Sandbox (état mixed explicite)',
-                            'state' => 'mixed',
+                            'label' => 'Sandbox (sélection partielle)',
                             'children' => [
-                                ['id' => '1-3-1', 'label' => 'Draft.md', 'checked' => true],
+                                ['id' => '1-3-1', 'label' => 'Draft.md'],
                                 ['id' => '1-3-2', 'label' => 'Notes.md'],
                             ],
                         ],
@@ -65,9 +64,8 @@
                         [
                             'id' => '2-1',
                             'label' => 'Documentation',
-                            'checked' => true,
                             'children' => [
-                                ['id' => '2-1-1', 'label' => 'README.md', 'checked' => true],
+                                ['id' => '2-1-1', 'label' => 'README.md'],
                                 ['id' => '2-1-2', 'label' => 'INSTALL.md'],
                             ],
                         ],

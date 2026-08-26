@@ -5,8 +5,8 @@
     "description": "Documentation and demo application for Art35rennes Daisy Kit.",
     "license": "MIT",
     "require": {
-        "php": "^8.2",
-        "art35rennes/laravel-daisy-kit": "dev-main",
+        "php": "^8.3",
+        "art35rennes/laravel-daisy-kit": "^4.0",
         "laravel/framework": "^13.0"
     },
     "require-dev": {
@@ -29,14 +29,8 @@
     },
     "repositories": [
         {
-            "type": "path",
-            "url": "../laravel-daisy-kit",
-            "options": {
-                "symlink": true,
-                "versions": {
-                    "art35rennes/laravel-daisy-kit": "dev-main"
-                }
-            }
+            "type": "vcs",
+            "url": "https://github.com/art35rennes/laravel-daisy-kit.git"
         }
     ],
     "scripts": {
