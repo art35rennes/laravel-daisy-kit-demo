@@ -1,11 +1,17 @@
 <?php
 
+use App\Http\Controllers\DemoFixtureController;
 use App\Http\Controllers\DocumentationController;
 use App\Http\Middleware\DocumentationContentSecurityPolicy;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(DocumentationContentSecurityPolicy::class)->group(function (): void {
+    Route::get('/fixtures/table', [DemoFixtureController::class, 'table'])->name('fixtures.table');
+    Route::get('/fixtures/{fixture}', [DemoFixtureController::class, 'show'])
+        ->whereIn('fixture', ['forms', 'tree', 'blueprint', 'file-preview', 'map'])
+        ->name('fixtures.show');
+
     Route::get('/demo', function (): RedirectResponse {
         return redirect()->route('docs.overview');
     })->name('docs.legacy-demo');

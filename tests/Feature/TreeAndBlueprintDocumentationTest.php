@@ -14,7 +14,7 @@ it('renders the published blueprint contract with a deterministic workflow', fun
         ->assertOk()
         ->assertSee('data-daisy-kit-module="blueprint"', false)
         ->assertSee('Draft')
-        ->assertSee('Review')
+        ->assertSee('Editorial review')
         ->assertSee('Published')
         ->assertSee('@daisy-kit/blueprint.js');
 });
