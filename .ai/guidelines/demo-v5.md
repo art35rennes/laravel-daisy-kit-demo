@@ -6,7 +6,7 @@
   Blueprint, File Preview, and Map.
 - Use native DaisyUI/Tailwind for standard shell controls. Do not revive v4 contracts,
   wrappers, catalogue pages, CRUD/auth templates, charts, calendars, or inventory tooling.
-- Laravel Daisy Kit is locked from its Git VCS repository at `v5.0.0-alpha.2`.
+- Laravel Daisy Kit is locked from its Git VCS repository at `v5.0.0-alpha.3`.
   Use only its public Blade contracts and the official `@daisy-kit` Vite alias to
   `vendor/art35rennes/laravel-daisy-kit/dist`; do not add v4 compatibility code, local copies,
   stubs, or unverified APIs.

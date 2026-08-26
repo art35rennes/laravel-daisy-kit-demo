@@ -14,10 +14,12 @@ it('operates the real blueprint with the keyboard', function (): void {
     visit('/blueprint')
         ->waitForEvent('networkidle')
         ->wait(1)
-        ->keys('[data-node-id="draft"]', 'ArrowRight')
+        ->assertScript("window.__blueprintSelection = null; document.querySelector('[data-daisy-kit-module=blueprint]').addEventListener('daisy-kit:blueprint:select', (event) => { window.__blueprintSelection = event.detail.id; }); true", true)
+        ->keys('[data-daisy-kit-blueprint-node-control][data-node-id="draft"]', 'ArrowRight')
         ->assertScript("document.activeElement?.dataset.nodeId === 'review'", true)
-        ->keys('[data-node-id="review"]', 'Enter')
+        ->keys('[data-daisy-kit-blueprint-node-control][data-node-id="review"]', 'Enter')
         ->assertScript("document.activeElement?.getAttribute('aria-pressed') === 'true'", true)
+        ->assertScript("window.__blueprintSelection === 'review'", true)
         ->assertNoAccessibilityIssues(1)
         ->assertNoSmoke();
 })->group('browser');

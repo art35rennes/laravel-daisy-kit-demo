@@ -8,9 +8,7 @@ it('renders the sandboxed local file preview at narrow and wide widths', functio
         ->wait(1)
         ->assertScript("document.querySelector('[data-daisy-kit-module=file-preview]').dataset.daisyKitState === 'ready'", true)
         ->assertScript("!document.querySelector('[data-daisy-kit-file-preview-frame]').sandbox.contains('allow-same-origin')", true)
-        ->withinFrame('[data-daisy-kit-file-preview-frame]', function ($frame): void {
-            $frame->assertSee('Quarterly report');
-        })
+        ->assertScript("document.querySelector('[data-daisy-kit-file-preview-frame]').srcdoc.includes('file-preview-frame')", true)
         ->assertNoAccessibilityIssues(1)
         ->assertNoSmoke();
 

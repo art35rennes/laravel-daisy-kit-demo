@@ -36,7 +36,7 @@ The only package contracts documented by the demo are:
 - `x-daisy-kit::table`, `x-daisy-kit::tree`, `x-daisy-kit::blueprint`,
   `x-daisy-kit::file-preview`, and `x-daisy-kit::map`
 - VCS Composer package `art35rennes/laravel-daisy-kit` locked at
-  `v5.0.0-alpha.2` (`c59f67375173c364b193dbcf309cca0891d02672`), with Vite's
+  `v5.0.0-alpha.3` (`e60631ff14c5ff3c7c9a9565bcecda4dc29af687`), with Vite's
   `@daisy-kit` alias resolving to its `dist` directory
 - `@daisy-kit/{forms-viewer,forms-builder,table,tree,blueprint,file-preview,map}.{js,css}`
 - ESM `mount`, `mountAll`, and `unmount`; DOM events named

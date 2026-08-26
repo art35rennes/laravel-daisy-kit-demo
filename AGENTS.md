@@ -9,7 +9,7 @@
   Blueprint, File Preview, and Map.
 - Use native DaisyUI/Tailwind for standard shell controls. Do not revive v4 contracts,
   wrappers, catalogue pages, CRUD/auth templates, charts, calendars, or inventory tooling.
-- Laravel Daisy Kit is locked from its Git VCS repository at `v5.0.0-alpha.2`.
+- Laravel Daisy Kit is locked from its Git VCS repository at `v5.0.0-alpha.3`.
   Use only its public Blade contracts and the official `@daisy-kit` Vite alias to
   `vendor/art35rennes/laravel-daisy-kit/dist`; do not add v4 compatibility code, local copies,
   stubs, or unverified APIs.
@@ -211,7 +211,8 @@ or make one module load another implicitly. Listen only to `daisy-kit:{module}:*
 
 Configuration is escaped, non-executable JSON. Preserve the modular CSP boundary: no inline
 script, handler, view-authored style attribute, or view-authored style block. File Preview keeps
-untrusted document rendering in its sandboxed child frame.
+untrusted document rendering in its sandboxed child frame; its auxiliary chunks are emitted by
+the explicit Vite entry and need no route, proxy, copy, or published asset.
 
 There is no compatibility layer, alias namespace, asset publication, route, or host template.
 For implementation and verification details, activate the `laravel-daisy-kit-development` skill.
