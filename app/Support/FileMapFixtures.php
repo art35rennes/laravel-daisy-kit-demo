@@ -5,6 +5,45 @@ namespace App\Support;
 final class FileMapFixtures
 {
     /**
+     * @return list<array{id: string, title: string, summary: string, state: string}>
+     */
+    public static function scenarios(string $module): array
+    {
+        return match ($module) {
+            'forms' => [
+                ['id' => 'contributor-profile', 'title' => 'Contributor profile', 'summary' => 'A multi-step profile that computes a review summary.', 'state' => 'success'],
+                ['id' => 'preference-variant', 'title' => 'Preference variant', 'summary' => 'An optional preference branch with a small field set.', 'state' => 'variant'],
+                ['id' => 'invalid-submission', 'title' => 'Invalid submission', 'summary' => 'A visible validation response for incomplete input.', 'state' => 'error'],
+            ],
+            'table' => [
+                ['id' => 'contributor-directory', 'title' => 'Contributor directory', 'summary' => 'A paged directory of active contributors.', 'state' => 'success'],
+                ['id' => 'filtered-server-result', 'title' => 'Filtered server result', 'summary' => 'A typed filter applied to a deterministic endpoint.', 'state' => 'variant'],
+                ['id' => 'unavailable-source', 'title' => 'Unavailable source', 'summary' => 'An accessible error when the data source cannot respond.', 'state' => 'error'],
+            ],
+            'tree' => [
+                ['id' => 'workspace-navigation', 'title' => 'Workspace navigation', 'summary' => 'A keyboard-navigable project hierarchy.', 'state' => 'success'],
+                ['id' => 'lazy-media-branch', 'title' => 'Lazy media branch', 'summary' => 'A branch whose deterministic child data loads on demand.', 'state' => 'loading'],
+                ['id' => 'search-result', 'title' => 'Search result', 'summary' => 'A local or remote search result with no-match handling.', 'state' => 'variant'],
+            ],
+            'blueprint' => [
+                ['id' => 'editorial-workflow', 'title' => 'Editorial workflow', 'summary' => 'A five-node publication flow.', 'state' => 'success'],
+                ['id' => 'inspector-selection', 'title' => 'Inspector selection', 'summary' => 'A selected node with contextual inspection.', 'state' => 'variant'],
+                ['id' => 'read-only-review', 'title' => 'Read-only review', 'summary' => 'A review mode that prevents authoring actions.', 'state' => 'variant'],
+            ],
+            'file-preview' => [
+                ['id' => 'text-report', 'title' => 'Text report', 'summary' => 'A local text document in the sandboxed frame.', 'state' => 'success'],
+                ['id' => 'document-gallery', 'title' => 'Document gallery', 'summary' => 'A compact gallery for supported local document types.', 'state' => 'variant'],
+                ['id' => 'rejected-file', 'title' => 'Rejected file', 'summary' => 'A MIME, size or authorization rejection.', 'state' => 'error'],
+            ],
+            'map' => [
+                ['id' => 'office-workspace', 'title' => 'Office workspace', 'summary' => 'A deterministic office map with a primary location.', 'state' => 'success'],
+                ['id' => 'layers-and-markers', 'title' => 'Layers and markers', 'summary' => 'A common layer and marker configuration.', 'state' => 'variant'],
+                ['id' => 'draw-and-measure', 'title' => 'Draw and measure', 'summary' => 'An editable geometry with a visible measurement.', 'state' => 'variant'],
+            ],
+        };
+    }
+
+    /**
      * @return array{schema: array{fields: list<array{name: string, label: string, type: string, options?: list<array{value: string, label: string}>}>, submitLabel: string}, value: array{name: string, email: string, updates: string}}
      */
     public static function forms(): array

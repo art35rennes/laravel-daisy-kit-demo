@@ -29,3 +29,19 @@ it('returns 422 when a table fixture filter is invalid', function (): void {
         ->assertUnprocessable()
         ->assertJsonValidationErrorFor('sort');
 });
+
+dataset('fixture-scenarios', [
+    'forms' => ['/fixtures/forms', 'Contributor profile', 'error'],
+    'table' => ['/fixtures/table', 'Contributor directory', 'error'],
+    'tree' => ['/fixtures/tree', 'Workspace navigation', 'variant'],
+    'blueprint' => ['/fixtures/blueprint', 'Editorial workflow', 'variant'],
+    'file preview' => ['/fixtures/file-preview', 'Text report', 'error'],
+    'map' => ['/fixtures/map', 'Office workspace', 'variant'],
+]);
+
+it('exposes named representative scenarios with every module fixture', function (string $uri, string $title, string $state): void {
+    $this->getJson($uri)
+        ->assertOk()
+        ->assertJsonPath('scenarios.0.title', $title)
+        ->assertJsonPath('scenarios.2.state', $state);
+})->with('fixture-scenarios');

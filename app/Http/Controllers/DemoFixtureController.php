@@ -10,17 +10,19 @@ final class DemoFixtureController extends Controller
 {
     public function show(string $fixture): JsonResponse
     {
-        return response()->json(match ($fixture) {
+        $fixtureData = match ($fixture) {
             'forms' => FileMapFixtures::formsParity(),
             'tree' => FileMapFixtures::treeParity(),
             'blueprint' => FileMapFixtures::blueprint(),
             'file-preview' => FileMapFixtures::filePreviews(),
             'map' => FileMapFixtures::map(),
-        });
+        };
+
+        return response()->json([...$fixtureData, 'scenarios' => FileMapFixtures::scenarios($fixture)]);
     }
 
     public function table(TableFixtureRequest $request): JsonResponse
     {
-        return response()->json(FileMapFixtures::tablePage($request->validated()));
+        return response()->json([...FileMapFixtures::tablePage($request->validated()), 'scenarios' => FileMapFixtures::scenarios('table')]);
     }
 }

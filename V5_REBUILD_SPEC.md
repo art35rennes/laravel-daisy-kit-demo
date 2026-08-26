@@ -7,8 +7,9 @@ Laravel Daisy Kit v5. It serves English, copyable, executable documentation for
 Forms, Table, Tree, Blueprint, File Preview, and Map. The host application owns
 Tailwind CSS and DaisyUI; Laravel Daisy Kit owns only its documented modules.
 
-The v4 release is preserved at `legacy/4.x`. The stable v5 release is promoted
-from `next/v5` to `dev` and then `main` only after the complete validation gate.
+The v4 release is preserved at `legacy/4.x`. The corrective v5 development
+branch is promoted only after the owner validates the integrated browser
+experience and the complete validation gate is green.
 
 ## Tech stack
 
@@ -34,9 +35,9 @@ The only package contracts documented by the demo are:
 - `x-daisy-kit::forms.viewer` and `x-daisy-kit::forms.builder`
 - `x-daisy-kit::table`, `x-daisy-kit::tree`, `x-daisy-kit::blueprint`,
   `x-daisy-kit::file-preview`, and `x-daisy-kit::map`
-- VCS Composer package `art35rennes/laravel-daisy-kit` declared at `^5.0` and
-  locked at `v5.0.0` (`6d7f28ffc17cc2e91cd5be3e4598986da7ac75d4`), with Vite's
-  `@daisy-kit` alias resolving to its `dist` directory
+- VCS Composer package `art35rennes/laravel-daisy-kit` locked to the verified
+  corrective v5 tag and commit, with Vite's `@daisy-kit` alias resolving to its
+  `dist` directory. No earlier v5 release is a compatibility target.
 - `@daisy-kit/{forms-viewer,forms-builder,table,tree,blueprint,file-preview,map}.{js,css}`
 - ESM `mount`, `mountAll`, and `unmount`; DOM events named
   `daisy-kit:{module}:*`; no global object.
@@ -105,8 +106,8 @@ Restore the differentiated product journeys that the v4 demo proved, while keepi
 the v5 boundary intact: the package owns module behavior and presentation; this
 application owns deterministic documentation data, thin read-only endpoints,
 native DaisyUI shell controls, and executable acceptance coverage. This phase
-starts from the published `v5.0.0` baseline and is integrated only after a package
-prerelease exposes the verified public contracts. It must not simulate a missing
+starts from the v5 product requirements and is integrated only after a corrective
+package prerelease exposes the verified public contracts. It must not simulate a missing
 package feature in Blade, JavaScript, a proxy, or a copied vendor asset.
 
 ### Delivery plan
@@ -138,6 +139,29 @@ package feature in Blade, JavaScript, a proxy, or a copied vendor asset.
 | File Preview | Sandboxed published file-preview module | v4 document wrapper | Local text/image/PDF/DOCX and proportionate video fixtures; preview/open/download/modal; deterministic MIME, size and authorization failures under CSP |
 | Map | Published map module | Leaflet demo route and unsupported providers | Deterministic test provider; markers/layers/GeoJSON, draw/edit/select/measure, undo/redo and export |
 | Documentation | Native DaisyUI host navigation and six focused pages | v4 catalogue, auth, CRUD, charts and calendar | Every page exposes success, empty, loading and error states, copyable usage/imports/API/events, and standard-control links to DaisyUI |
+
+### Multi-example documentation layout
+
+Each module page will use a small, visible scenario index followed by executable
+examples. A scenario is not a catalogue entry: it demonstrates one familiar use
+case, its common configuration, a deterministic fixture and its observable
+result. The page starts with the success path, groups closely related variants,
+then keeps empty/loading/error together. Snippets are copied from the rendered
+example after the prerelease contract is verified; no unpublished property or
+event name is presented as executable documentation.
+
+| Module | Visible scenarios | Common contract coverage |
+| --- | --- | --- |
+| Forms | Contributor profile; preference variant; schema empty state; validation/submission failure; Livewire builder editing | Viewer `schema`/`value`; builder `schema`; validation, steps, computed values and submission are verified against the prerelease before examples are published |
+| Table | Contributor directory; filtered server result; saved bulk selection; no-result state; unavailable source | `columns`, `rows`, `pageSize`; filtering, sort/page, column choice, details/actions and editing are verified before endpoint options are documented |
+| Tree | Workspace navigation; multi/indeterminate selection; lazy media branch; search result; empty/error | `items`, `label`; selection, persistence, remote search and lazy loading are verified before their options are documented |
+| Blueprint | Editorial workflow; inspector selection; authoring/linking; read-only review; empty/error | `nodes`, `edges`, `label`; editing, JSON synchronization, undo/redo and organization are verified before their options are documented |
+| File Preview | Text report; image/PDF/DOCX asset; modal/open/download; rejected MIME/size/auth; empty/loading | `src`, `type`, `name`, `maxBytes`; CSP sandbox and each action/event are verified before snippets are published |
+| Map | Office workspace; layers/markers/GeoJSON; draw/edit/measure; selection/export; empty/error | `geojson`, `center`, `zoom`, `drawing`, `label`; provider, layers, editing and export options are verified before snippets are published |
+
+The fixture catalog carries scenario labels and local data only. It is
+not a compatibility API and must never become an alternate implementation of a
+package module.
 
 ### Browser and deployment parity gate
 
