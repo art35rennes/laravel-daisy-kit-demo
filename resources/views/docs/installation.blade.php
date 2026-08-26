@@ -5,7 +5,7 @@
     { "type": "vcs", "url": "https://github.com/art35rennes/laravel-daisy-kit" }
   ],
   "require": {
-    "art35rennes/laravel-daisy-kit": "v5.0.0-alpha.3"
+    "art35rennes/laravel-daisy-kit": "^5.0"
   }
 }
 JSON;
@@ -37,7 +37,7 @@ JS;
     <article class="max-w-3xl">
         <p class="text-sm font-medium uppercase tracking-widest text-primary">Getting started</p>
         <h1 class="mt-3 text-4xl font-bold tracking-tight">Installation</h1>
-        <p class="mt-5 leading-7 text-base-content/75">Laravel Daisy Kit is installed from GitHub as a Composer VCS package. This demo locks the immutable <code>v5.0.0-alpha.3</code> prerelease; it is not published on Packagist or npm.</p>
+        <p class="mt-5 leading-7 text-base-content/75">Laravel Daisy Kit is installed from GitHub as a Composer VCS package. This demo declares the public <code>^5.0</code> constraint and its committed lock resolves the immutable <code>v5.0.0</code> release; it is not published on Packagist or npm.</p>
         <section class="mt-10" aria-labelledby="composer-heading"><h2 id="composer-heading" class="text-2xl font-semibold">1. Require the package from VCS</h2><pre class="code-sample mt-4 overflow-x-auto" tabindex="0" aria-label="Composer VCS package configuration"><code>{{ $composer }}</code></pre></section>
         <section class="mt-10" aria-labelledby="vite-heading"><h2 id="vite-heading" class="text-2xl font-semibold">2. Configure the official Vite alias</h2><pre class="code-sample mt-4 overflow-x-auto" tabindex="0" aria-label="Vite Daisy Kit alias"><code>{{ $vite }}</code></pre><p class="mt-3 leading-7 text-base-content/75">The package is Composer-installed, so Vite resolves its distributable assets through <code>@daisy-kit</code>, never through the Composer package name.</p></section>
         <section class="mt-10" aria-labelledby="assets-heading"><h2 id="assets-heading" class="text-2xl font-semibold">3. Import module assets</h2><pre class="code-sample mt-4 overflow-x-auto" tabindex="0" aria-label="Module asset imports"><code>{{ $assets }}</code></pre><p class="mt-3 leading-7 text-base-content/75">Import only the CSS and ESM stem used on the page. The available stems are <code>forms-viewer</code>, <code>forms-builder</code>, <code>table</code>, <code>tree</code>, <code>blueprint</code>, <code>file-preview</code>, and <code>map</code>.</p></section>

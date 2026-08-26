@@ -1,10 +1,9 @@
 # Laravel Daisy Kit Demo v5
 
-Executable English documentation for the six Laravel Daisy Kit v5 modules. This
-branch is a reconstruction in progress and intentionally does not publish to
-`main`, `dev`, or a stable release. It locks the Git VCS package
-`art35rennes/laravel-daisy-kit` at `v5.0.0-alpha.3`
-(`e60631ff14c5ff3c7c9a9565bcecda4dc29af687`).
+Executable English documentation for the six Laravel Daisy Kit v5 modules. It
+declares the Git VCS package `art35rennes/laravel-daisy-kit` at the public
+stable constraint `^5.0`; the committed lock resolves `v5.0.0`
+(`6d7f28ffc17cc2e91cd5be3e4598986da7ac75d4`).
 
 ## Requirements
 
@@ -63,7 +62,7 @@ skill is genuinely needed); Boost synchronizes generated skills to
 php artisan boost:update --discover
 ```
 
-The package’s alpha.3 Boost guidance and `laravel-daisy-kit-development` skill are
+The package’s v5.0.0 Boost guidance and `laravel-daisy-kit-development` skill are
 included through Boost after a static SkillSpector review (SAFE; no LLM analysis).
 The local MCP settings for Codex and Cursor remain ignored because their working
 directory is machine-specific.
