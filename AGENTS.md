@@ -17,6 +17,14 @@
 - Use Pest 5 TIA for fast feedback (`composer run test:tia`), but use
   `composer run test:release` as the full non-TIA gate. Preserve Browser coverage for all six
   pages, responsive widths, keyboard/focus behavior, accessibility, and console errors.
+- Product parity is defined by `V5_REBUILD_SPEC.md`: preserve the v4 user needs through the
+  six v5 public modules, but never revive v4 aliases or implement a missing package capability
+  in the host. Keep `/fixtures/*` read-only, deterministic and validated.
+- Browser acceptance must prove visible outcomes, styles, focus, accessibility, console and
+  network behavior rather than only an internal mount state. Forms Viewer and File Preview also
+  need trusted-HTTPS or no-Web-Crypto-origin coverage; never bypass a Herd certificate warning.
+- A package prerelease must be locked from Git VCS and verified from a fresh install before its
+  contract is documented or the corrective branch is considered promotable.
 
 === foundation rules ===
 
