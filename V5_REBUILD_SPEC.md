@@ -13,7 +13,8 @@ prerelease is available.
 
 ## Tech stack
 
-- Laravel 13 and PHP ^8.3.
+- Laravel 13 and PHP ^8.4. Pest 5, TIA, local development, and CI use PHP 8.4;
+  the v5 demo deliberately does not support PHP 8.3.
 - Blade, Vite, Tailwind CSS, and DaisyUI. No authentication or persistent
   database is needed.
 - Deterministic PHP fixtures and lightweight controllers only.
@@ -48,8 +49,8 @@ mount and interactive package demonstrations are a follow-up integration slice.
 ```sh
 composer install
 npm install
-composer test
-composer run test:browser
+composer run test:release
+composer run test:tia
 vendor/bin/pint --test
 npm run build
 composer audit
@@ -91,3 +92,6 @@ to a database or external service.
    has no console errors at 320, 768, 1024, and 1440 pixels.
 5. Composer/npm locks are current and audited. `next/v5` is the only branch pushed
    by this phase; package integration remains an explicit checkpoint.
+6. `composer run test:release` runs every test without TIA. `composer run test:tia`
+   first records the full suite, then replays unaffected results as fast, non-release
+   feedback; its graph and cached results live in ignored `.pest/tia`.
