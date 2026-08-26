@@ -11,6 +11,7 @@
         "livewire/livewire": "^4.3"
     },
     "require-dev": {
+        "laravel/boost": "^2.6",
         "laravel/pint": "^1.27",
         "pestphp/pest": "^5.0",
         "pestphp/pest-plugin-browser": "^5.0"

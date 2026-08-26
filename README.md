@@ -48,9 +48,25 @@ subsequent runs replay unaffected results from ignored `.pest/tia`. The release
 command always executes the complete suite without TIA, so browser, responsive,
 accessibility, and module coverage cannot be masked.
 
+## AI guidance
+
+Laravel Boost 2 is installed as a development dependency. Keep project-specific
+agent context in `.ai/guidelines` (and `.ai/skills` only when a project-specific
+skill is genuinely needed); Boost synchronizes generated skills to
+`.agents/skills` and composes `AGENTS.md`. Refresh generated guidance with:
+
+```sh
+php artisan boost:update --discover
+```
+
+The local MCP settings for Codex and Cursor remain ignored because their working
+directory is machine-specific. Do not add a package-v5 stand-in while refreshing
+agent guidance.
+
 ## Sources
 
 - [Laravel 13 installation](https://laravel.com/docs/13.x/installation)
+- [Laravel Boost](https://laravel.com/docs/boost)
 - [Laravel routing](https://laravel.com/docs/13.x/routing)
 - [DaisyUI documentation](https://daisyui.com/docs/)
 - [Pest 5 TIA](https://pestphp.com/docs/tia)
