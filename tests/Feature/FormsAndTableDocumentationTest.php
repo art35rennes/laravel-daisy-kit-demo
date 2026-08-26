@@ -1,29 +1,21 @@
 <?php
 
-it('documents the forms contract without requiring a package component to render', function (): void {
+it('renders the published forms viewer and optional builder contracts', function (): void {
     $this->get('/forms')
         ->assertOk()
-        ->assertSee('Forms')
-        ->assertSee('x-daisy-kit::forms.viewer')
-        ->assertSee('x-daisy-kit::forms.builder')
-        ->assertSee('Viewer does not require Livewire')
-        ->assertSee('Livewire 4 is optional for the builder')
-        ->assertSee('Package prerelease checkpoint')
-        ->assertSee('Empty')
-        ->assertSee('Loading')
-        ->assertSee('Error')
-        ->assertSee('daisy-kit:forms:*');
+        ->assertSee('data-daisy-kit-module="forms-viewer"', false)
+        ->assertSee('data-daisy-kit-module="forms-builder"', false)
+        ->assertSee('forms-viewer.js')
+        ->assertSee('forms-builder.js')
+        ->assertSee('Ada Lovelace');
 });
 
-it('documents the table contract with deterministic records and package checkpoint', function (): void {
+it('renders the published table contract with deterministic rows', function (): void {
     $this->get('/table')
         ->assertOk()
-        ->assertSee('Table')
-        ->assertSee('x-daisy-kit::table')
+        ->assertSee('data-daisy-kit-module="table"', false)
+        ->assertSee('data-daisy-kit-table-filter', false)
         ->assertSee('Ada Lovelace')
-        ->assertSee('Package prerelease checkpoint')
-        ->assertSee('Empty')
-        ->assertSee('Loading')
-        ->assertSee('Error')
-        ->assertSee('daisy-kit:table:*');
+        ->assertSee('Type an unmatched value in the interactive table filter')
+        ->assertSee('@daisy-kit/table.js');
 });

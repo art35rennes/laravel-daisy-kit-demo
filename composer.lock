@@ -4,8 +4,137 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f89ebf5aa7254629ad40da2a6eaa79ba",
+    "content-hash": "400bdece8359472f36d10f7549453dc6",
     "packages": [
+        {
+            "name": "art35rennes/laravel-daisy-kit",
+            "version": "v5.0.0-alpha.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/art35rennes/laravel-daisy-kit.git",
+                "reference": "c59f67375173c364b193dbcf309cca0891d02672"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/art35rennes/laravel-daisy-kit/zipball/c59f67375173c364b193dbcf309cca0891d02672",
+                "reference": "c59f67375173c364b193dbcf309cca0891d02672",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^13.0",
+                "illuminate/view": "^13.0",
+                "php": "^8.4"
+            },
+            "require-dev": {
+                "larastan/larastan": "^3.9",
+                "laravel/boost": "^2.6",
+                "laravel/framework": "^13.0",
+                "laravel/pint": "^1.29",
+                "livewire/livewire": "^4.0",
+                "orchestra/testbench": "^11.0",
+                "pestphp/pest": "^5.0",
+                "pestphp/pest-plugin-browser": "^5.0",
+                "pestphp/pest-plugin-laravel": "^5.0",
+                "pestphp/pest-plugin-type-coverage": "^5.0",
+                "phpstan/extension-installer": "^1.4"
+            },
+            "suggest": {
+                "livewire/livewire": "Required only to enhance x-daisy-kit::forms.builder with Livewire 4."
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Art35rennes\\DaisyKit\\DaisyKitServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Art35rennes\\DaisyKit\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Art35rennes\\DaisyKit\\Tests\\": "tests/",
+                    "Workbench\\App\\": "workbench/app/"
+                }
+            },
+            "scripts": {
+                "post-autoload-dump": [
+                    "@php vendor/bin/testbench package:discover --ansi"
+                ],
+                "build:workbench": [
+                    "@php vendor/bin/testbench workbench:build --ansi",
+                    "npm run build:workbench-assets"
+                ],
+                "lint": [
+                    "vendor/bin/pint --parallel"
+                ],
+                "lint:check": [
+                    "vendor/bin/pint --parallel --test"
+                ],
+                "analyse": [
+                    "vendor/bin/phpstan analyse --memory-limit=1G"
+                ],
+                "test:types": [
+                    "vendor/bin/pest --ci --no-tia --exclude-group=browser --type-coverage --min=100"
+                ],
+                "test:unit": [
+                    "vendor/bin/pest --ci --no-tia --parallel --exclude-group=browser"
+                ],
+                "test:browser": [
+                    "npm run build",
+                    "npm run build:browser-assets",
+                    "vendor/bin/pest --ci --no-tia --group=browser"
+                ],
+                "test:full": [
+                    "@test:unit",
+                    "@test:browser"
+                ],
+                "test:vite-host": [
+                    "npm run test:vite-host"
+                ],
+                "test:tia": [
+                    "npm run build",
+                    "@build:workbench",
+                    "npm run build:browser-assets",
+                    "vendor/bin/pest --tia --baselined"
+                ],
+                "test:tia:fresh": [
+                    "npm run build",
+                    "@build:workbench",
+                    "npm run build:browser-assets",
+                    "vendor/bin/pest --tia --fresh"
+                ],
+                "test": [
+                    "@analyse",
+                    "@lint:check",
+                    "@test:types",
+                    "@test:full",
+                    "@test:vite-host"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Focused, explicitly mounted Laravel UI modules for DaisyUI host applications.",
+            "homepage": "https://github.com/art35rennes/laravel-daisy-kit",
+            "keywords": [
+                "blade",
+                "daisyui",
+                "forms",
+                "laravel",
+                "map",
+                "table",
+                "tailwindcss"
+            ],
+            "support": {
+                "issues": "https://github.com/art35rennes/laravel-daisy-kit/issues",
+                "source": "https://github.com/art35rennes/laravel-daisy-kit"
+            },
+            "time": "2026-08-26T18:01:00+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.18.0",
@@ -11002,7 +11131,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "art35rennes/laravel-daisy-kit": 15
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

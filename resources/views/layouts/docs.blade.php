@@ -5,12 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Executable documentation for Laravel Daisy Kit v5.">
         <title>{{ $title ?? 'Laravel Daisy Kit' }}</title>
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @livewireStyles
+        @vite([...['resources/css/app.css', 'resources/js/app.js'], ...($moduleAssets ?? [])])
     </head>
     <body class="min-h-screen bg-base-100 text-base-content">
         <a class="skip-link" href="#main-content">Skip to content</a>
-        <div class="drawer lg:drawer-open">
+        <div class="drawer lg:drawer-open" role="region" aria-label="Documentation layout">
             <input id="documentation-drawer" type="checkbox" class="drawer-toggle">
             <div class="drawer-content min-w-0">
                 <header class="navbar sticky top-0 z-20 border-b border-base-300 bg-base-100/95 px-4 backdrop-blur lg:px-8">
@@ -43,6 +42,5 @@
                 </nav>
             </aside>
         </div>
-        @livewireScripts
     </body>
 </html>

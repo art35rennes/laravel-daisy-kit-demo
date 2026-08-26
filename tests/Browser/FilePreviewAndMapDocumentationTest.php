@@ -1,31 +1,34 @@
 <?php
 
-test('file preview documentation keeps its public contract usable at narrow and wide widths', function (): void {
+it('renders the sandboxed local file preview at narrow and wide widths', function (): void {
     $page = visit('/file-preview');
 
     $page->resize(320, 800)
-        ->assertSee('File Preview')
-        ->assertSee('quarterly-report.pdf')
-        ->assertSee('Empty')
-        ->assertNoSmoke()
-        ->assertNoAccessibilityIssues();
+        ->waitForEvent('networkidle')
+        ->wait(1)
+        ->assertScript("document.querySelector('[data-daisy-kit-module=file-preview]').dataset.daisyKitState === 'ready'", true)
+        ->assertScript("!document.querySelector('[data-daisy-kit-file-preview-frame]').sandbox.contains('allow-same-origin')", true)
+        ->withinFrame('[data-daisy-kit-file-preview-frame]', function ($frame): void {
+            $frame->assertSee('Quarterly report');
+        })
+        ->assertNoAccessibilityIssues(1)
+        ->assertNoSmoke();
 
     $page->resize(1440, 960)
-        ->assertSee('Public contract')
-        ->assertSee('Package prerelease checkpoint');
+        ->assertSee('Public contract');
 })->group('browser');
 
-test('map documentation keeps its public contract usable at tablet and desktop widths', function (): void {
+it('mounts the map with drawing controls at tablet and desktop widths', function (): void {
     $page = visit('/map');
 
     $page->resize(768, 900)
-        ->assertSee('Map')
-        ->assertSee('48.1173')
-        ->assertSee('Loading')
-        ->assertNoSmoke()
-        ->assertNoAccessibilityIssues();
+        ->waitForEvent('networkidle')
+        ->wait(1)
+        ->assertScript("document.querySelector('[data-daisy-kit-module=map]').dataset.daisyKitState === 'ready'", true)
+        ->click('[data-daisy-kit-map-mode="linestring"]')
+        ->assertNoAccessibilityIssues(1)
+        ->assertNoSmoke();
 
     $page->resize(1024, 900)
-        ->assertSee('Public contract')
-        ->assertSee('Package prerelease checkpoint');
+        ->assertSee('Public contract');
 })->group('browser');

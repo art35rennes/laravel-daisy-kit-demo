@@ -5,7 +5,14 @@
     "description": "Executable documentation for Laravel Daisy Kit v5.",
     "keywords": ["laravel", "daisyui", "documentation"],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/art35rennes/laravel-daisy-kit"
+        }
+    ],
     "require": {
+        "art35rennes/laravel-daisy-kit": "v5.0.0-alpha.2",
         "php": "^8.4",
         "laravel/framework": "^13.17",
         "livewire/livewire": "^4.3"

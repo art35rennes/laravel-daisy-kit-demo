@@ -9,9 +9,10 @@
   Blueprint, File Preview, and Map.
 - Use native DaisyUI/Tailwind for standard shell controls. Do not revive v4 contracts,
   wrappers, catalogue pages, CRUD/auth templates, charts, calendars, or inventory tooling.
-- The Laravel Daisy Kit v5 prerelease is not available yet. Do not invent Blade components,
-  assets, or Composer constraints for it. Keep v5 imports as documentation checkpoints until
-  the exact published tag is supplied.
+- Laravel Daisy Kit is locked from its Git VCS repository at `v5.0.0-alpha.2`.
+  Use only its public Blade contracts and the official `@daisy-kit` Vite alias to
+  `vendor/art35rennes/laravel-daisy-kit/dist`; do not add v4 compatibility code, local copies,
+  stubs, or unverified APIs.
 - Use Pest 5 TIA for fast feedback (`composer run test:tia`), but use
   `composer run test:release` as the full non-TIA gate. Preserve Browser coverage for all six
   pages, responsive widths, keyboard/focus behavior, accessibility, and console errors.
@@ -190,5 +191,29 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - Rerun a test after each change to it.
 - Run `vendor/bin/pest` to call the test runner directly. It accepts the same file path and `--filter=testName` arguments.
 - After the feature tests pass, ask the user to run the complete suite with `php artisan test --compact`.
+
+=== art35rennes/laravel-daisy-kit/core rules ===
+
+## Laravel Daisy Kit
+
+Laravel Daisy Kit is a PHP 8.4 / Laravel 13 package of focused Blade modules for applications
+that already own their Tailwind CSS and DaisyUI setup. It provides exactly these components:
+
+- `x-daisy-kit::forms.viewer` and `x-daisy-kit::forms.builder`
+- `x-daisy-kit::table`, `x-daisy-kit::tree`, and `x-daisy-kit::blueprint`
+- `x-daisy-kit::file-preview` and `x-daisy-kit::map`
+
+This is a Composer/VCS package, not an npm package. In the host Vite configuration, resolve the
+stable `@daisy-kit` alias to `vendor/art35rennes/laravel-daisy-kit/dist`; then import each used
+entry explicitly, such as `@daisy-kit/table.js` and `@daisy-kit/table.css`. Every module exposes
+`mount(root)`, `mountAll(scope = document)`, and `unmount(root)`; do not add a global bootstrap
+or make one module load another implicitly. Listen only to `daisy-kit:{module}:*` events.
+
+Configuration is escaped, non-executable JSON. Preserve the modular CSP boundary: no inline
+script, handler, view-authored style attribute, or view-authored style block. File Preview keeps
+untrusted document rendering in its sandboxed child frame.
+
+There is no compatibility layer, alias namespace, asset publication, route, or host template.
+For implementation and verification details, activate the `laravel-daisy-kit-development` skill.
 
 </laravel-boost-guidelines>

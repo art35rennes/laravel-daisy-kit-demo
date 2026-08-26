@@ -1,27 +1,19 @@
 <?php
 
-it('documents the file preview contract with a deterministic descriptor and package checkpoint', function (): void {
+it('renders the published file preview with a local deterministic source', function (): void {
     $this->get('/file-preview')
         ->assertOk()
-        ->assertSee('File Preview')
-        ->assertSee('x-daisy-kit::file-preview')
-        ->assertSee('quarterly-report.pdf')
-        ->assertSee('Package prerelease checkpoint')
-        ->assertSee('Empty')
-        ->assertSee('Loading')
-        ->assertSee('Error')
-        ->assertSee('daisy-kit:file-preview:*');
+        ->assertSee('data-daisy-kit-module="file-preview"', false)
+        ->assertSee('sandbox="allow-scripts"', false)
+        ->assertSee('quarterly-report.txt')
+        ->assertSee('@daisy-kit/file-preview.js');
 });
 
-it('documents the map contract with deterministic coordinates and package checkpoint', function (): void {
+it('renders the published map contract with deterministic GeoJSON', function (): void {
     $this->get('/map')
         ->assertOk()
-        ->assertSee('Map')
-        ->assertSee('x-daisy-kit::map')
+        ->assertSee('data-daisy-kit-module="map"', false)
+        ->assertSee('data-daisy-kit-map-canvas', false)
         ->assertSee('48.1173')
-        ->assertSee('Package prerelease checkpoint')
-        ->assertSee('Empty')
-        ->assertSee('Loading')
-        ->assertSee('Error')
-        ->assertSee('daisy-kit:map:*');
+        ->assertSee('@daisy-kit/map.js');
 });

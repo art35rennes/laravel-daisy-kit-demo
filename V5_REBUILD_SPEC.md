@@ -35,14 +35,16 @@ The only package contracts documented by the demo are:
 - `x-daisy-kit::forms.viewer` and `x-daisy-kit::forms.builder`
 - `x-daisy-kit::table`, `x-daisy-kit::tree`, `x-daisy-kit::blueprint`,
   `x-daisy-kit::file-preview`, and `x-daisy-kit::map`
-- `vendor/art35rennes/laravel-daisy-kit/dist/{forms,table,tree,blueprint,file-preview,map}.{js,css}`
+- VCS Composer package `art35rennes/laravel-daisy-kit` locked at
+  `v5.0.0-alpha.2` (`c59f67375173c364b193dbcf309cca0891d02672`), with Vite's
+  `@daisy-kit` alias resolving to its `dist` directory
+- `@daisy-kit/{forms-viewer,forms-builder,table,tree,blueprint,file-preview,map}.{js,css}`
 - ESM `mount`, `mountAll`, and `unmount`; DOM events named
   `daisy-kit:{module}:*`; no global object.
 
-Until an actual v5 prerelease resolves from the package VCS repository, this demo
-must not fabricate a replacement component or asset. Each page instead exposes a
-visible integration checkpoint and tests its documentation contract. The component
-mount and interactive package demonstrations are a follow-up integration slice.
+The package resolves from its Git VCS repository. This demo must not fabricate a
+replacement component or asset: each page mounts only the published package module
+and imports its matching CSS and ESM entry through the documented Vite alias.
 
 ## Commands
 

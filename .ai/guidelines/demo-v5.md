@@ -6,9 +6,10 @@
   Blueprint, File Preview, and Map.
 - Use native DaisyUI/Tailwind for standard shell controls. Do not revive v4 contracts,
   wrappers, catalogue pages, CRUD/auth templates, charts, calendars, or inventory tooling.
-- The Laravel Daisy Kit v5 prerelease is not available yet. Do not invent Blade components,
-  assets, or Composer constraints for it. Keep v5 imports as documentation checkpoints until
-  the exact published tag is supplied.
+- Laravel Daisy Kit is locked from its Git VCS repository at `v5.0.0-alpha.2`.
+  Use only its public Blade contracts and the official `@daisy-kit` Vite alias to
+  `vendor/art35rennes/laravel-daisy-kit/dist`; do not add v4 compatibility code, local copies,
+  stubs, or unverified APIs.
 - Use Pest 5 TIA for fast feedback (`composer run test:tia`), but use
   `composer run test:release` as the full non-TIA gate. Preserve Browser coverage for all six
   pages, responsive widths, keyboard/focus behavior, accessibility, and console errors.

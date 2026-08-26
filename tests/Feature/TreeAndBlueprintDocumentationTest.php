@@ -1,34 +1,20 @@
 <?php
 
-it('documents the tree contract with deterministic fixture data and an explicit package checkpoint', function (): void {
+it('renders the published tree contract with deterministic items', function (): void {
     $this->get('/tree')
         ->assertOk()
-        ->assertSee('Tree')
+        ->assertSee('data-daisy-kit-module="tree"', false)
         ->assertSee('Documentation')
         ->assertSee('README.md')
-        ->assertSee('x-daisy-kit::tree')
-        ->assertSee('mountAll')
-        ->assertSee('daisy-kit:tree:*')
-        ->assertSee('Package prerelease checkpoint')
-        ->assertSee('Empty')
-        ->assertSee('Loading')
-        ->assertSee('Error')
-        ->assertSee('DaisyUI');
+        ->assertSee('@daisy-kit/tree.js');
 });
 
-it('documents the blueprint contract with a deterministic workflow and an explicit package checkpoint', function (): void {
+it('renders the published blueprint contract with a deterministic workflow', function (): void {
     $this->get('/blueprint')
         ->assertOk()
-        ->assertSee('Blueprint')
+        ->assertSee('data-daisy-kit-module="blueprint"', false)
         ->assertSee('Draft')
         ->assertSee('Review')
         ->assertSee('Published')
-        ->assertSee('x-daisy-kit::blueprint')
-        ->assertSee('mountAll')
-        ->assertSee('daisy-kit:blueprint:*')
-        ->assertSee('Package prerelease checkpoint')
-        ->assertSee('Empty')
-        ->assertSee('Loading')
-        ->assertSee('Error')
-        ->assertSee('DaisyUI');
+        ->assertSee('@daisy-kit/blueprint.js');
 });

@@ -1,0 +1,3 @@
+Quarterly report
+
+All documentation fixtures are deterministic and local to this application.
