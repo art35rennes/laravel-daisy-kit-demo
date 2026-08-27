@@ -181,6 +181,7 @@ final class FileMapFixtures
                 'expanded' => true,
                 'children' => [
                     ['id' => 'forms', 'label' => 'Forms', 'selected' => true],
+                    ['id' => 'guide', 'label' => 'Developer guide'],
                     ['id' => 'table', 'label' => 'Table'],
                     ['id' => 'tree', 'label' => 'Tree', 'indeterminate' => true],
                     ['id' => 'media', 'label' => 'Media', 'source' => '/fixtures/tree?parent=media'],
@@ -209,8 +210,18 @@ final class FileMapFixtures
     {
         $query = mb_strtolower($query);
 
+        $workspace = self::treeParity()['items'][0];
+        $searchableItems = [
+            ['id' => $workspace['id'], 'label' => $workspace['label']],
+            ...array_map(
+                static fn (array $item): array => ['id' => $item['id'], 'label' => $item['label']],
+                $workspace['children'],
+            ),
+            ...self::mediaTreeItems(),
+        ];
+
         return array_values(array_filter(
-            self::treeParity()['items'],
+            $searchableItems,
             static fn (array $item): bool => str_contains(mb_strtolower($item['label']), $query),
         ));
     }
