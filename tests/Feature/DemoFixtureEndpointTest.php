@@ -66,6 +66,16 @@ it('serves the published Tree lazy and search response shapes', function (): voi
         ->assertJsonPath('items.0.id', 'workspace');
 });
 
+it('applies Tree query validation only to the Tree fixture endpoint', function (): void {
+    $this->getJson('/fixtures/forms?parent=unexpected')
+        ->assertOk()
+        ->assertJsonPath('value.name', 'Ada Lovelace');
+
+    $this->getJson('/fixtures/tree?parent=unexpected')
+        ->assertUnprocessable()
+        ->assertJsonValidationErrorFor('parent');
+});
+
 dataset('fixture-scenarios', [
     'forms' => ['/fixtures/forms', 'Contributor profile', 'error'],
     'table' => ['/fixtures/table', 'Contributor directory', 'error'],

@@ -9,26 +9,21 @@ use Illuminate\Http\JsonResponse;
 
 final class DemoFixtureController extends Controller
 {
-    public function show(string $fixture, TreeFixtureRequest $request): JsonResponse
+    public function show(string $fixture): JsonResponse
     {
-        if ($fixture === 'tree') {
-            return $this->tree($request);
-        }
-
         $fixtureData = match ($fixture) {
             'forms' => FileMapFixtures::formsParity(),
-            'tree' => FileMapFixtures::treeParity(),
             'blueprint' => FileMapFixtures::blueprint(),
             'file-preview' => FileMapFixtures::filePreviews(),
             'map' => FileMapFixtures::map(),
         };
 
-        return response()->json([...$fixtureData, 'scenarios' => FileMapFixtures::scenarios($fixture)]);
+        return $this->fixtureResponse($fixture, $fixtureData);
     }
 
     public function table(TableFixtureRequest $request): JsonResponse
     {
-        return response()->json([...FileMapFixtures::tablePage($request->validated()), 'scenarios' => FileMapFixtures::scenarios('table')]);
+        return $this->fixtureResponse('table', FileMapFixtures::tablePage($request->validated()));
     }
 
     public function unavailableTable(): JsonResponse
@@ -36,24 +31,26 @@ final class DemoFixtureController extends Controller
         return response()->json(['message' => 'The deterministic table source is unavailable.'], 503);
     }
 
-    private function tree(TreeFixtureRequest $request): JsonResponse
+    public function tree(TreeFixtureRequest $request): JsonResponse
     {
         $validated = $request->validated();
 
         if (($validated['parent'] ?? null) === 'media') {
-            return response()->json(['items' => [
-                ['id' => 'office-plan', 'label' => 'office-plan.png'],
-                ['id' => 'editorial-brief', 'label' => 'editorial-brief.docx'],
-            ]]);
+            return response()->json(['items' => FileMapFixtures::mediaTreeItems()]);
         }
 
         if (($validated['query'] ?? '') !== '') {
-            $query = mb_strtolower($validated['query']);
-            $items = array_filter(FileMapFixtures::treeParity()['items'], static fn (array $item): bool => str_contains(mb_strtolower($item['label']), $query));
-
-            return response()->json(['items' => array_values($items)]);
+            return response()->json(['items' => FileMapFixtures::searchTreeItems($validated['query'])]);
         }
 
-        return response()->json([...FileMapFixtures::treeParity(), 'scenarios' => FileMapFixtures::scenarios('tree')]);
+        return $this->fixtureResponse('tree', FileMapFixtures::treeParity());
+    }
+
+    /**
+     * @param  array<string, mixed>  $fixtureData
+     */
+    private function fixtureResponse(string $fixture, array $fixtureData): JsonResponse
+    {
+        return response()->json([...$fixtureData, 'scenarios' => FileMapFixtures::scenarios($fixture)]);
     }
 }

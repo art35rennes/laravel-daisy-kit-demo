@@ -62,7 +62,11 @@ final class FileMapFixtures
     }
 
     /**
-     * @return array{schema: array{title: string, steps: list<array{id: string, label: string}>, fields: list<array<string, mixed>>}, value: array<string, mixed>, submission: array{endpoint: string, method: string}}
+     * @return array{
+     *     schema: array{submit: array{label: string, mode: string}, fields: list<array{id: string, type: string, label: string, fields: list<array<string, mixed>>}>},
+     *     value: array{name: string, email: string, role: string, newsletter: bool},
+     *     submission: array{endpoint: string, method: string}
+     * }
      */
     public static function formsParity(): array
     {
@@ -162,23 +166,11 @@ final class FileMapFixtures
     }
 
     /**
-     * @return list<array{id: string, label: string, expanded?: bool, children?: list<array{id: string, label: string}>}>
-     */
-    public static function tree(): array
-    {
-        return [[
-            'id' => 'documentation',
-            'label' => 'Documentation',
-            'expanded' => true,
-            'children' => [
-                ['id' => 'readme', 'label' => 'README.md'],
-                ['id' => 'installation', 'label' => 'installation.md'],
-            ],
-        ]];
-    }
-
-    /**
-     * @return array{items: list<array<string, mixed>>, lazy: array<string, string>, searchEndpoint: string}
+     * @return array{
+     *     items: list<array{id: string, label: string, expanded: bool, children: list<array{id: string, label: string, selected?: bool, indeterminate?: bool, source?: string}>}>,
+     *     lazy: array{media: string},
+     *     searchEndpoint: string
+     * }
      */
     public static function treeParity(): array
     {
@@ -197,6 +189,30 @@ final class FileMapFixtures
             'lazy' => ['media' => '/fixtures/tree?parent=media'],
             'searchEndpoint' => '/fixtures/tree',
         ];
+    }
+
+    /**
+     * @return list<array{id: string, label: string}>
+     */
+    public static function mediaTreeItems(): array
+    {
+        return [
+            ['id' => 'office-plan', 'label' => 'office-plan.png'],
+            ['id' => 'editorial-brief', 'label' => 'editorial-brief.docx'],
+        ];
+    }
+
+    /**
+     * @return list<array{id: string, label: string, expanded: bool, children: list<array{id: string, label: string, selected?: bool, indeterminate?: bool, source?: string}>}>
+     */
+    public static function searchTreeItems(string $query): array
+    {
+        $query = mb_strtolower($query);
+
+        return array_values(array_filter(
+            self::treeParity()['items'],
+            static fn (array $item): bool => str_contains(mb_strtolower($item['label']), $query),
+        ));
     }
 
     /**
@@ -219,20 +235,6 @@ final class FileMapFixtures
                 ['source' => 'legal-review', 'target' => 'scheduled'],
                 ['source' => 'scheduled', 'target' => 'published'],
             ],
-        ];
-    }
-
-    /**
-     * @return array{name: string, type: string, size: string, updatedAt: string, src: string}
-     */
-    public static function filePreview(): array
-    {
-        return [
-            'name' => 'quarterly-report.txt',
-            'type' => 'text',
-            'size' => '164 B',
-            'updatedAt' => '2026-01-15',
-            'src' => '/fixtures/quarterly-report.txt',
         ];
     }
 
