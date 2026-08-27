@@ -13,6 +13,26 @@ final class TableFixtureRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        $columnFilters = $this->decodeStructuredQuery($this->query('columnFilters'));
+
+        if (is_array($columnFilters) && array_is_list($columnFilters)) {
+            $columnFilters = collect($columnFilters)
+                ->filter(static fn (mixed $filter): bool => is_array($filter)
+                    && is_string($filter['id'] ?? null)
+                    && array_key_exists('value', $filter))
+                ->mapWithKeys(static fn (array $filter): array => [$filter['id'] => $filter['value']])
+                ->all();
+        }
+
+        $this->merge([
+            'columnFilters' => $columnFilters,
+            'columnPinning' => $this->decodeStructuredQuery($this->query('columnPinning')),
+            'columnVisibility' => $this->decodeStructuredQuery($this->query('columnVisibility')),
+        ]);
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -32,5 +52,16 @@ final class TableFixtureRequest extends FormRequest
             'columnPinning' => ['nullable', 'array'],
             'columnVisibility' => ['nullable', 'array'],
         ];
+    }
+
+    private function decodeStructuredQuery(mixed $value): mixed
+    {
+        if (! is_string($value)) {
+            return $value;
+        }
+
+        $decoded = json_decode($value, true);
+
+        return json_last_error() === JSON_ERROR_NONE ? $decoded : $value;
     }
 }

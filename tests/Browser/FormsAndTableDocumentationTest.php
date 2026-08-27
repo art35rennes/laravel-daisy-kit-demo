@@ -28,9 +28,11 @@ it('filters the real package table and retains keyboard focus', function (): voi
         ->type('#contributor-directory [data-daisy-kit-table-filter]', 'Grace')
         ->assertScript("document.activeElement.matches('#contributor-directory [data-daisy-kit-table-filter]')", true)
         ->assertScript("document.querySelector('#contributor-directory [data-daisy-kit-module=table]').dataset.daisyKitState === 'ready'", true)
+        ->assertScript("document.querySelector('#filtered-server-result [data-daisy-kit-module=table]').dataset.daisyKitState === 'ready'", true)
         ->assertCount('[data-daisy-kit-module="table"]', 3)
         ->assertCount('#contributor-directory nav[aria-label="Table pagination"]', 1)
         ->assertSee('Grace Hopper')
+        ->assertSeeIn('#filtered-server-result', 'Ada Lovelace')
         ->assertNoAccessibilityIssues(1)
         ->assertNoSmoke();
 })->group('browser');

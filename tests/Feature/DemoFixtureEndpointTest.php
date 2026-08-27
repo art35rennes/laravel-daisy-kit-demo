@@ -22,10 +22,32 @@ it('filters and pages deterministic table records on the server', function (): v
         ->assertJsonPath('total', 1);
 });
 
+it('accepts the serialized state sent by the published table module', function (): void {
+    $query = http_build_query([
+        'filter' => '',
+        'columnFilters' => json_encode([['id' => 'status', 'value' => 'active']], JSON_THROW_ON_ERROR),
+        'columnPinning' => json_encode(['start' => ['name'], 'end' => []], JSON_THROW_ON_ERROR),
+        'columnVisibility' => json_encode(['status' => true], JSON_THROW_ON_ERROR),
+        'page' => 1,
+        'pageSize' => 2,
+    ]);
+
+    $this->getJson("/fixtures/table?{$query}")
+        ->assertOk()
+        ->assertJsonCount(2, 'rows')
+        ->assertJsonPath('total', 4);
+});
+
 it('returns 422 when a table fixture filter is invalid', function (): void {
     $this->getJson('/fixtures/table?sort=unsafe')
         ->assertUnprocessable()
         ->assertJsonValidationErrorFor('sort');
+});
+
+it('returns 422 when serialized table state is malformed', function (): void {
+    $this->getJson('/fixtures/table?columnFilters=not-json')
+        ->assertUnprocessable()
+        ->assertJsonValidationErrorFor('columnFilters');
 });
 
 it('serves an explicit deterministic Table failure without a missing route', function (): void {
