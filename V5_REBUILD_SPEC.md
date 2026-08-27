@@ -35,9 +35,11 @@ The only package contracts documented by the demo are:
 - `x-daisy-kit::forms.viewer` and `x-daisy-kit::forms.builder`
 - `x-daisy-kit::table`, `x-daisy-kit::tree`, `x-daisy-kit::blueprint`,
   `x-daisy-kit::file-preview`, and `x-daisy-kit::map`
-- VCS Composer package `art35rennes/laravel-daisy-kit` locked to the verified
-  corrective v5 tag and commit, with Vite's `@daisy-kit` alias resolving to its
-  `dist` directory. No earlier v5 release is a compatibility target.
+- VCS Composer package `art35rennes/laravel-daisy-kit` locked to corrective
+  prerelease `v5.1.0-alpha.1` / commit
+  `d906021a82d3b86059551ba8f6042c7823df3dfd`, with Vite's `@daisy-kit` alias
+  resolving to its `dist` directory. Owner browser validation is pending; no
+  earlier v5 release is a compatibility target.
 - `@daisy-kit/{forms-viewer,forms-builder,table,tree,blueprint,file-preview,map}.{js,css}`
 - ESM `mount`, `mountAll`, and `unmount`; DOM events named
   `daisy-kit:{module}:*`; no global object.

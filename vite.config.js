@@ -1,4 +1,4 @@
-import path from 'node:path';
+import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
@@ -32,7 +32,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@daisy-kit': path.resolve(projectRoot, 'vendor/art35rennes/laravel-daisy-kit/dist'),
+            '@daisy-kit': resolve(projectRoot, 'vendor/art35rennes/laravel-daisy-kit/dist'),
         },
     },
     server: {

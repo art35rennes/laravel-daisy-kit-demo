@@ -16,6 +16,7 @@ it('renders the published table contract with deterministic rows', function (): 
         ->assertSee('data-daisy-kit-module="table"', false)
         ->assertSee('data-daisy-kit-table-filter', false)
         ->assertSee('Ada Lovelace')
-        ->assertSee('Type an unmatched value in the interactive table filter')
+        ->assertSee('Filtered server result')
+        ->assertSee('Unavailable source')
         ->assertSee('@daisy-kit/table.js');
 });

@@ -1,7 +1,7 @@
 <?php
 
 dataset('fixture-endpoints', [
-    'forms' => ['/fixtures/forms', 'schema.fields.0.name', 'name'],
+    'forms' => ['/fixtures/forms', 'schema.fields.0.fields.0.name', 'name'],
     'tree' => ['/fixtures/tree', 'items.0.id', 'workspace'],
     'blueprint' => ['/fixtures/blueprint', 'nodes.4.id', 'published'],
     'file preview' => ['/fixtures/file-preview', 'files.0.name', 'quarterly-report.txt'],
@@ -16,18 +16,32 @@ it('serves deterministic documentation fixtures without a database', function (s
 })->with('fixture-endpoints');
 
 it('filters and pages deterministic table records on the server', function (): void {
-    $this->getJson('/fixtures/table?q=Grace&status=active&sort=name&direction=asc&page=1&per_page=2')
+    $this->getJson('/fixtures/table?filter=Grace&columnFilters[status]=active&sort=name&direction=asc&page=1&pageSize=2')
         ->assertOk()
-        ->assertJsonPath('data.0.name', 'Grace Hopper')
-        ->assertJsonPath('meta.total', 1)
-        ->assertJsonPath('meta.current_page', 1)
-        ->assertJsonPath('meta.per_page', 2);
+        ->assertJsonPath('rows.0.name', 'Grace Hopper')
+        ->assertJsonPath('total', 1);
 });
 
 it('returns 422 when a table fixture filter is invalid', function (): void {
     $this->getJson('/fixtures/table?sort=unsafe')
         ->assertUnprocessable()
         ->assertJsonValidationErrorFor('sort');
+});
+
+it('serves an explicit deterministic Table failure without a missing route', function (): void {
+    $this->getJson('/fixtures/table-unavailable')
+        ->assertServiceUnavailable()
+        ->assertJsonPath('message', 'The deterministic table source is unavailable.');
+});
+
+it('serves the published Tree lazy and search response shapes', function (): void {
+    $this->getJson('/fixtures/tree?parent=media')
+        ->assertOk()
+        ->assertJsonPath('items.0.id', 'office-plan');
+
+    $this->getJson('/fixtures/tree?query=workspace')
+        ->assertOk()
+        ->assertJsonPath('items.0.id', 'workspace');
 });
 
 dataset('fixture-scenarios', [

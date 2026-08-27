@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="280" viewBox="0 0 480 280" role="img" aria-labelledby="title description">
+  <title id="title">Rennes office plan</title>
+  <desc id="description">A deterministic floor-plan fixture with reception, workspace and meeting room.</desc>
+  <rect width="480" height="280" fill="#eaf4ff"/>
+  <rect x="24" y="24" width="432" height="232" rx="12" fill="#ffffff" stroke="#2563eb" stroke-width="4"/>
+  <path d="M180 24v232M340 24v232M24 150h432" stroke="#93c5fd" stroke-width="3"/>
+  <text x="65" y="92" fill="#1e3a8a" font-family="sans-serif" font-size="20">Reception</text>
+  <text x="218" y="92" fill="#1e3a8a" font-family="sans-serif" font-size="20">Workspace</text>
+  <text x="365" y="92" fill="#1e3a8a" font-family="sans-serif" font-size="18">Focus</text>
+  <text x="210" y="210" fill="#1e3a8a" font-family="sans-serif" font-size="20">Meeting room</text>
+</svg>

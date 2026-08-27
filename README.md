@@ -1,9 +1,10 @@
 # Laravel Daisy Kit Demo v5
 
 Executable English documentation for the six Laravel Daisy Kit v5 modules. This
-branch is product-development work: its corrective v5 package version and final
-examples are locked only after the owner has reviewed the integrated browser
-experience. It does not provide a compatibility mode for an earlier v5 release.
+branch is product-development work. It locks the corrective package prerelease
+`v5.1.0-alpha.1` at commit `d906021a82d3b86059551ba8f6042c7823df3dfd`; owner
+browser validation remains pending. It does not provide a compatibility mode for
+v5.0.0 or an earlier alpha.
 
 ## Requirements
 
@@ -24,8 +25,7 @@ php artisan key:generate
 npm run build
 ```
 
-After the corrective package tag is verified from GitHub, Composer locks it
-directly from that VCS source. In `vite.config.js`, the official `@daisy-kit`
+Composer locks the prerelease directly from that GitHub VCS source. In `vite.config.js`, the official `@daisy-kit`
 alias resolves to
 `vendor/art35rennes/laravel-daisy-kit/dist`; import only the required
 `@daisy-kit/{stem}.js` and `.css` entries. This demo has no local package copy,

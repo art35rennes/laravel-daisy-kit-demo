@@ -68,18 +68,34 @@ final class FileMapFixtures
     {
         return [
             'schema' => [
-                'title' => 'Contributor profile',
-                'steps' => [
-                    ['id' => 'identity', 'label' => 'Identity'],
-                    ['id' => 'preferences', 'label' => 'Preferences'],
-                    ['id' => 'review', 'label' => 'Review'],
-                ],
+                'submit' => ['label' => 'Save contributor profile', 'mode' => 'event'],
                 'fields' => [
-                    ['name' => 'name', 'label' => 'Name', 'type' => 'text', 'step' => 'identity', 'rules' => ['required', 'min:3']],
-                    ['name' => 'email', 'label' => 'Email', 'type' => 'email', 'step' => 'identity', 'rules' => ['required', 'email']],
-                    ['name' => 'role', 'label' => 'Role', 'type' => 'select', 'step' => 'preferences', 'options' => [['value' => 'maintainer', 'label' => 'Maintainer'], ['value' => 'reviewer', 'label' => 'Reviewer']]],
-                    ['name' => 'newsletter', 'label' => 'Newsletter', 'type' => 'checkbox', 'step' => 'preferences'],
-                    ['name' => 'summary', 'label' => 'Summary', 'type' => 'computed', 'step' => 'review', 'expression' => '"Contributor: " & $name'],
+                    [
+                        'id' => 'identity',
+                        'type' => 'wizardStep',
+                        'label' => 'Identity',
+                        'fields' => [
+                            ['name' => 'name', 'label' => 'Name', 'type' => 'text', 'rules' => ['required', 'min:3']],
+                            ['name' => 'email', 'label' => 'Email', 'type' => 'email', 'rules' => ['required', 'email']],
+                        ],
+                    ],
+                    [
+                        'id' => 'preferences',
+                        'type' => 'wizardStep',
+                        'label' => 'Preferences',
+                        'fields' => [
+                            ['name' => 'role', 'label' => 'Role', 'type' => 'select', 'options' => [['value' => 'maintainer', 'label' => 'Maintainer'], ['value' => 'reviewer', 'label' => 'Reviewer']]],
+                            ['name' => 'newsletter', 'label' => 'Newsletter', 'type' => 'checkbox'],
+                        ],
+                    ],
+                    [
+                        'id' => 'review',
+                        'type' => 'wizardStep',
+                        'label' => 'Review',
+                        'fields' => [
+                            ['name' => 'summary', 'label' => 'Summary', 'type' => 'text', 'computed' => ['type' => 'jsonata', 'expression' => '"Contributor: " & name']],
+                        ],
+                    ],
                 ],
             ],
             'value' => ['name' => 'Ada Lovelace', 'email' => 'ada@example.test', 'role' => 'maintainer', 'newsletter' => true],
@@ -110,18 +126,18 @@ final class FileMapFixtures
     }
 
     /**
-     * @param  array{q?: string, role?: string, status?: string, sort?: string, direction?: string, page?: int, per_page?: int}  $filters
-     * @return array{data: list<array{id: string, name: string, role: string, status: string, location: string, updatedAt: string}>, meta: array{total: int, current_page: int, per_page: int, last_page: int}}
+     * @param  array{filter?: string, columnFilters?: array{role?: string, status?: string}, sort?: string, direction?: string, page?: int, pageSize?: int}  $filters
+     * @return array{rows: list<array{id: string, name: string, role: string, status: string, location: string, updatedAt: string}>, total: int}
      */
     public static function tablePage(array $filters): array
     {
-        $query = mb_strtolower($filters['q'] ?? '');
-        $role = $filters['role'] ?? null;
-        $status = $filters['status'] ?? null;
+        $query = mb_strtolower($filters['filter'] ?? '');
+        $role = $filters['columnFilters']['role'] ?? null;
+        $status = $filters['columnFilters']['status'] ?? null;
         $sort = $filters['sort'] ?? 'name';
         $direction = $filters['direction'] ?? 'asc';
         $page = (int) ($filters['page'] ?? 1);
-        $perPage = (int) ($filters['per_page'] ?? 5);
+        $perPage = (int) ($filters['pageSize'] ?? 5);
 
         $rows = array_values(array_filter(self::table()['rows'], static function (array $row) use ($query, $role, $status): bool {
             $matchesQuery = $query === '' || str_contains(mb_strtolower(implode(' ', $row)), $query);
@@ -138,12 +154,10 @@ final class FileMapFixtures
         });
 
         $total = count($rows);
-        $lastPage = max(1, (int) ceil($total / $perPage));
-        $page = min($page, $lastPage);
 
         return [
-            'data' => array_values(array_slice($rows, ($page - 1) * $perPage, $perPage)),
-            'meta' => ['total' => $total, 'current_page' => $page, 'per_page' => $perPage, 'last_page' => $lastPage],
+            'rows' => array_values(array_slice($rows, ($page - 1) * $perPage, $perPage)),
+            'total' => $total,
         ];
     }
 
@@ -177,11 +191,11 @@ final class FileMapFixtures
                     ['id' => 'forms', 'label' => 'Forms', 'selected' => true],
                     ['id' => 'table', 'label' => 'Table'],
                     ['id' => 'tree', 'label' => 'Tree', 'indeterminate' => true],
-                    ['id' => 'media', 'label' => 'Media', 'lazy' => true],
+                    ['id' => 'media', 'label' => 'Media', 'source' => '/fixtures/tree?parent=media'],
                 ],
             ]],
             'lazy' => ['media' => '/fixtures/tree?parent=media'],
-            'searchEndpoint' => '/fixtures/tree?q={query}',
+            'searchEndpoint' => '/fixtures/tree',
         ];
     }
 
@@ -230,7 +244,7 @@ final class FileMapFixtures
         return [
             'files' => [
                 ['name' => 'quarterly-report.txt', 'type' => 'text/plain', 'src' => '/fixtures/quarterly-report.txt', 'state' => 'ready'],
-                ['name' => 'office-plan.png', 'type' => 'image/png', 'src' => '/fixtures/office-plan.png', 'state' => 'ready'],
+                ['name' => 'office-plan.svg', 'type' => 'image/svg+xml', 'src' => '/fixtures/office-plan.svg', 'state' => 'ready'],
                 ['name' => 'release-notes.pdf', 'type' => 'application/pdf', 'src' => '/fixtures/release-notes.pdf', 'state' => 'ready'],
                 ['name' => 'editorial-brief.docx', 'type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'src' => '/fixtures/editorial-brief.docx', 'state' => 'ready'],
                 ['name' => 'unsupported.exe', 'type' => 'application/octet-stream', 'src' => '/fixtures/unsupported.exe', 'state' => 'error'],

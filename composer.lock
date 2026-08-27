@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "24e9e00e9326fb58684ebee1ed81c483",
+    "content-hash": "2e3af94cc07259350570c5f4829c0e93",
     "packages": [
         {
             "name": "art35rennes/laravel-daisy-kit",
-            "version": "v5.0.0",
+            "version": "v5.1.0-alpha.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/art35rennes/laravel-daisy-kit.git",
-                "reference": "6d7f28ffc17cc2e91cd5be3e4598986da7ac75d4"
+                "reference": "d906021a82d3b86059551ba8f6042c7823df3dfd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/art35rennes/laravel-daisy-kit/zipball/6d7f28ffc17cc2e91cd5be3e4598986da7ac75d4",
-                "reference": "6d7f28ffc17cc2e91cd5be3e4598986da7ac75d4",
+                "url": "https://api.github.com/repos/art35rennes/laravel-daisy-kit/zipball/d906021a82d3b86059551ba8f6042c7823df3dfd",
+                "reference": "d906021a82d3b86059551ba8f6042c7823df3dfd",
                 "shasum": ""
             },
             "require": {
@@ -133,7 +133,7 @@
                 "issues": "https://github.com/art35rennes/laravel-daisy-kit/issues",
                 "source": "https://github.com/art35rennes/laravel-daisy-kit"
             },
-            "time": "2026-08-26T18:37:54+00:00"
+            "time": "2026-08-26T23:14:42+00:00"
         },
         {
             "name": "brick/math",
@@ -7778,16 +7778,16 @@
         },
         {
             "name": "laravel/boost",
-            "version": "v2.6.0",
+            "version": "v2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/boost.git",
-                "reference": "44f5944bf837856bc727aab87aba026dc70faa94"
+                "reference": "b19e98a8637cb69b2aab7b5b6c5fe9e2c79d182f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/boost/zipball/44f5944bf837856bc727aab87aba026dc70faa94",
-                "reference": "44f5944bf837856bc727aab87aba026dc70faa94",
+                "url": "https://api.github.com/repos/laravel/boost/zipball/b19e98a8637cb69b2aab7b5b6c5fe9e2c79d182f",
+                "reference": "b19e98a8637cb69b2aab7b5b6c5fe9e2c79d182f",
                 "shasum": ""
             },
             "require": {
@@ -7840,7 +7840,7 @@
                 "issues": "https://github.com/laravel/boost/issues",
                 "source": "https://github.com/laravel/boost"
             },
-            "time": "2026-08-25T15:25:31+00:00"
+            "time": "2026-08-26T21:39:22+00:00"
         },
         {
             "name": "laravel/mcp",
@@ -11131,7 +11131,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "art35rennes/laravel-daisy-kit": 15
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

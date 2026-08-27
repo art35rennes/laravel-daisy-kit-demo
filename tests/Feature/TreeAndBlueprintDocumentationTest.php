@@ -4,8 +4,8 @@ it('renders the published tree contract with deterministic items', function (): 
     $this->get('/tree')
         ->assertOk()
         ->assertSee('data-daisy-kit-module="tree"', false)
-        ->assertSee('Documentation')
-        ->assertSee('README.md')
+        ->assertSee('Workspace navigation')
+        ->assertSee('Lazy media branch')
         ->assertSee('@daisy-kit/tree.js');
 });
 

@@ -175,7 +175,7 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 # Livewire
 
-- Livewire allow to build dynamic, reactive interfaces in PHP without writing JavaScript.
+- Livewire allows you to build dynamic, reactive interfaces in PHP without writing JavaScript.
 - You can use Alpine.js for client-side interactions instead of JavaScript frameworks.
 - Keep state server-side so the UI reflects it. Validate and authorize in actions as you would in HTTP requests.
 
@@ -225,6 +225,9 @@ untrusted document rendering in its sandboxed child frame; its auxiliary chunks 
 the explicit Vite entry and need no route, proxy, copy, or published asset.
 
 There is no compatibility layer, alias namespace, asset publication, route, or host template.
+The differentiated product outcomes (recursive Forms, editable data/graph/geospatial workflows,
+and isolated document/media previews) are defined by the package's
+`docs/specs/v5-product-contract-matrix.md`; do not reduce them to a successful mount state.
 For implementation and verification details, activate the `laravel-daisy-kit-development` skill.
 
 </laravel-boost-guidelines>

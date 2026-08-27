@@ -6,6 +6,7 @@
         <meta name="description" content="Executable documentation for Laravel Daisy Kit v5.">
         <title>{{ $title ?? 'Laravel Daisy Kit' }}</title>
         @vite([...['resources/css/app.css', 'resources/js/app.js'], ...($moduleAssets ?? [])])
+        @livewireStyles
     </head>
     <body class="min-h-screen bg-base-100 text-base-content">
         <a class="skip-link" href="#main-content">Skip to content</a>
@@ -42,5 +43,6 @@
                 </nav>
             </aside>
         </div>
+        @livewireScripts
     </body>
 </html>

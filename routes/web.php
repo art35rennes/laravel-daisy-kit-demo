@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(DocumentationContentSecurityPolicy::class)->group(function (): void {
     Route::get('/fixtures/table', [DemoFixtureController::class, 'table'])->name('fixtures.table');
+    Route::get('/fixtures/table-unavailable', [DemoFixtureController::class, 'unavailableTable'])->name('fixtures.table-unavailable');
     Route::get('/fixtures/{fixture}', [DemoFixtureController::class, 'show'])
         ->whereIn('fixture', ['forms', 'tree', 'blueprint', 'file-preview', 'map'])
         ->name('fixtures.show');

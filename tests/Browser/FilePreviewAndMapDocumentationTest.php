@@ -13,7 +13,7 @@ it('renders the sandboxed local file preview at narrow and wide widths', functio
         ->assertNoSmoke();
 
     $page->resize(1440, 960)
-        ->assertSee('Public contract');
+        ->assertSee('Common options');
 })->group('browser');
 
 it('mounts the map with drawing controls at tablet and desktop widths', function (): void {
@@ -28,5 +28,5 @@ it('mounts the map with drawing controls at tablet and desktop widths', function
         ->assertNoSmoke();
 
     $page->resize(1024, 900)
-        ->assertSee('Public contract');
+        ->assertSee('Common options');
 })->group('browser');
