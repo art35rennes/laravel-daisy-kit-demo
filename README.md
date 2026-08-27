@@ -52,6 +52,21 @@ subsequent runs replay unaffected results from ignored `.pest/tia`. The release
 command always executes the complete suite without TIA, so browser, responsive,
 accessibility, and module coverage cannot be masked.
 
+## Dependency checkpoint
+
+The locks were renewed on 27 August 2026 after the functional browser baseline.
+`composer outdated --direct` and `npm outdated` reported no newer stable direct
+dependency, including a newer major, and both security audits were empty.
+
+| Area | Locked direct versions | Official release notes |
+| --- | --- | --- |
+| Application | Laravel 13.29.0; Livewire 4.4.2 | [Laravel](https://github.com/laravel/framework/releases), [Livewire](https://github.com/livewire/livewire/releases) |
+| PHP quality | Boost 2.7.0; Pint 1.30.5; Pest 5.1.3; Pest Browser 5.0.1 | [Boost](https://github.com/laravel/boost/releases), [Pint](https://github.com/laravel/pint/releases), [Pest](https://github.com/pestphp/pest/releases), [Pest Browser](https://github.com/pestphp/pest-plugin-browser/releases) |
+| Frontend | Tailwind CSS and its Vite plugin 4.3.3; DaisyUI 5.7.22; Vite 8.2.2; Laravel Vite plugin 3.2.0; Playwright 1.62.1 | [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss/releases), [DaisyUI](https://github.com/saadeghi/daisyui/releases), [Vite](https://github.com/vitejs/vite/releases), [Laravel Vite plugin](https://github.com/laravel/vite-plugin/releases), [Playwright](https://github.com/microsoft/playwright/releases) |
+
+The Composer and npm manifests retain compatible major ranges while the lock
+files preserve this verified application snapshot.
+
 ## AI guidance
 
 Laravel Boost 2 is installed as a development dependency. Keep project-specific
