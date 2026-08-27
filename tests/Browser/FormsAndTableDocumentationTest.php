@@ -17,6 +17,12 @@ it('mounts the real forms viewer and builder without a Livewire dependency in th
         ->wait(2)
         ->assertNoSmoke()
         ->assertSee('Field 9')
+        ->click('[data-daisy-kit-module=forms-builder] button[wire\\:click="undo"]')
+        ->wait(1)
+        ->assertDontSee('Field 9')
+        ->click('[data-daisy-kit-module=forms-builder] button[wire\\:click="redo"]')
+        ->wait(1)
+        ->assertSee('Field 9')
         ->assertNoAccessibilityIssues(1)
         ->assertNoSmoke();
 })->group('browser');
@@ -33,6 +39,14 @@ it('filters the real package table and retains keyboard focus', function (): voi
         ->assertCount('#contributor-directory nav[aria-label="Table pagination"]', 1)
         ->assertSee('Grace Hopper')
         ->assertSeeIn('#filtered-server-result', 'Ada Lovelace')
+        ->click('#contributor-directory [data-daisy-kit-table-row-select="grace"]')
+        ->assertScript("document.querySelector('#contributor-directory [data-daisy-kit-table-row-select=grace]').checked", true)
+        ->click('#contributor-directory [data-daisy-kit-table-detail-toggle="grace"]')
+        ->assertScript("!document.querySelector('#contributor-directory [data-daisy-kit-table-detail=grace]').hidden", true)
+        ->click('#contributor-directory [data-daisy-kit-table-edit="grace:name"]')
+        ->fill('#contributor-directory [data-daisy-kit-table-edit-input="grace:name"]', 'Grace Murray Hopper')
+        ->click('#contributor-directory [data-daisy-kit-table-edit-save="grace:name"]')
+        ->assertSee('Grace Murray Hopper')
         ->assertNoAccessibilityIssues(1)
         ->assertNoSmoke();
 })->group('browser');
