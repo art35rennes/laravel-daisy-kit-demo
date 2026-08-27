@@ -21,8 +21,8 @@ it('serves every documented module page', function (string $uri, string $heading
 it('documents the corrective VCS checkpoint and official Vite alias', function (): void {
     $this->get('/installation')
         ->assertOk()
-        ->assertSee('v5.1.0-alpha.1')
-        ->assertSee('d906021a82d3b86059551ba8f6042c7823df3dfd')
+        ->assertSee('v5.1.0-alpha.2')
+        ->assertSee('a674ebd8c124c8c7891b8f2a6c46fbe23c4ddd59')
         ->assertSee('Do not use this development page as compatibility guidance for v5.0.0')
         ->assertSee('https://github.com/art35rennes/laravel-daisy-kit')
         ->assertSee('@daisy-kit')

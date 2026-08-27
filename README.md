@@ -2,7 +2,7 @@
 
 Executable English documentation for the six Laravel Daisy Kit v5 modules. This
 branch is product-development work. It locks the corrective package prerelease
-`v5.1.0-alpha.1` at commit `d906021a82d3b86059551ba8f6042c7823df3dfd`; owner
+`v5.1.0-alpha.2` at commit `a674ebd8c124c8c7891b8f2a6c46fbe23c4ddd59`; owner
 browser validation remains pending. It does not provide a compatibility mode for
 v5.0.0 or an earlier alpha.
 
