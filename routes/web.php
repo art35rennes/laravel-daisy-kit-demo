@@ -12,9 +12,9 @@ Route::middleware(DocumentationContentSecurityPolicy::class)->group(function ():
     Route::get('/fixtures/tree', [DemoFixtureController::class, 'tree'])->name('fixtures.tree');
     Route::get('/fixtures/preview.wav', [DemoFixtureController::class, 'audio'])->name('fixtures.audio');
     Route::get('/fixtures/map/districts.geojson', [DemoFixtureController::class, 'mapDistricts'])->name('fixtures.map.districts');
-    Route::get('/fixtures/map/tiles/{style}/{z}/{x}/{y}.png', [DemoFixtureController::class, 'mapTile'])
+    Route::get('/fixtures/map/tiles/{style}/{z}/{x}/{y}.svg', [DemoFixtureController::class, 'mapTile'])
+        ->whereIn('style', ['light', 'dark', 'works'])
         ->where([
-            'style' => '[a-z-]+',
             'z' => '[0-9]+',
             'x' => '[0-9]+',
             'y' => '[0-9]+',

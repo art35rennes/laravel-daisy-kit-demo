@@ -54,6 +54,7 @@ it('exercises typed layers, drawing and the public map facade', function (): voi
         ->assertScript("document.querySelector('#controlled-map').dataset.daisyKitState === 'error'", true)
         ->assertScript("!document.querySelector('#controlled-map [data-daisy-kit-map-error]').hidden", true)
         ->assertScript('document.documentElement.scrollWidth <= window.innerWidth', true)
+        ->assertScript("document.querySelectorAll('#marker-clustering .leaflet-tile').length > 0 && Array.from(document.querySelectorAll('#marker-clustering .leaflet-tile')).every((tile) => tile.src.includes('/fixtures/map/tiles/light/'))", true)
         ->assertCount('#marker-clustering .marker-cluster', 1)
         ->click('#basemaps-and-layers [data-daisy-kit-map-layer-menu] summary')
         ->click('#basemaps-and-layers [data-daisy-kit-map-layer="districts"]')

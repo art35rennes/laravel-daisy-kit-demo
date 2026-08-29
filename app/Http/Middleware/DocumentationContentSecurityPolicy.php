@@ -13,7 +13,12 @@ final class DocumentationContentSecurityPolicy
         /** @var Response $response */
         $response = $next($request);
 
-        $response->headers->set('Content-Security-Policy', "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; style-src 'self'; style-src-attr 'none'; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self' blob:; frame-src 'self'; form-action 'self'");
+        $imageSources = config('services.openstreetmap.tiles_enabled')
+            ? "'self' data: blob: https://tile.openstreetmap.org"
+            : "'self' data: blob:";
+
+        $response->headers->set('Content-Security-Policy', "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; style-src 'self'; style-src-attr 'none'; img-src {$imageSources}; connect-src 'self'; worker-src 'self' blob:; frame-src 'self'; form-action 'self'");
+        $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
         return $response;
     }

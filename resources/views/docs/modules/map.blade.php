@@ -1,5 +1,7 @@
 @php
     $map = \App\Support\FileMapFixtures::mapParity();
+    $mapProvider = config('services.openstreetmap.tiles_enabled') ? 'osm' : false;
+    $defaultBasemaps = $mapProvider === false ? [$map['basemaps'][0]] : [];
     $blade = <<<'BLADE'
 <x-daisy-kit::map
     :markers="$markers"
@@ -32,7 +34,8 @@ JS;
         <h1 class="mt-3 text-4xl font-bold tracking-tight">Map</h1>
         <p class="mt-5 max-w-3xl text-lg leading-8 text-base-content/75">
             Compose production map workflows with Leaflet rendering, typed local layers, clustering,
-            Terra Draw editing and Turf measurements. Every example is deterministic and makes no external request.
+            Terra Draw editing and Turf measurements. OpenStreetMap provides the default geographic context;
+            deterministic local basemaps remain available and automated tests never request the external service.
         </p>
 
         <section class="mt-10 space-y-8" aria-labelledby="map-examples-heading">
@@ -45,6 +48,8 @@ JS;
                     <x-daisy-kit::map
                         id="cluster-map"
                         label="Operations sites"
+                        :provider="$mapProvider"
+                        :basemaps="$defaultBasemaps"
                         :fit-bounds="false"
                         :center="[48.1173, -1.6778]"
                         :zoom="12"
@@ -61,6 +66,7 @@ JS;
                     <x-daisy-kit::map
                         id="layer-map"
                         label="Service network layers"
+                        :provider="$mapProvider"
                         :center="[48.1173, -1.6778]"
                         :zoom="12"
                         :scale="true"
@@ -77,6 +83,8 @@ JS;
                     <x-daisy-kit::map
                         id="maintenance-map"
                         label="Maintenance drawing"
+                        :provider="$mapProvider"
+                        :basemaps="$defaultBasemaps"
                         name="maintenance_geometry"
                         :center="[48.1173, -1.6778]"
                         :zoom="12"
@@ -97,6 +105,7 @@ JS;
                     <x-daisy-kit::map
                         id="controlled-map"
                         label="Externally controlled map"
+                        :provider="$mapProvider"
                         :center="[48.1173, -1.6778]"
                         :zoom="12"
                         :fullscreen="true"

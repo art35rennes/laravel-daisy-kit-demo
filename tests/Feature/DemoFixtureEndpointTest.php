@@ -21,9 +21,14 @@ it('serves deterministic local map layers and tiles', function (): void {
         ->assertHeader('Content-Type', 'application/geo+json')
         ->assertJsonPath('features.0.id', 'district-center');
 
-    $this->get('/fixtures/map/tiles/light/12/2028/1420.png')
+    $this->get('/fixtures/map/tiles/light/12/2028/1420.svg')
         ->assertOk()
-        ->assertHeader('Content-Type', 'image/png');
+        ->assertHeader('Content-Type', 'image/svg+xml; charset=UTF-8')
+        ->assertSee('Local demo map', false)
+        ->assertSee('12 / 2028 / 1420', false);
+
+    $this->get('/fixtures/map/tiles/unknown/12/2028/1420.svg')
+        ->assertNotFound();
 
     $this->get('/fixtures/map/wms?service=WMS&request=GetMap&layers=demo%3Azoning&format=image%2Fpng&transparent=true&version=1.1.1&srs=EPSG%3A3857&bbox=-1,48,0,49&width=256&height=256')
         ->assertOk()
