@@ -6,7 +6,7 @@ dataset('module-scenarios', [
     'tree' => ['/tree', ['Workspace navigation', 'Lazy media branch', 'Search result']],
     'blueprint' => ['/blueprint', ['Editorial workflow', 'Inspector selection', 'Read-only review']],
     'file preview' => ['/file-preview', ['Media previews', 'Document previews', 'Custom actions and public API', 'Errors and limits']],
-    'map' => ['/map', ['Markers, popups and clustering', 'Basemaps and typed layers', 'Drawing, measurement and form export', 'Persistence, errors and external controls']],
+    'map' => ['/map', ['Markers, popups and clustering', 'OSM styles and business layers', 'Drawing, measurement and form export', 'Persistence, errors and external controls']],
 ]);
 
 it('renders visible representative scenarios for each module', function (string $uri, array $scenarioTitles): void {

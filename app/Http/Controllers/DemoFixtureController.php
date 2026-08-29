@@ -47,9 +47,9 @@ final class DemoFixtureController extends Controller
         return response()->json(FileMapFixtures::mapDistricts(), headers: ['Content-Type' => 'application/geo+json']);
     }
 
-    public function mapTile(string $style, string $z, string $x, string $y): Response
+    public function mapTile(string $z, string $x, string $y): Response
     {
-        return response(FileMapFixtures::mapTile($style, (int) $z, (int) $x, (int) $y), 200, [
+        return response(FileMapFixtures::mapTile((int) $z, (int) $x, (int) $y), 200, [
             'Cache-Control' => 'public, max-age=3600',
             'Content-Type' => 'image/svg+xml; charset=UTF-8',
         ]);

@@ -1,7 +1,7 @@
 @php
     $map = \App\Support\FileMapFixtures::mapParity();
-    $mapProvider = config('services.openstreetmap.tiles_enabled') ? 'osm' : false;
-    $defaultBasemaps = $mapProvider === false ? [$map['basemaps'][0]] : [];
+    $mapProvider = config('services.openstreetmap.tiles_enabled') ? 'osm.standard' : false;
+    $osmBasemaps = $mapProvider === false ? [] : $map['basemaps'];
     $blade = <<<'BLADE'
 <x-daisy-kit::map
     :markers="$markers"
@@ -33,9 +33,9 @@ JS;
         <p class="text-sm font-medium uppercase tracking-widest text-primary">Module</p>
         <h1 class="mt-3 text-4xl font-bold tracking-tight">Map</h1>
         <p class="mt-5 max-w-3xl text-lg leading-8 text-base-content/75">
-            Compose production map workflows with Leaflet rendering, typed local layers, clustering,
-            Terra Draw editing and Turf measurements. OpenStreetMap provides the default geographic context;
-            deterministic local basemaps remain available and automated tests never request the external service.
+            Compose production map workflows with Leaflet rendering, business layers, clustering,
+            Terra Draw editing and Turf measurements. OpenStreetMap provides every basemap mode;
+            automated tests disable remote tiles and validate the component with deterministic business data.
         </p>
 
         <section class="mt-10 space-y-8" aria-labelledby="map-examples-heading">
@@ -49,7 +49,6 @@ JS;
                         id="cluster-map"
                         label="Operations sites"
                         :provider="$mapProvider"
-                        :basemaps="$defaultBasemaps"
                         :fit-bounds="false"
                         :center="[48.1173, -1.6778]"
                         :zoom="12"
@@ -59,18 +58,18 @@ JS;
                 </div>
             </section>
 
-            <section id="basemaps-and-layers" class="rounded-box border border-base-300 bg-base-100 p-4 sm:p-5">
-                <h3 class="font-semibold">Basemaps and typed layers</h3>
-                <p class="mt-2 text-sm text-base-content/70">Switch between local basemaps and toggle GeoJSON, XYZ or WMS overlays from the layer menu.</p>
+            <section id="osm-and-business-layers" class="rounded-box border border-base-300 bg-base-100 p-4 sm:p-5">
+                <h3 class="font-semibold">OSM styles and business layers</h3>
+                <p class="mt-2 text-sm text-base-content/70">Choose an OSM visual mode, then combine service districts, scheduled works and planning constraints. GeoJSON, XYZ and WMS are delivery formats; the menu presents the operational meaning first.</p>
                 <div class="mt-4">
                     <x-daisy-kit::map
                         id="layer-map"
                         label="Service network layers"
-                        :provider="$mapProvider"
+                        :provider="false"
                         :center="[48.1173, -1.6778]"
                         :zoom="12"
                         :scale="true"
-                        :basemaps="$map['basemaps']"
+                        :basemaps="$osmBasemaps"
                         :layers="$map['layers']"
                     />
                 </div>
@@ -84,16 +83,16 @@ JS;
                         id="maintenance-map"
                         label="Maintenance drawing"
                         :provider="$mapProvider"
-                        :basemaps="$defaultBasemaps"
                         name="maintenance_geometry"
                         :center="[48.1173, -1.6778]"
                         :zoom="12"
-                        :geojson="$map['editableGeojson']"
+                        :value="$map['editableGeojson']"
                         :drawing="true"
                         :measure="true"
                         :spatial-selection="['mode' => 'both']"
                         :object-types="$map['objectTypes']"
                         :draw-layers="$map['drawLayers']"
+                        draw-layer-selection="multiple"
                     />
                 </form>
             </section>
@@ -114,7 +113,6 @@ JS;
                         :persist-state="true"
                         state-key="docs-controlled-map"
                         :markers="[['id' => 'center', 'label' => 'Initial center', 'position' => [48.1173, -1.6778]]]"
-                        :basemaps="[$map['basemaps'][0]]"
                         :layers="[['id' => 'unavailable', 'label' => 'Unavailable local layer', 'type' => 'geojson', 'url' => '/fixtures/map/unavailable.geojson']]"
                     >
                         <x-slot:controls>
@@ -147,6 +145,11 @@ JS;
                 <code>cluster</code>, <code>drawing</code>, <code>measure</code>, <code>spatialSelection</code>,
                 <code>geolocation</code> and <code>persistState</code>. A WMS source is a <code>layers</code> entry with
                 <code>type: 'wms'</code>, not a separate prop.
+            </p>
+            <p class="mt-3 leading-7 text-base-content/75">
+                Organize the in-map menu with <code>controls.sections</code>. Drawing layers use radio-style visibility by default,
+                or cumulative visibility with <code>drawLayerSelection="multiple"</code>. The facade methods
+                <code>getVisibleDrawLayers()</code> and <code>setVisibleDrawLayers()</code> let host filters drive the same state.
             </p>
             <p class="mt-3 leading-7 text-base-content/75">
                 Use the stable facade for external filters or controls. <code>getLeafletMap()</code> is the single documented

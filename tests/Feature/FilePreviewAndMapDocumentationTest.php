@@ -18,7 +18,7 @@ it('renders the complete published map contract with deterministic sources', fun
         ->assertSee('data-daisy-kit-module="map"', false)
         ->assertSeeInOrder([
             'Markers, popups and clustering',
-            'Basemaps and typed layers',
+            'OSM styles and business layers',
             'Drawing, measurement and form export',
             'Persistence, errors and external controls',
         ])

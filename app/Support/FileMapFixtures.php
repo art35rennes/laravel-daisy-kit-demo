@@ -37,7 +37,7 @@ final class FileMapFixtures
             ],
             'map' => [
                 ['id' => 'marker-clustering', 'title' => 'Markers, popups and clustering', 'summary' => 'Nearby operations sites grouped as the view changes.', 'state' => 'success'],
-                ['id' => 'basemaps-and-layers', 'title' => 'Basemaps and typed layers', 'summary' => 'GeoJSON, XYZ and WMS sources served locally.', 'state' => 'variant'],
+                ['id' => 'osm-and-business-layers', 'title' => 'OSM styles and business layers', 'summary' => 'Operational layers delivered through GeoJSON, XYZ and WMS.', 'state' => 'variant'],
                 ['id' => 'drawing-and-export', 'title' => 'Drawing, measurement and form export', 'summary' => 'Editable typed geometry synchronized with a form value.', 'state' => 'variant'],
                 ['id' => 'facade-and-persistence', 'title' => 'Persistence, errors and external controls', 'summary' => 'Integrator controls and a retryable local error using the documented Map facade.', 'state' => 'error'],
             ],
@@ -293,11 +293,11 @@ final class FileMapFixtures
     /**
      * @return array{
      *     markers: list<array{id: string, label: string, position: array{float, float}, popup: string|array{renderer: string, content: string}}>,
-     *     basemaps: list<array{id: string, label: string, type: string, url: string, selected?: bool}>,
+     *     basemaps: list<array{id: string, label: string, provider: string, selected?: bool}>,
      *     layers: list<array<string, mixed>>,
      *     editableGeojson: array<string, mixed>,
      *     objectTypes: list<array{id: string, label: string, geometry: string}>,
-     *     drawLayers: list<array{id: string, label: string}>
+     *     drawLayers: list<array{id: string, label: string, visible: bool}>
      * }
      */
     public static function mapParity(): array
@@ -314,29 +314,34 @@ final class FileMapFixtures
                 ['id' => 'support', 'label' => 'Support desk', 'position' => [48.1175, -1.6758], 'popup' => 'Support desk'],
             ],
             'basemaps' => [
-                ['id' => 'light', 'label' => 'Light local grid', 'type' => 'xyz', 'url' => '/fixtures/map/tiles/light/{z}/{x}/{y}.svg', 'selected' => true],
-                ['id' => 'dark', 'label' => 'Dark local grid', 'type' => 'xyz', 'url' => '/fixtures/map/tiles/dark/{z}/{x}/{y}.svg'],
+                ['id' => 'standard', 'label' => 'OSM standard', 'provider' => 'osm.standard', 'selected' => true],
+                ['id' => 'light', 'label' => 'OSM light', 'provider' => 'osm.light'],
+                ['id' => 'dark', 'label' => 'OSM dark', 'provider' => 'osm.dark'],
+                ['id' => 'voyager', 'label' => 'OSM voyager', 'provider' => 'osm.voyager'],
             ],
             'layers' => [
                 ['id' => 'districts', 'label' => 'Service districts', 'type' => 'geojson', 'url' => '/fixtures/map/districts.geojson', 'style' => ['color' => '#2563eb', 'weight' => 2]],
-                ['id' => 'works', 'label' => 'Works tiles', 'type' => 'xyz', 'url' => '/fixtures/map/tiles/works/{z}/{x}/{y}.svg', 'visible' => false],
-                ['id' => 'zoning', 'label' => 'Zoning WMS', 'type' => 'wms', 'url' => '/fixtures/map/wms', 'options' => ['layers' => 'demo:zoning', 'format' => 'image/png', 'transparent' => true], 'visible' => false],
+                ['id' => 'works', 'label' => 'Scheduled road works', 'type' => 'xyz', 'url' => '/fixtures/map/tiles/works/{z}/{x}/{y}.svg', 'visible' => false],
+                ['id' => 'zoning', 'label' => 'Planning constraints', 'type' => 'wms', 'url' => '/fixtures/map/wms', 'options' => ['layers' => 'demo:zoning', 'format' => 'image/png', 'transparent' => true], 'visible' => false],
             ],
             'editableGeojson' => [
                 'type' => 'FeatureCollection',
                 'features' => [
-                    ['type' => 'Feature', 'id' => 'site-north', 'properties' => ['name' => 'North maintenance site'], 'geometry' => ['type' => 'Point', 'coordinates' => [-1.684, 48.124]]],
-                    ['type' => 'Feature', 'id' => 'site-south', 'properties' => ['name' => 'South maintenance site'], 'geometry' => ['type' => 'Point', 'coordinates' => [-1.671, 48.109]]],
+                    ['type' => 'Feature', 'id' => 'hydrant-north', 'properties' => ['name' => 'North hydrant', 'drawLayer' => 'water', 'objectType' => 'hydrant'], 'geometry' => ['type' => 'Point', 'coordinates' => [-1.684, 48.124]]],
+                    ['type' => 'Feature', 'id' => 'hydrant-south', 'properties' => ['name' => 'South hydrant', 'drawLayer' => 'water', 'objectType' => 'hydrant'], 'geometry' => ['type' => 'Point', 'coordinates' => [-1.671, 48.109]]],
+                    ['type' => 'Feature', 'id' => 'cabinet-west', 'properties' => ['name' => 'West cabinet', 'drawLayer' => 'electricity', 'objectType' => 'cabinet'], 'geometry' => ['type' => 'Point', 'coordinates' => [-1.691, 48.116]]],
+                    ['type' => 'Feature', 'id' => 'cabinet-east', 'properties' => ['name' => 'East cabinet', 'drawLayer' => 'electricity', 'objectType' => 'cabinet'], 'geometry' => ['type' => 'Point', 'coordinates' => [-1.662, 48.118]]],
                 ],
             ],
             'objectTypes' => [
                 ['id' => 'hydrant', 'label' => 'Hydrant', 'geometry' => 'point'],
+                ['id' => 'cabinet', 'label' => 'Electrical cabinet', 'geometry' => 'point'],
                 ['id' => 'pipe', 'label' => 'Pipe', 'geometry' => 'line'],
                 ['id' => 'zone', 'label' => 'Intervention zone', 'geometry' => 'polygon'],
             ],
             'drawLayers' => [
-                ['id' => 'water', 'label' => 'Water network'],
-                ['id' => 'electricity', 'label' => 'Electricity network'],
+                ['id' => 'water', 'label' => 'Water network', 'visible' => true],
+                ['id' => 'electricity', 'label' => 'Electricity network', 'visible' => false],
             ],
         ];
     }
@@ -366,41 +371,14 @@ final class FileMapFixtures
         ];
     }
 
-    public static function mapTile(string $style, int $z, int $x, int $y): string
+    public static function mapTile(int $z, int $x, int $y): string
     {
-        if ($style === 'works') {
-            return <<<'SVG'
-                <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
-                    <path d="M-24 196 L82 90 L126 134 L232 28 L280 76 L174 182 L130 138 L24 244 Z" fill="#f97316" fill-opacity=".28" stroke="#ea580c" stroke-width="3" stroke-dasharray="10 8"/>
-                    <circle cx="82" cy="90" r="10" fill="#f97316" fill-opacity=".8"/>
-                    <circle cx="174" cy="182" r="10" fill="#f97316" fill-opacity=".8"/>
-                </svg>
-                SVG;
-        }
-
-        $dark = $style === 'dark';
-        $background = $dark ? '#182235' : '#f3f0e8';
-        $water = $dark ? '#173b5c' : '#cfe8f3';
-        $park = $dark ? '#244532' : '#d7e8c9';
-        $minorRoad = $dark ? '#334155' : '#ffffff';
-        $majorRoad = $dark ? '#64748b' : '#f8fafc';
-        $roadEdge = $dark ? '#0f172a' : '#d6d3d1';
-        $text = $dark ? '#cbd5e1' : '#64748b';
-        $coordinate = "{$z} / {$x} / {$y}";
-
         return <<<SVG
             <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
-                <rect width="256" height="256" fill="{$background}"/>
-                <path d="M-24 38 C42 70 61 107 98 141 C139 179 185 198 280 214 L280 280 L-24 280 Z" fill="{$water}"/>
-                <path d="M18 18 H94 V78 H56 L38 58 H18 Z" fill="{$park}"/>
-                <path d="M-16 192 C49 173 84 148 122 111 C160 75 202 48 272 32" fill="none" stroke="{$roadEdge}" stroke-width="13"/>
-                <path d="M-16 192 C49 173 84 148 122 111 C160 75 202 48 272 32" fill="none" stroke="{$majorRoad}" stroke-width="9"/>
-                <path d="M42 -12 C65 54 102 85 144 114 C181 140 216 185 226 272" fill="none" stroke="{$roadEdge}" stroke-width="7"/>
-                <path d="M42 -12 C65 54 102 85 144 114 C181 140 216 185 226 272" fill="none" stroke="{$minorRoad}" stroke-width="4"/>
-                <path d="M-12 112 H268 M128 -12 V268" fill="none" stroke="{$roadEdge}" stroke-width="2" stroke-dasharray="3 7" opacity=".45"/>
-                <circle cx="128" cy="112" r="5" fill="#7c3aed" stroke="#ffffff" stroke-width="2"/>
-                <text x="16" y="222" fill="{$text}" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="600">Local demo map</text>
-                <text x="16" y="241" fill="{$text}" font-family="ui-monospace, monospace" font-size="11">{$coordinate}</text>
+                <path d="M-24 196 L82 90 L126 134 L232 28 L280 76 L174 182 L130 138 L24 244 Z" fill="#f97316" fill-opacity=".28" stroke="#ea580c" stroke-width="3" stroke-dasharray="10 8"/>
+                <circle cx="82" cy="90" r="10" fill="#f97316" fill-opacity=".8"/>
+                <circle cx="174" cy="182" r="10" fill="#f97316" fill-opacity=".8"/>
+                <text x="12" y="244" fill="#9a3412" font-family="ui-monospace, monospace" font-size="10">Works {$z}/{$x}/{$y}</text>
             </svg>
             SVG;
     }
