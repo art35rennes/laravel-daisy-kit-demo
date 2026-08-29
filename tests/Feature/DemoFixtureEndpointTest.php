@@ -58,7 +58,7 @@ it('ships genuine preview files for every supported renderer', function (): void
         ->and(substr_count($documentXml, 'w:type="page"'))->toBeGreaterThanOrEqual(2);
 });
 
-it('serves deterministic local map layers and tiles', function (): void {
+it('serves deterministic local map business layers', function (): void {
     $this->getJson('/fixtures/map/districts.geojson')
         ->assertOk()
         ->assertHeader('Content-Type', 'application/geo+json')
