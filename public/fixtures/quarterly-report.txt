@@ -1,3 +1,10 @@
-Quarterly report
+Daisy Kit File Preview
+=======================
 
-All documentation fixtures are deterministic and local to this application.
+This genuine UTF-8 text fixture verifies safe text rendering, whitespace, and accents.
+French sample: aperçu isolé, téléchargement et défilement.
+
+Checklist:
+- text is escaped
+- line breaks are preserved
+- long content remains scrollable

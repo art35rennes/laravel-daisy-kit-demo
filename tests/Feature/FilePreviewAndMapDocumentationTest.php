@@ -7,8 +7,9 @@ it('renders the published file preview with a local deterministic source', funct
         ->assertSee('sandbox="allow-scripts"', false)
         ->assertSee('quarterly-report.txt')
         ->assertSee('preview.wav')
+        ->assertSee('preview-walkthrough.mp4')
         ->assertSee('data-file-preview-open-external="customer-handoff"', false)
-        ->assertDontSee('src="/fixtures/quarterly-report.txt"', false)
+        ->assertDontSee('src="/fixtures/file-preview/quarterly-report.txt"', false)
         ->assertSee('@daisy-kit/file-preview.js');
 });
 

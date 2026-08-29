@@ -15,6 +15,49 @@ it('serves deterministic documentation fixtures without a database', function (s
         ->assertJsonPath($path, $expected);
 })->with('fixture-endpoints');
 
+it('ships genuine preview files for every supported renderer', function (): void {
+    $fixtures = public_path('fixtures');
+    $contentTypes = [
+        'editorial-brief.docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'office-plan.svg' => 'image/svg+xml',
+        'preview-walkthrough.mp4' => 'video/mp4',
+        'preview.wav' => 'audio/wav',
+        'quarterly-report.txt' => 'text/plain; charset=UTF-8',
+        'release-notes.pdf' => 'application/pdf',
+    ];
+
+    foreach ($contentTypes as $fixture => $contentType) {
+        $this->get("/fixtures/file-preview/{$fixture}")
+            ->assertOk()
+            ->assertHeader('Content-Type', $contentType);
+    }
+
+    expect(file_get_contents("{$fixtures}/quarterly-report.txt"))
+        ->toContain('Daisy Kit File Preview')
+        ->and(file_get_contents("{$fixtures}/office-plan.svg"))
+        ->toStartWith('<svg')
+        ->and(file_get_contents("{$fixtures}/preview.wav", false, null, 0, 12))
+        ->toStartWith('RIFF')
+        ->toEndWith('WAVE')
+        ->and(file_get_contents("{$fixtures}/preview-walkthrough.mp4", false, null, 4, 4))
+        ->toBe('ftyp')
+        ->and(file_get_contents("{$fixtures}/release-notes.pdf", false, null, 0, 5))
+        ->toBe('%PDF-');
+
+    $pdf = file_get_contents("{$fixtures}/release-notes.pdf");
+    preg_match_all('/\/Type\s*\/Page(?!s)/', $pdf, $pdfPages);
+    expect($pdfPages[0])->toHaveCount(3);
+
+    $docx = new ZipArchive;
+    expect($docx->open("{$fixtures}/editorial-brief.docx"))->toBeTrue();
+    $documentXml = $docx->getFromName('word/document.xml');
+    $docx->close();
+
+    expect($documentXml)
+        ->toContain('Product preview brief')
+        ->and(substr_count($documentXml, 'w:type="page"'))->toBeGreaterThanOrEqual(2);
+});
+
 it('serves deterministic local map layers and tiles', function (): void {
     $this->getJson('/fixtures/map/districts.geojson')
         ->assertOk()

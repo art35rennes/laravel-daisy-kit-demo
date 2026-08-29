@@ -11,13 +11,28 @@ use Illuminate\Http\Response;
 
 final class DemoFixtureController extends Controller
 {
-    public function audio(): Response
+    public function filePreview(string $fixture): Response
     {
-        $sampleRate = 8_000;
-        $samples = str_repeat(pack('v', 0), $sampleRate);
-        $header = 'RIFF'.pack('V', 36 + strlen($samples)).'WAVEfmt '.pack('VvvVVvv', 16, 1, 1, $sampleRate, $sampleRate * 2, 2, 16);
+        $contentTypes = [
+            'editorial-brief.docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'office-plan.svg' => 'image/svg+xml',
+            'preview-walkthrough.mp4' => 'video/mp4',
+            'preview.wav' => 'audio/wav',
+            'quarterly-report.txt' => 'text/plain; charset=UTF-8',
+            'release-notes.pdf' => 'application/pdf',
+        ];
 
-        return response($header.'data'.pack('V', strlen($samples)).$samples, 200, ['Content-Type' => 'audio/wav']);
+        abort_unless(isset($contentTypes[$fixture]), 404);
+
+        $path = public_path('fixtures/'.$fixture);
+        $contents = file_get_contents($path);
+
+        abort_unless($contents !== false, 404);
+
+        return response($contents, 200, [
+            'Content-Length' => (string) filesize($path),
+            'Content-Type' => $contentTypes[$fixture],
+        ]);
     }
 
     public function show(string $fixture): JsonResponse
