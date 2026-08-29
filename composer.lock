@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/art35rennes/laravel-daisy-kit.git",
-                "reference": "ace3abe114b53db34266b3163d6405b55d4d2f0c"
+                "reference": "086ad91433a68be63509716cfd02ecff5f2f8c61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/art35rennes/laravel-daisy-kit/zipball/ace3abe114b53db34266b3163d6405b55d4d2f0c",
-                "reference": "ace3abe114b53db34266b3163d6405b55d4d2f0c",
+                "url": "https://api.github.com/repos/art35rennes/laravel-daisy-kit/zipball/086ad91433a68be63509716cfd02ecff5f2f8c61",
+                "reference": "086ad91433a68be63509716cfd02ecff5f2f8c61",
                 "shasum": ""
             },
             "require": {
@@ -133,7 +133,7 @@
                 "issues": "https://github.com/art35rennes/laravel-daisy-kit/issues",
                 "source": "https://github.com/art35rennes/laravel-daisy-kit"
             },
-            "time": "2026-08-29T20:47:56+00:00"
+            "time": "2026-08-29T21:38:22+00:00"
         },
         {
             "name": "brick/math",

@@ -145,7 +145,7 @@ JS;
         </section>
         <section class="mt-10">
             <h2 class="text-2xl font-semibold">Common options</h2>
-            <p class="mt-3 leading-7 text-base-content/75"><code>file</code> or <code>url</code> describes the source; <code>layout</code> chooses <code>card</code>, <code>compact-list</code> or <code>action-only</code>; <code>previewMode</code> chooses <code>auto</code>, <code>inline</code>, <code>modal</code> or <code>download</code>. Image, video, audio, PDF, text and DOCX are previewable. Modal previews retain the validated download action; multipage DOCX scrolls inside its frame and PDF paging uses the native browser viewer. The stable instance facade exposes state, open/close, retry and zoom controls, with English and French labels supplied by Laravel translations.</p>
+            <p class="mt-3 leading-7 text-base-content/75"><code>file</code> or <code>url</code> describes the source; <code>layout</code> chooses <code>card</code>, <code>compact-list</code> or <code>action-only</code>; <code>previewMode</code> chooses <code>auto</code>, <code>inline</code>, <code>modal</code> or <code>download</code>. Image, video, audio, PDF, text and DOCX are previewable. Modal previews retain the validated download action; multipage DOCX and PDF files scroll inside their isolated frame. The stable instance facade exposes state, open/close, retry, zoom and <code>fit()</code> controls, with English and French labels supplied by Laravel translations.</p>
         </section>
         <a class="btn btn-outline btn-sm mt-10" href="{{ $module['daisyUiUrl'] }}" target="_blank" rel="noopener noreferrer">DaisyUI loading states <span aria-hidden="true">↗</span></a>
     </article>
