@@ -36,7 +36,7 @@ it('filters the real package table and retains keyboard focus', function (): voi
         ->assertScript("document.querySelector('#contributor-directory [data-daisy-kit-module=table]').dataset.daisyKitState === 'ready'", true)
         ->assertScript("document.querySelector('#filtered-server-result [data-daisy-kit-module=table]').dataset.daisyKitState === 'ready'", true)
         ->assertCount('[data-daisy-kit-module="table"]', 3)
-        ->assertCount('#contributor-directory nav[aria-label="Table pagination"]', 1)
+        ->assertCount('#contributor-directory .daisy-kit-table__pagination', 1)
         ->assertSee('Grace Hopper')
         ->assertSeeIn('#filtered-server-result', 'Ada Lovelace')
         ->click('#contributor-directory [data-daisy-kit-table-row-select="grace"]')

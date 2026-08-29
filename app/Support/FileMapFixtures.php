@@ -36,9 +36,10 @@ final class FileMapFixtures
                 ['id' => 'rejected-file', 'title' => 'Rejected file', 'summary' => 'A MIME, size or authorization rejection.', 'state' => 'error'],
             ],
             'map' => [
-                ['id' => 'office-workspace', 'title' => 'Office workspace', 'summary' => 'A deterministic office map with a primary location.', 'state' => 'success'],
-                ['id' => 'layers-and-markers', 'title' => 'Layers and markers', 'summary' => 'A common layer and marker configuration.', 'state' => 'variant'],
-                ['id' => 'draw-and-measure', 'title' => 'Draw and measure', 'summary' => 'An editable geometry with a visible measurement.', 'state' => 'variant'],
+                ['id' => 'marker-clustering', 'title' => 'Markers, popups and clustering', 'summary' => 'Nearby operations sites grouped as the view changes.', 'state' => 'success'],
+                ['id' => 'basemaps-and-layers', 'title' => 'Basemaps and typed layers', 'summary' => 'GeoJSON, XYZ and WMS sources served locally.', 'state' => 'variant'],
+                ['id' => 'drawing-and-export', 'title' => 'Drawing, measurement and form export', 'summary' => 'Editable typed geometry synchronized with a form value.', 'state' => 'variant'],
+                ['id' => 'facade-and-persistence', 'title' => 'Persistence, errors and external controls', 'summary' => 'Integrator controls and a retryable local error using the documented Map facade.', 'state' => 'error'],
             ],
         };
     }
@@ -287,5 +288,87 @@ final class FileMapFixtures
                 ]],
             ],
         ];
+    }
+
+    /**
+     * @return array{
+     *     markers: list<array{id: string, label: string, position: array{float, float}, popup: string|array{renderer: string, content: string}}>,
+     *     basemaps: list<array{id: string, label: string, type: string, url: string, selected?: bool}>,
+     *     layers: list<array<string, mixed>>,
+     *     editableGeojson: array<string, mixed>,
+     *     objectTypes: list<array{id: string, label: string, geometry: string}>,
+     *     drawLayers: list<array{id: string, label: string}>
+     * }
+     */
+    public static function mapParity(): array
+    {
+        return [
+            'markers' => [
+                ['id' => 'rennes', 'label' => 'Rennes office', 'position' => [48.1173, -1.6778], 'popup' => 'Rennes office'],
+                ['id' => 'depot', 'label' => 'Central depot', 'position' => [48.1181, -1.6769], 'popup' => 'Central depot'],
+                ['id' => 'lab', 'label' => 'Materials lab', 'position' => [48.1167, -1.6786], 'popup' => ['renderer' => 'trusted-html', 'content' => '<strong>Materials lab</strong><br>Open 08:00–18:00']],
+                ['id' => 'workshop', 'label' => 'Workshop', 'position' => [48.1178, -1.6791], 'popup' => 'Workshop'],
+                ['id' => 'dispatch', 'label' => 'Dispatch center', 'position' => [48.1169, -1.6762], 'popup' => 'Dispatch center'],
+                ['id' => 'storage', 'label' => 'Storage', 'position' => [48.1185, -1.6781], 'popup' => 'Storage'],
+                ['id' => 'training', 'label' => 'Training room', 'position' => [48.1164, -1.6771], 'popup' => 'Training room'],
+                ['id' => 'support', 'label' => 'Support desk', 'position' => [48.1175, -1.6758], 'popup' => 'Support desk'],
+            ],
+            'basemaps' => [
+                ['id' => 'light', 'label' => 'Light local grid', 'type' => 'xyz', 'url' => '/fixtures/map/tiles/light/{z}/{x}/{y}.png', 'selected' => true],
+                ['id' => 'dark', 'label' => 'Dark local grid', 'type' => 'xyz', 'url' => '/fixtures/map/tiles/dark/{z}/{x}/{y}.png'],
+            ],
+            'layers' => [
+                ['id' => 'districts', 'label' => 'Service districts', 'type' => 'geojson', 'url' => '/fixtures/map/districts.geojson', 'style' => ['color' => '#2563eb', 'weight' => 2]],
+                ['id' => 'works', 'label' => 'Works tiles', 'type' => 'xyz', 'url' => '/fixtures/map/tiles/works/{z}/{x}/{y}.png', 'visible' => false],
+                ['id' => 'zoning', 'label' => 'Zoning WMS', 'type' => 'wms', 'url' => '/fixtures/map/wms', 'options' => ['layers' => 'demo:zoning', 'format' => 'image/png', 'transparent' => true], 'visible' => false],
+            ],
+            'editableGeojson' => [
+                'type' => 'FeatureCollection',
+                'features' => [
+                    ['type' => 'Feature', 'id' => 'site-north', 'properties' => ['name' => 'North maintenance site'], 'geometry' => ['type' => 'Point', 'coordinates' => [-1.684, 48.124]]],
+                    ['type' => 'Feature', 'id' => 'site-south', 'properties' => ['name' => 'South maintenance site'], 'geometry' => ['type' => 'Point', 'coordinates' => [-1.671, 48.109]]],
+                ],
+            ],
+            'objectTypes' => [
+                ['id' => 'hydrant', 'label' => 'Hydrant', 'geometry' => 'point'],
+                ['id' => 'pipe', 'label' => 'Pipe', 'geometry' => 'line'],
+                ['id' => 'zone', 'label' => 'Intervention zone', 'geometry' => 'polygon'],
+            ],
+            'drawLayers' => [
+                ['id' => 'water', 'label' => 'Water network'],
+                ['id' => 'electricity', 'label' => 'Electricity network'],
+            ],
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public static function mapDistricts(): array
+    {
+        return [
+            'type' => 'FeatureCollection',
+            'features' => [[
+                'type' => 'Feature',
+                'id' => 'district-center',
+                'properties' => ['name' => 'Central district', 'popup' => 'Central district'],
+                'geometry' => [
+                    'type' => 'Polygon',
+                    'coordinates' => [[
+                        [-1.72, 48.09],
+                        [-1.61, 48.09],
+                        [-1.61, 48.16],
+                        [-1.72, 48.16],
+                        [-1.72, 48.09],
+                    ]],
+                ],
+            ]],
+        ];
+    }
+
+    public static function transparentMapTile(): string
+    {
+        return base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=', true)
+            ?: throw new \LogicException('The deterministic map tile is invalid.');
     }
 }

@@ -15,6 +15,31 @@ it('serves deterministic documentation fixtures without a database', function (s
         ->assertJsonPath($path, $expected);
 })->with('fixture-endpoints');
 
+it('serves deterministic local map layers and tiles', function (): void {
+    $this->getJson('/fixtures/map/districts.geojson')
+        ->assertOk()
+        ->assertHeader('Content-Type', 'application/geo+json')
+        ->assertJsonPath('features.0.id', 'district-center');
+
+    $this->get('/fixtures/map/tiles/light/12/2028/1420.png')
+        ->assertOk()
+        ->assertHeader('Content-Type', 'image/png');
+
+    $this->get('/fixtures/map/wms?service=WMS&request=GetMap&layers=demo%3Azoning&format=image%2Fpng&transparent=true&version=1.1.1&srs=EPSG%3A3857&bbox=-1,48,0,49&width=256&height=256')
+        ->assertOk()
+        ->assertHeader('Content-Type', 'image/png');
+
+    $this->getJson('/fixtures/map/unavailable.geojson')
+        ->assertServiceUnavailable()
+        ->assertJsonPath('message', 'The deterministic map layer is unavailable.');
+});
+
+it('rejects invalid deterministic WMS query parameters', function (): void {
+    $this->getJson('/fixtures/map/wms?request=DeleteLayer')
+        ->assertUnprocessable()
+        ->assertJsonValidationErrorFor('request');
+});
+
 it('filters and pages deterministic table records on the server', function (): void {
     $this->getJson('/fixtures/table?filter=Grace&columnFilters[status]=active&sort=name&direction=asc&page=1&pageSize=2')
         ->assertOk()
@@ -89,17 +114,17 @@ it('applies Tree query validation only to the Tree fixture endpoint', function (
 });
 
 dataset('fixture-scenarios', [
-    'forms' => ['/fixtures/forms', 'Contributor profile', 'error'],
-    'table' => ['/fixtures/table', 'Contributor directory', 'error'],
-    'tree' => ['/fixtures/tree', 'Workspace navigation', 'variant'],
-    'blueprint' => ['/fixtures/blueprint', 'Editorial workflow', 'variant'],
-    'file preview' => ['/fixtures/file-preview', 'Text report', 'error'],
-    'map' => ['/fixtures/map', 'Office workspace', 'variant'],
+    'forms' => ['/fixtures/forms', 'Contributor profile', 'scenarios.2.state', 'error'],
+    'table' => ['/fixtures/table', 'Contributor directory', 'scenarios.2.state', 'error'],
+    'tree' => ['/fixtures/tree', 'Workspace navigation', 'scenarios.2.state', 'variant'],
+    'blueprint' => ['/fixtures/blueprint', 'Editorial workflow', 'scenarios.2.state', 'variant'],
+    'file preview' => ['/fixtures/file-preview', 'Text report', 'scenarios.2.state', 'error'],
+    'map' => ['/fixtures/map', 'Markers, popups and clustering', 'scenarios.3.state', 'error'],
 ]);
 
-it('exposes named representative scenarios with every module fixture', function (string $uri, string $title, string $state): void {
+it('exposes named representative scenarios with every module fixture', function (string $uri, string $title, string $statePath, string $state): void {
     $this->getJson($uri)
         ->assertOk()
         ->assertJsonPath('scenarios.0.title', $title)
-        ->assertJsonPath('scenarios.2.state', $state);
+        ->assertJsonPath($statePath, $state);
 })->with('fixture-scenarios');

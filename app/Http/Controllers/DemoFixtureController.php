@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MapWmsFixtureRequest;
 use App\Http\Requests\TableFixtureRequest;
 use App\Http\Requests\TreeFixtureRequest;
 use App\Support\FileMapFixtures;
@@ -39,6 +40,31 @@ final class DemoFixtureController extends Controller
     public function unavailableTable(): JsonResponse
     {
         return response()->json(['message' => 'The deterministic table source is unavailable.'], 503);
+    }
+
+    public function mapDistricts(): JsonResponse
+    {
+        return response()->json(FileMapFixtures::mapDistricts(), headers: ['Content-Type' => 'application/geo+json']);
+    }
+
+    public function mapTile(): Response
+    {
+        return response(FileMapFixtures::transparentMapTile(), 200, [
+            'Cache-Control' => 'public, max-age=3600',
+            'Content-Type' => 'image/png',
+        ]);
+    }
+
+    public function mapWms(MapWmsFixtureRequest $request): Response
+    {
+        $request->validated();
+
+        return response(FileMapFixtures::transparentMapTile(), 200, ['Content-Type' => 'image/png']);
+    }
+
+    public function unavailableMapLayer(): JsonResponse
+    {
+        return response()->json(['message' => 'The deterministic map layer is unavailable.'], 503);
     }
 
     public function tree(TreeFixtureRequest $request): JsonResponse

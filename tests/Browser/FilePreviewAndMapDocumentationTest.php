@@ -44,26 +44,36 @@ it('renders the complete sandboxed file preview contract at narrow and wide widt
         ->assertSee('Common options');
 })->group('browser');
 
-it('mounts the map with drawing controls at tablet and desktop widths', function (): void {
+it('exercises typed layers, drawing and the public map facade', function (): void {
     $page = visit('/map');
 
-    $page->resize(768, 900)
+    $page->resize(390, 844)
         ->waitForEvent('networkidle')
         ->wait(1)
-        ->assertScript("document.querySelector('[data-daisy-kit-module=map]').dataset.daisyKitState === 'ready'", true)
-        ->click('#layers-and-markers [data-daisy-kit-map-layer="route"]')
-        ->assertScript("!document.querySelector('#layers-and-markers [data-daisy-kit-map-layer=route]').checked", true)
-        ->click('#layers-and-markers [data-daisy-kit-map-layer="route"]')
-        ->assertScript("document.querySelector('#layers-and-markers [data-daisy-kit-map-layer=route]').checked", true)
-        ->click('#draw-and-measure [data-daisy-kit-map-mode="point"]')
-        ->click('#draw-and-measure .leaflet-container')
-        ->assertScript("!document.querySelector('#draw-and-measure [data-daisy-kit-map-history=undo]').disabled", true)
-        ->assertScript("!document.querySelector('#draw-and-measure [data-daisy-kit-map-export]').disabled", true)
-        ->click('#draw-and-measure [data-daisy-kit-map-history="undo"]')
-        ->assertScript("!document.querySelector('#draw-and-measure [data-daisy-kit-map-history=redo]').disabled", true)
+        ->assertScript("Array.from(document.querySelectorAll('[data-daisy-kit-module=map]')).filter((root) => root.dataset.daisyKitState === 'ready').length === 3", true)
+        ->assertScript("document.querySelector('#controlled-map').dataset.daisyKitState === 'error'", true)
+        ->assertScript("!document.querySelector('#controlled-map [data-daisy-kit-map-error]').hidden", true)
+        ->assertScript('document.documentElement.scrollWidth <= window.innerWidth', true)
+        ->assertCount('#marker-clustering .marker-cluster', 1)
+        ->click('#basemaps-and-layers [data-daisy-kit-map-layer-menu] summary')
+        ->click('#basemaps-and-layers [data-daisy-kit-map-layer="districts"]')
+        ->assertScript("!document.querySelector('#basemaps-and-layers [data-daisy-kit-map-layer=districts]').checked", true)
+        ->click('#basemaps-and-layers [data-daisy-kit-map-layer="districts"]')
+        ->assertScript("document.querySelector('#basemaps-and-layers [data-daisy-kit-map-layer=districts]').checked", true)
+        ->click('#drawing-and-export [data-daisy-kit-map-mode="point"]')
+        ->assertScript("document.querySelector('#drawing-and-export [data-daisy-kit-map-mode=point]').getAttribute('aria-pressed') === 'true'", true)
+        ->click('#drawing-and-export .leaflet-container')
+        ->assertScript("!document.querySelector('#drawing-and-export [data-daisy-kit-map-history=undo]').disabled", true)
+        ->assertScript("!document.querySelector('#drawing-and-export [data-daisy-kit-map-export]').disabled", true)
+        ->assertScript("JSON.parse(document.querySelector('#drawing-and-export [name=maintenance_geometry]').value).features.length === 1", true)
+        ->click('#drawing-and-export [data-daisy-kit-map-history="undo"]')
+        ->assertScript("!document.querySelector('#drawing-and-export [data-daisy-kit-map-history=redo]').disabled", true)
+        ->click('#facade-and-persistence [data-doc-map-action="view"]')
+        ->assertScript("document.querySelector('#controlled-map').dataset.docsMapFacade === 'view-updated'", true)
+        ->wait(1)
         ->assertNoAccessibilityIssues(1)
         ->assertNoSmoke();
 
-    $page->resize(1024, 900)
-        ->assertSee('Common options');
+    $page->resize(1440, 1000)
+        ->assertSee('Configuration and extension');
 })->group('browser');
