@@ -3,6 +3,9 @@
 it('renders the complete sandboxed file preview contract at narrow and wide widths', function (): void {
     $page = visit('/file-preview');
     $image = '#media-previews [data-daisy-kit-module="file-preview"][aria-label="Office plan.svg"]';
+    $video = '#media-previews [data-daisy-kit-module="file-preview"][aria-label="Preview walkthrough.mp4"]';
+    $docx = '#document-previews [data-daisy-kit-module="file-preview"][aria-label="Editorial brief.docx"]';
+    $docxDialog = "{$docx} [data-daisy-kit-file-preview-modal]";
     $custom = '[data-file-preview-instance="customer-handoff"]';
     $customDialog = "{$custom} [data-daisy-kit-file-preview-modal]";
 
@@ -11,6 +14,11 @@ it('renders the complete sandboxed file preview contract at narrow and wide widt
         ->wait(1)
         ->assertScript("document.querySelector('{$image}').dataset.daisyKitState === 'ready'", true)
         ->assertScript("document.querySelector('#media-previews [aria-label=\"Interview excerpt.wav\"]').dataset.daisyKitState === 'ready'", true)
+        ->assertScript("document.querySelector('{$video}').dataset.daisyKitState === 'ready'", true)
+        ->assertScript("document.querySelector('{$docx}').dataset.daisyKitState === 'ready'", true)
+        ->withinFrame("{$video} [data-daisy-kit-file-preview-frame]", function ($frame): void {
+            $frame->assertScript("document.querySelector('video')?.src.startsWith('blob:')", true);
+        })
         ->assertScript("!document.querySelector('{$image} [data-daisy-kit-file-preview-frame]').sandbox.contains('allow-same-origin')", true)
         ->click("{$image} [data-daisy-kit-file-preview-open-preview]")
         ->assertScript(<<<JS
@@ -31,10 +39,35 @@ it('renders the complete sandboxed file preview contract at narrow and wide widt
         ->keys($customDialog, 'Escape')
         ->assertScript("!document.querySelector('{$customDialog}').open", true)
         ->assertScript("document.activeElement.matches('[data-file-preview-open-external]')", true)
-        ->click('#document-previews [aria-label="Editorial brief.docx"] [data-daisy-kit-file-preview-open-preview]')
-        ->assertScript("document.querySelector('#document-previews [aria-label=\"Editorial brief.docx\"] dialog').open", true)
-        ->click('#document-previews [aria-label="Editorial brief.docx"] [data-daisy-kit-file-preview-zoom="in"]')
-        ->assertScript("document.querySelector('#document-previews [aria-label=\"Editorial brief.docx\"]').dataset.daisyKitZoom === '110'", true)
+        ->click("{$docx} [data-daisy-kit-file-preview-open-preview]")
+        ->assertScript("document.querySelector('{$docxDialog}').open", true)
+        ->assertScript("document.querySelector('{$docxDialog} [data-daisy-kit-file-preview-modal-download]').download === 'Editorial brief.docx'", true)
+        ->withinFrame("{$docxDialog} [data-daisy-kit-file-preview-frame]", function ($frame): void {
+            $frame->assertScript(<<<'JS'
+                (() => {
+                    const pages = [...document.querySelectorAll('.docx-wrapper > section.docx')];
+                    const scrollingElement = document.scrollingElement;
+
+                    document.documentElement.dataset.initialDocxWidth = String(pages[0]?.getBoundingClientRect().width ?? 0);
+
+                    return pages.length >= 3
+                        && scrollingElement.scrollHeight > scrollingElement.clientHeight;
+                })()
+                JS, true);
+        })
+        ->click("{$docxDialog} [data-daisy-kit-file-preview-zoom=\"in\"]")
+        ->assertScript("document.querySelector('{$docx}').dataset.daisyKitZoom === '110'", true)
+        ->withinFrame("{$docxDialog} [data-daisy-kit-file-preview-frame]", function ($frame): void {
+            $frame->assertScript(<<<'JS'
+                (() => {
+                    const initialWidth = Number(document.documentElement.dataset.initialDocxWidth);
+                    const currentWidth = document.querySelector('.docx-wrapper > section.docx')?.getBoundingClientRect().width ?? 0;
+
+                    return initialWidth > 0 && currentWidth > initialWidth * 1.05;
+                })()
+                JS, true);
+        })
+        ->click("{$docxDialog} header [data-daisy-kit-file-preview-close-preview]")
         ->assertScript("document.querySelector('#preview-errors [aria-label=\"Invalid contract.pdf\"]').dataset.daisyKitState === 'error'", true)
         ->assertScript("document.querySelector('#preview-errors [aria-label=\"Oversized report.txt\"]').dataset.daisyKitState === 'error'", true)
         ->assertNoAccessibilityIssues(1)

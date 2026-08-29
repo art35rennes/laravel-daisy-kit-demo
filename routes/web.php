@@ -10,7 +10,16 @@ Route::middleware(DocumentationContentSecurityPolicy::class)->group(function ():
     Route::get('/fixtures/table', [DemoFixtureController::class, 'table'])->name('fixtures.table');
     Route::get('/fixtures/table-unavailable', [DemoFixtureController::class, 'unavailableTable'])->name('fixtures.table-unavailable');
     Route::get('/fixtures/tree', [DemoFixtureController::class, 'tree'])->name('fixtures.tree');
-    Route::get('/fixtures/preview.wav', [DemoFixtureController::class, 'audio'])->name('fixtures.audio');
+    Route::get('/fixtures/file-preview/{fixture}', [DemoFixtureController::class, 'filePreview'])
+        ->whereIn('fixture', [
+            'editorial-brief.docx',
+            'office-plan.svg',
+            'preview-walkthrough.mp4',
+            'preview.wav',
+            'quarterly-report.txt',
+            'release-notes.pdf',
+        ])
+        ->name('fixtures.file-preview');
     Route::get('/fixtures/map/districts.geojson', [DemoFixtureController::class, 'mapDistricts'])->name('fixtures.map.districts');
     Route::get('/fixtures/map/tiles/works/{z}/{x}/{y}.svg', [DemoFixtureController::class, 'mapTile'])
         ->where([
