@@ -1,24 +1,42 @@
 <?php
 
-it('renders the sandboxed local file preview at narrow and wide widths', function (): void {
+it('renders the complete sandboxed file preview contract at narrow and wide widths', function (): void {
     $page = visit('/file-preview');
+    $image = '#media-previews [data-daisy-kit-module="file-preview"][aria-label="Office plan.svg"]';
+    $custom = '[data-file-preview-instance="customer-handoff"]';
+    $customDialog = "{$custom} [data-daisy-kit-file-preview-modal]";
 
     $page->resize(320, 800)
         ->waitForEvent('networkidle')
         ->wait(1)
-        ->assertScript("document.querySelector('[data-daisy-kit-module=file-preview]').dataset.daisyKitState === 'ready'", true)
-        ->assertScript("!document.querySelector('[data-daisy-kit-file-preview-frame]').sandbox.contains('allow-same-origin')", true)
-        ->assertScript("document.querySelector('[data-daisy-kit-file-preview-frame]').srcdoc.includes('file-preview-frame')", true)
-        ->click('#text-report [data-daisy-kit-file-preview-open-preview]')
-        ->assertScript("document.querySelector('#text-report dialog').open", true)
-        ->assertScript("document.querySelector('#text-report [data-daisy-kit-module=file-preview]').dataset.daisyKitPreviewOpen === 'true'", true)
-        ->assertScript("document.activeElement.matches('#text-report [data-daisy-kit-file-preview-close-preview]')", true)
-        ->keys('#text-report dialog', 'Escape')
-        ->assertScript("!document.querySelector('#text-report dialog').open", true)
-        ->assertScript("document.activeElement.matches('#text-report [data-daisy-kit-file-preview-open-preview]')", true)
-        ->click('#document-gallery [aria-label="Editorial brief"] [data-daisy-kit-file-preview-open-preview]')
-        ->assertScript("document.querySelector('#document-gallery [aria-label=\"Editorial brief\"] dialog').open", true)
-        ->assertScript("document.querySelector('#rejected-file [data-daisy-kit-module=file-preview]').dataset.daisyKitState === 'error'", true)
+        ->assertScript("document.querySelector('{$image}').dataset.daisyKitState === 'ready'", true)
+        ->assertScript("document.querySelector('#media-previews [aria-label=\"Interview excerpt.wav\"]').dataset.daisyKitState === 'ready'", true)
+        ->assertScript("!document.querySelector('{$image} [data-daisy-kit-file-preview-frame]').sandbox.contains('allow-same-origin')", true)
+        ->click("{$image} [data-daisy-kit-file-preview-open-preview]")
+        ->assertScript(<<<JS
+            (() => {
+                const dialog = document.querySelector('{$image} dialog');
+                const box = dialog.querySelector('[data-daisy-kit-file-preview-modal-box]');
+                const frame = dialog.querySelector('[data-daisy-kit-file-preview-frame]');
+
+                return dialog.open
+                    && box.contains(frame)
+                    && box.getBoundingClientRect().right <= window.innerWidth;
+            })()
+            JS, true)
+        ->click("{$image} header [data-daisy-kit-file-preview-close-preview]")
+        ->click('[data-file-preview-open-external="customer-handoff"]')
+        ->assertScript("document.querySelector('{$customDialog}').open", true)
+        ->assertScript("document.querySelector('{$custom}').dataset.daisyKitPreviewOpen === 'true'", true)
+        ->keys($customDialog, 'Escape')
+        ->assertScript("!document.querySelector('{$customDialog}').open", true)
+        ->assertScript("document.activeElement.matches('[data-file-preview-open-external]')", true)
+        ->click('#document-previews [aria-label="Editorial brief.docx"] [data-daisy-kit-file-preview-open-preview]')
+        ->assertScript("document.querySelector('#document-previews [aria-label=\"Editorial brief.docx\"] dialog').open", true)
+        ->click('#document-previews [aria-label="Editorial brief.docx"] [data-daisy-kit-file-preview-zoom="in"]')
+        ->assertScript("document.querySelector('#document-previews [aria-label=\"Editorial brief.docx\"]').dataset.daisyKitZoom === '110'", true)
+        ->assertScript("document.querySelector('#preview-errors [aria-label=\"Invalid contract.pdf\"]').dataset.daisyKitState === 'error'", true)
+        ->assertScript("document.querySelector('#preview-errors [aria-label=\"Oversized report.txt\"]').dataset.daisyKitState === 'error'", true)
         ->assertNoAccessibilityIssues(1)
         ->assertNoSmoke();
 

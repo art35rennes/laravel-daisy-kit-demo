@@ -10,6 +10,7 @@ Route::middleware(DocumentationContentSecurityPolicy::class)->group(function ():
     Route::get('/fixtures/table', [DemoFixtureController::class, 'table'])->name('fixtures.table');
     Route::get('/fixtures/table-unavailable', [DemoFixtureController::class, 'unavailableTable'])->name('fixtures.table-unavailable');
     Route::get('/fixtures/tree', [DemoFixtureController::class, 'tree'])->name('fixtures.tree');
+    Route::get('/fixtures/preview.wav', [DemoFixtureController::class, 'audio'])->name('fixtures.audio');
     Route::get('/fixtures/{fixture}', [DemoFixtureController::class, 'show'])
         ->whereIn('fixture', ['forms', 'blueprint', 'file-preview', 'map'])
         ->name('fixtures.show');

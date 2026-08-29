@@ -5,7 +5,7 @@ dataset('module-scenarios', [
     'table' => ['/table', ['Contributor directory', 'Filtered server result', 'Unavailable source']],
     'tree' => ['/tree', ['Workspace navigation', 'Lazy media branch', 'Search result']],
     'blueprint' => ['/blueprint', ['Editorial workflow', 'Inspector selection', 'Read-only review']],
-    'file preview' => ['/file-preview', ['Text report', 'Document gallery', 'Rejected file']],
+    'file preview' => ['/file-preview', ['Media previews', 'Document previews', 'Custom actions and public API', 'Errors and limits']],
     'map' => ['/map', ['Office workspace', 'Layers and markers', 'Draw and measure']],
 ]);
 

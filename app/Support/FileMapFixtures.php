@@ -250,17 +250,17 @@ final class FileMapFixtures
     }
 
     /**
-     * @return array{files: list<array{name: string, type: string, src: string, state: string}>}
+     * @return array{files: list<array{name: string, type: string, url: string, state: string}>}
      */
     public static function filePreviews(): array
     {
         return [
             'files' => [
-                ['name' => 'quarterly-report.txt', 'type' => 'text/plain', 'src' => '/fixtures/quarterly-report.txt', 'state' => 'ready'],
-                ['name' => 'office-plan.svg', 'type' => 'image/svg+xml', 'src' => '/fixtures/office-plan.svg', 'state' => 'ready'],
-                ['name' => 'release-notes.pdf', 'type' => 'application/pdf', 'src' => '/fixtures/release-notes.pdf', 'state' => 'ready'],
-                ['name' => 'editorial-brief.docx', 'type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'src' => '/fixtures/editorial-brief.docx', 'state' => 'ready'],
-                ['name' => 'unsupported.exe', 'type' => 'application/octet-stream', 'src' => '/fixtures/unsupported.exe', 'state' => 'error'],
+                ['name' => 'quarterly-report.txt', 'type' => 'text/plain', 'url' => '/fixtures/quarterly-report.txt', 'state' => 'ready'],
+                ['name' => 'office-plan.svg', 'type' => 'image/svg+xml', 'url' => '/fixtures/office-plan.svg', 'state' => 'ready'],
+                ['name' => 'release-notes.pdf', 'type' => 'application/pdf', 'url' => '/fixtures/release-notes.pdf', 'state' => 'ready'],
+                ['name' => 'editorial-brief.docx', 'type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'url' => '/fixtures/editorial-brief.docx', 'state' => 'ready'],
+                ['name' => 'unsupported.exe', 'type' => 'application/octet-stream', 'url' => '/fixtures/unsupported.exe', 'state' => 'error'],
             ],
         ];
     }

@@ -6,9 +6,19 @@ use App\Http\Requests\TableFixtureRequest;
 use App\Http\Requests\TreeFixtureRequest;
 use App\Support\FileMapFixtures;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 
 final class DemoFixtureController extends Controller
 {
+    public function audio(): Response
+    {
+        $sampleRate = 8_000;
+        $samples = str_repeat(pack('v', 0), $sampleRate);
+        $header = 'RIFF'.pack('V', 36 + strlen($samples)).'WAVEfmt '.pack('VvvVVvv', 16, 1, 1, $sampleRate, $sampleRate * 2, 2, 16);
+
+        return response($header.'data'.pack('V', strlen($samples)).$samples, 200, ['Content-Type' => 'audio/wav']);
+    }
+
     public function show(string $fixture): JsonResponse
     {
         $fixtureData = match ($fixture) {
