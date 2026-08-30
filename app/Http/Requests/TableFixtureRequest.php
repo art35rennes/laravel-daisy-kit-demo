@@ -43,12 +43,13 @@ final class TableFixtureRequest extends FormRequest
         return [
             'filter' => ['nullable', 'string', 'max:80'],
             'columnFilters' => ['nullable', 'array'],
+            'columnFilters.name' => ['nullable', 'string', 'max:80'],
             'columnFilters.role' => ['nullable', Rule::in(['Maintainer', 'Reviewer', 'Contributor'])],
             'columnFilters.status' => ['nullable', Rule::in(['active', 'invited', 'paused'])],
             'sort' => ['nullable', Rule::in(['name', 'role', 'status'])],
             'direction' => ['nullable', Rule::in(['asc', 'desc'])],
-            'page' => ['nullable', 'integer', 'min:1', 'max:10'],
-            'pageSize' => ['nullable', 'integer', Rule::in([2, 5, 10])],
+            'page' => ['nullable', 'integer', 'min:1', 'max:100'],
+            'pageSize' => ['nullable', 'integer', Rule::in([2, 5, 10, 25, 50, 100])],
             'columnPinning' => ['nullable', 'array'],
             'columnVisibility' => ['nullable', 'array'],
         ];

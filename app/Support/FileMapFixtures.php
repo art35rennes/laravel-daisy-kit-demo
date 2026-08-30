@@ -14,6 +14,8 @@ final class FileMapFixtures
                 ['id' => 'contributor-directory', 'title' => 'Contributor directory', 'summary' => 'A paged directory of active contributors.', 'state' => 'success'],
                 ['id' => 'filtered-server-result', 'title' => 'Filtered server result', 'summary' => 'A typed filter applied to a deterministic endpoint.', 'state' => 'variant'],
                 ['id' => 'unavailable-source', 'title' => 'Unavailable source', 'summary' => 'An accessible error when the data source cannot respond.', 'state' => 'error'],
+                ['id' => 'inline-editing', 'title' => 'Inline editing', 'summary' => 'Editable profiles retained across client pages.', 'state' => 'variant'],
+                ['id' => 'custom-cells', 'title' => 'Custom cells and applied filters', 'summary' => 'Private Blade layouts and cumulative manual filters.', 'state' => 'variant'],
             ],
             'tree' => [
                 ['id' => 'workspace-navigation', 'title' => 'Workspace navigation', 'summary' => 'A keyboard-navigable project hierarchy.', 'state' => 'success'],
@@ -57,17 +59,46 @@ final class FileMapFixtures
                 ['id' => 'radia', 'name' => 'Radia Perlman', 'role' => 'Maintainer', 'status' => 'active', 'location' => 'Portsmouth', 'updatedAt' => '2026-08-04'],
                 ['id' => 'margaret', 'name' => 'Margaret Hamilton', 'role' => 'Reviewer', 'status' => 'paused', 'location' => 'Cambridge', 'updatedAt' => '2026-08-05'],
                 ['id' => 'donald', 'name' => 'Donald Knuth', 'role' => 'Contributor', 'status' => 'active', 'location' => 'Stanford', 'updatedAt' => '2026-08-06'],
+                ...self::additionalTableRows(),
             ],
         ];
     }
 
+    /** @return list<array{id: string, name: string, role: string, status: string, location: string, updatedAt: string}> */
+    private static function additionalTableRows(): array
+    {
+        $firstNames = ['Alice', 'Benoît', 'Camille', 'David', 'Elena', 'Farah', 'Hugo', 'Inès', 'Jules'];
+        $lastNames = ['Martin', 'Bernard', 'Dubois', 'Petit', 'Moreau', 'Laurent'];
+        $roles = ['Maintainer', 'Reviewer', 'Contributor'];
+        $statuses = ['active', 'invited', 'paused'];
+        $cities = ['Rennes', 'Nantes', 'Lyon', 'Paris', 'Lille', 'Bordeaux'];
+        $rows = [];
+
+        foreach ($firstNames as $firstIndex => $firstName) {
+            foreach ($lastNames as $lastIndex => $lastName) {
+                $index = count($rows);
+                $rows[] = [
+                    'id' => 'contributor-'.($index + 7),
+                    'name' => "{$firstName} {$lastName}",
+                    'role' => $roles[($firstIndex + $lastIndex) % 3],
+                    'status' => $statuses[$firstIndex % 3],
+                    'location' => $cities[$lastIndex],
+                    'updatedAt' => sprintf('2026-08-%02d', ($index % 28) + 1),
+                ];
+            }
+        }
+
+        return $rows;
+    }
+
     /**
-     * @param  array{filter?: string, columnFilters?: array{role?: string, status?: string}, sort?: string, direction?: string, page?: int, pageSize?: int}  $filters
+     * @param  array{filter?: string, columnFilters?: array{name?: string, role?: string, status?: string}, sort?: string, direction?: string, page?: int, pageSize?: int}  $filters
      * @return array{rows: list<array{id: string, name: string, role: string, status: string, location: string, updatedAt: string}>, total: int}
      */
     public static function tablePage(array $filters): array
     {
         $query = mb_strtolower($filters['filter'] ?? '');
+        $name = mb_strtolower($filters['columnFilters']['name'] ?? '');
         $role = $filters['columnFilters']['role'] ?? null;
         $status = $filters['columnFilters']['status'] ?? null;
         $sort = $filters['sort'] ?? 'name';
@@ -75,12 +106,13 @@ final class FileMapFixtures
         $page = (int) ($filters['page'] ?? 1);
         $perPage = (int) ($filters['pageSize'] ?? 5);
 
-        $rows = array_values(array_filter(self::table()['rows'], static function (array $row) use ($query, $role, $status): bool {
+        $rows = array_values(array_filter(self::table()['rows'], static function (array $row) use ($query, $name, $role, $status): bool {
             $matchesQuery = $query === '' || str_contains(mb_strtolower(implode(' ', $row)), $query);
+            $matchesName = $name === '' || str_contains(mb_strtolower($row['name']), $name);
             $matchesRole = $role === null || $row['role'] === $role;
             $matchesStatus = $status === null || $row['status'] === $status;
 
-            return $matchesQuery && $matchesRole && $matchesStatus;
+            return $matchesQuery && $matchesName && $matchesRole && $matchesStatus;
         }));
 
         usort($rows, static function (array $left, array $right) use ($sort, $direction): int {

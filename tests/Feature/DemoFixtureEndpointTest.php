@@ -106,7 +106,7 @@ it('accepts the serialized state sent by the published table module', function (
     $this->getJson("/fixtures/table?{$query}")
         ->assertOk()
         ->assertJsonCount(2, 'rows')
-        ->assertJsonPath('total', 4);
+        ->assertJsonPath('total', 22);
 });
 
 it('returns 422 when a table fixture filter is invalid', function (): void {

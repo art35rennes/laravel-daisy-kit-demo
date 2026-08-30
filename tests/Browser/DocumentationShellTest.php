@@ -7,7 +7,7 @@ dataset('responsive-module-pages', [
     ...array_map(static fn (int $width): array => ['/truncate', 'truncate', $width, 900, 2], [320, 768, 1024, 1440]),
     ...array_map(static fn (int $width): array => ['/scrollspy', 'scrollspy', $width, 900, 1], [320, 768, 1024, 1440]),
     ...array_map(static fn (int $width): array => ['/transfer-list', 'transfer-list', $width, 900, 2], [320, 768, 1024, 1440]),
-    ...array_map(static fn (int $width): array => ['/table', 'table', $width, 900, 3], [320, 768, 1024, 1440]),
+    ...array_map(static fn (int $width): array => ['/table', 'table', $width, 900, 5], [320, 768, 1024, 1440]),
     ...array_map(static fn (int $width): array => ['/tree', 'tree', $width, 900, 3], [320, 768, 1024, 1440]),
     ...array_map(static fn (int $width): array => ['/blueprint', 'blueprint', $width, 900, 3], [320, 768, 1024, 1440]),
     ...array_map(static fn (int $width): array => ['/file-preview', 'file-preview', $width, 900, 4], [320, 390, 768, 1024, 1440]),
