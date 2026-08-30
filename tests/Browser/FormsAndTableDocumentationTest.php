@@ -1,32 +1,5 @@
 <?php
 
-it('mounts the real forms viewer and builder without a Livewire dependency in the viewer', function (): void {
-    visit('/forms')
-        ->waitForEvent('networkidle')
-        ->wait(1)
-        ->assertScript("document.querySelector('[data-daisy-kit-module=forms-viewer]').dataset.daisyKitState === 'ready'", true)
-        ->assertScript("document.querySelector('[data-daisy-kit-module=forms-builder]').dataset.daisyKitState === 'ready'", true)
-        ->assertScript('typeof window.Livewire === "object"', true)
-        ->assertScript('window.Livewire.all().length === 1', true)
-        ->assertCount('script[data-update-uri]', 1)
-        ->assertScript('document.querySelector("[data-update-uri]").getAttribute("data-update-uri").startsWith(window.location.origin)', true)
-        ->assertScript("window.Livewire.all()[0].el.contains(document.querySelector('[data-daisy-kit-module=forms-builder] .daisy-kit-forms-builder-livewire__catalogue button'))", true)
-        ->fill('#contributor-profile [data-daisy-kit-module=forms-viewer] input[name=name]', 'Ada Byron')
-        ->assertScript("document.querySelector('#contributor-profile [data-daisy-kit-module=forms-viewer] input[name=name]').value === 'Ada Byron'", true)
-        ->click('[data-daisy-kit-module=forms-builder] .daisy-kit-forms-builder-livewire__catalogue button:first-child')
-        ->wait(2)
-        ->assertNoSmoke()
-        ->assertSee('Field 9')
-        ->click('[data-daisy-kit-module=forms-builder] button[wire\\:click="undo"]')
-        ->wait(1)
-        ->assertDontSee('Field 9')
-        ->click('[data-daisy-kit-module=forms-builder] button[wire\\:click="redo"]')
-        ->wait(1)
-        ->assertSee('Field 9')
-        ->assertNoAccessibilityIssues(1)
-        ->assertNoSmoke();
-})->group('browser');
-
 it('filters the real package table and retains keyboard focus', function (): void {
     visit('/table')
         ->waitForEvent('networkidle')

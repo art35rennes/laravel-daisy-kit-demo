@@ -1,7 +1,6 @@
 <?php
 
 dataset('module-scenarios', [
-    'forms' => ['/forms', ['Contributor profile', 'Preference variant', 'Invalid submission']],
     'table' => ['/table', ['Contributor directory', 'Filtered server result', 'Unavailable source']],
     'tree' => ['/tree', ['Workspace navigation', 'Lazy media branch', 'Search result']],
     'blueprint' => ['/blueprint', ['Editorial workflow', 'Inspector selection', 'Read-only review']],

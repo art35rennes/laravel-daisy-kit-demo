@@ -4,7 +4,6 @@
     themes: light --default, dark, cupcake;
 }
 
-@source '../../vendor/livewire/livewire/dist/*.js';
 
 @layer base {
     :focus-visible {

@@ -10,11 +10,6 @@ final class FileMapFixtures
     public static function scenarios(string $module): array
     {
         return match ($module) {
-            'forms' => [
-                ['id' => 'contributor-profile', 'title' => 'Contributor profile', 'summary' => 'A multi-step profile that computes a review summary.', 'state' => 'success'],
-                ['id' => 'preference-variant', 'title' => 'Preference variant', 'summary' => 'An optional preference branch with a small field set.', 'state' => 'variant'],
-                ['id' => 'invalid-submission', 'title' => 'Invalid submission', 'summary' => 'A visible validation response for incomplete input.', 'state' => 'error'],
-            ],
             'table' => [
                 ['id' => 'contributor-directory', 'title' => 'Contributor directory', 'summary' => 'A paged directory of active contributors.', 'state' => 'success'],
                 ['id' => 'filtered-server-result', 'title' => 'Filtered server result', 'summary' => 'A typed filter applied to a deterministic endpoint.', 'state' => 'variant'],
@@ -42,70 +37,6 @@ final class FileMapFixtures
                 ['id' => 'facade-and-persistence', 'title' => 'Persistence, errors and external controls', 'summary' => 'Integrator controls and a retryable local error using the documented Map facade.', 'state' => 'error'],
             ],
         };
-    }
-
-    /**
-     * @return array{schema: array{fields: list<array{name: string, label: string, type: string, options?: list<array{value: string, label: string}>}>, submitLabel: string}, value: array{name: string, email: string, updates: string}}
-     */
-    public static function forms(): array
-    {
-        return [
-            'schema' => [
-                'fields' => [
-                    ['name' => 'name', 'label' => 'Name', 'type' => 'text'],
-                    ['name' => 'email', 'label' => 'Email', 'type' => 'email'],
-                    ['name' => 'updates', 'label' => 'Updates', 'type' => 'select', 'options' => [['value' => 'weekly', 'label' => 'Weekly'], ['value' => 'monthly', 'label' => 'Monthly']]],
-                ],
-                'submitLabel' => 'Save profile',
-            ],
-            'value' => ['name' => 'Ada Lovelace', 'email' => 'ada@example.test', 'updates' => 'weekly'],
-        ];
-    }
-
-    /**
-     * @return array{
-     *     schema: array{submit: array{label: string, mode: string}, fields: list<array{id: string, type: string, label: string, fields: list<array<string, mixed>>}>},
-     *     value: array{name: string, email: string, role: string, newsletter: bool},
-     *     submission: array{endpoint: string, method: string}
-     * }
-     */
-    public static function formsParity(): array
-    {
-        return [
-            'schema' => [
-                'submit' => ['label' => 'Save contributor profile', 'mode' => 'event'],
-                'fields' => [
-                    [
-                        'id' => 'identity',
-                        'type' => 'wizardStep',
-                        'label' => 'Identity',
-                        'fields' => [
-                            ['name' => 'name', 'label' => 'Name', 'type' => 'text', 'rules' => ['required', 'min:3']],
-                            ['name' => 'email', 'label' => 'Email', 'type' => 'email', 'rules' => ['required', 'email']],
-                        ],
-                    ],
-                    [
-                        'id' => 'preferences',
-                        'type' => 'wizardStep',
-                        'label' => 'Preferences',
-                        'fields' => [
-                            ['name' => 'role', 'label' => 'Role', 'type' => 'select', 'options' => [['value' => 'maintainer', 'label' => 'Maintainer'], ['value' => 'reviewer', 'label' => 'Reviewer']]],
-                            ['name' => 'newsletter', 'label' => 'Newsletter', 'type' => 'checkbox'],
-                        ],
-                    ],
-                    [
-                        'id' => 'review',
-                        'type' => 'wizardStep',
-                        'label' => 'Review',
-                        'fields' => [
-                            ['name' => 'summary', 'label' => 'Summary', 'type' => 'text', 'computed' => ['type' => 'jsonata', 'expression' => '"Contributor: " & name']],
-                        ],
-                    ],
-                ],
-            ],
-            'value' => ['name' => 'Ada Lovelace', 'email' => 'ada@example.test', 'role' => 'maintainer', 'newsletter' => true],
-            'submission' => ['endpoint' => '/fixtures/forms', 'method' => 'POST'],
-        ];
     }
 
     /**

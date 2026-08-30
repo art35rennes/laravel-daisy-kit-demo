@@ -5,8 +5,10 @@
 
 - Target Laravel 13 and PHP 8.4; keep all documentation and UI copy in English.
 - This is executable documentation only: no authentication, no persistent database, and no
-  network-backed fixtures. Keep the six module pages deterministic: Forms, Table, Tree,
-  Blueprint, File Preview, and Map.
+  network-backed fixtures. Keep eleven module pages deterministic: Table, Tree, Blueprint,
+  File Preview, Map, Copyable, Combobox, Signature, Truncate, Scrollspy, and Transfer List.
+  Forms Viewer/Builder and Livewire are retired without aliases. Only Signature and
+  Transfer List pages allow style-src-attr 'unsafe-inline'.
 - Use native DaisyUI/Tailwind for standard shell controls. Do not revive v4 contracts,
   wrappers, catalogue pages, CRUD/auth templates, charts, calendars, or inventory tooling.
 - Laravel Daisy Kit is declared from its Git VCS repository for the corrective v5
@@ -16,13 +18,13 @@
   `vendor/art35rennes/laravel-daisy-kit/dist`; do not add v4 compatibility code, local copies,
   stubs, or unverified APIs.
 - Use Pest 5 TIA for fast feedback (`composer run test:tia`), but use
-  `composer run test:release` as the full non-TIA gate. Preserve Browser coverage for all six
+  `composer run test:release` as the full non-TIA gate. Preserve Browser coverage for all eleven
   pages, responsive widths, keyboard/focus behavior, accessibility, and console errors.
 - Product parity is defined by `V5_REBUILD_SPEC.md`: preserve the v4 user needs through the
-  six v5 public modules, but never revive v4 aliases or implement a missing package capability
+  eleven v5 public modules, but never revive v4 aliases or implement a missing package capability
   in the host. Keep `/fixtures/*` read-only, deterministic and validated.
 - Browser acceptance must prove visible outcomes, styles, focus, accessibility, console and
-  network behavior rather than only an internal mount state. Forms Viewer and File Preview also
+  network behavior rather than only an internal mount state. File Preview also
   need trusted-HTTPS or no-Web-Crypto-origin coverage; never bypass a Herd certificate warning.
 - A package prerelease must be locked from Git VCS and verified from a fresh install before its
   contract is documented or the corrective branch is considered promotable.
@@ -132,14 +134,12 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 - Laravel can be deployed using [Laravel Cloud](https://cloud.laravel.com/), which is the fastest way to deploy and scale production Laravel applications.
 
-=== tests rules ===
+=== herd rules ===
 
-# Test Enforcement
+# Laravel Herd
 
-- Test every code change by adding or updating a test.
-- Run the affected tests and ensure they pass.
-- Test the changed behavior and its important failure modes, but do not add tests beyond them.
-- Read the `testing-best-practices` skill before writing tests.
+- The application is served by Laravel Herd at `https?://[kebab-case-project-dir].test`. Use the `get-absolute-url` tool to generate valid URLs. Never run commands to serve the site. It is always available.
+- Use the `herd` CLI to manage services, PHP versions, and sites (e.g. `herd sites`, `herd services:start <service>`, `herd php:list`). Run `herd list` to discover all available commands.
 
 === laravel/core rules ===
 
@@ -171,14 +171,6 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 - If you receive an "Illuminate\Foundation\ViteException: Unable to locate file in Vite manifest" error, you can run `npm run build` or ask the user to run `npm run dev` or `composer run dev`.
 
-=== livewire/core rules ===
-
-# Livewire
-
-- Livewire allows you to build dynamic, reactive interfaces in PHP without writing JavaScript.
-- You can use Alpine.js for client-side interactions instead of JavaScript frameworks.
-- Keep state server-side so the UI reflects it. Validate and authorize in actions as you would in HTTP requests.
-
 === pint/core rules ===
 
 # Laravel Pint Code Formatter
@@ -209,25 +201,33 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 Laravel Daisy Kit is a PHP 8.4 / Laravel 13 package of focused Blade modules for applications
 that already own their Tailwind CSS and DaisyUI setup. It provides exactly these components:
 
-- `x-daisy-kit::forms.viewer` and `x-daisy-kit::forms.builder`
-- `x-daisy-kit::table`, `x-daisy-kit::tree`, and `x-daisy-kit::blueprint`
-- `x-daisy-kit::file-preview` and `x-daisy-kit::map`
+- `x-daisy-kit::table`, `x-daisy-kit::tree`, `x-daisy-kit::blueprint`, `x-daisy-kit::file-preview`, and `x-daisy-kit::map`
+- `x-daisy-kit::copyable`, `x-daisy-kit::combobox`, `x-daisy-kit::signature`, `x-daisy-kit::truncate`, `x-daisy-kit::scrollspy`, and `x-daisy-kit::transfer-list`
 
 This is a Composer/VCS package, not an npm package. In the host Vite configuration, resolve the
 stable `@daisy-kit` alias to `vendor/art35rennes/laravel-daisy-kit/dist`; then import each used
 entry explicitly, such as `@daisy-kit/table.js` and `@daisy-kit/table.css`. Every module exposes
-`mount(root)`, `mountAll(scope = document)`, and `unmount(root)`; do not add a global bootstrap
-or make one module load another implicitly. Listen only to `daisy-kit:{module}:*` events.
+`mount(root)`, `mountAll(scope = document)`, `unmount(root)`, and `getInstance(root)`; do not add a global bootstrap
+or make one module load another implicitly. `mount` and `getInstance` return the same stable facade;
+getters return detached snapshots, commands report success, and operational failures emit
+`daisy-kit:{module}:error` with a machine-readable `code` and safe `message`. Listen only to
+`daisy-kit:{module}:*` events.
 
 Configuration is escaped, non-executable JSON. Preserve the modular CSP boundary: no inline
 script, handler, view-authored style attribute, or view-authored style block. File Preview keeps
 untrusted document rendering in its sandboxed child frame; its auxiliary chunks are emitted by
 the explicit Vite entry and need no route, proxy, copy, or published asset.
 
+Signature and Transfer List use dependencies that write runtime DOM styles. Pages mounting either
+module require `style-src-attr 'unsafe-inline'`; all other parent-page modules keep
+`style-src-attr 'none'`.
+
 There is no compatibility layer, alias namespace, asset publication, route, or host template.
-The differentiated product outcomes (recursive Forms, editable data/graph/geospatial workflows,
+The differentiated product outcomes (focused interaction, editable data/graph/geospatial workflows,
 and isolated document/media previews) are defined by the package's
 `docs/specs/v5-product-contract-matrix.md`; do not reduce them to a successful mount state.
 For implementation and verification details, activate the `laravel-daisy-kit-development` skill.
+Keep the package Workbench a representative Laravel host with normal Blade, Vite, routes, and
+forms. Do not turn it into an API explorer, event console, or interactive documentation surface.
 
 </laravel-boost-guidelines>

@@ -31,7 +31,7 @@ Route::middleware(DocumentationContentSecurityPolicy::class)->group(function ():
     Route::get('/fixtures/map/wms', [DemoFixtureController::class, 'mapWms'])->name('fixtures.map.wms');
     Route::get('/fixtures/map/unavailable.geojson', [DemoFixtureController::class, 'unavailableMapLayer'])->name('fixtures.map.unavailable');
     Route::get('/fixtures/{fixture}', [DemoFixtureController::class, 'show'])
-        ->whereIn('fixture', ['forms', 'blueprint', 'file-preview', 'map'])
+        ->whereIn('fixture', ['blueprint', 'file-preview', 'map'])
         ->name('fixtures.show');
 
     Route::get('/demo', function (): RedirectResponse {

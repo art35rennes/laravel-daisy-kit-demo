@@ -38,7 +38,6 @@ final class DemoFixtureController extends Controller
     public function show(string $fixture): JsonResponse
     {
         $fixtureData = match ($fixture) {
-            'forms' => FileMapFixtures::formsParity(),
             'blueprint' => FileMapFixtures::blueprint(),
             'file-preview' => FileMapFixtures::filePreviews(),
             'map' => FileMapFixtures::map(),

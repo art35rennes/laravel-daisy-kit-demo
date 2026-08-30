@@ -1,7 +1,6 @@
 <?php
 
 dataset('fixture-endpoints', [
-    'forms' => ['/fixtures/forms', 'schema.fields.0.fields.0.name', 'name'],
     'tree' => ['/fixtures/tree', 'items.0.id', 'workspace'],
     'blueprint' => ['/fixtures/blueprint', 'nodes.4.id', 'published'],
     'file preview' => ['/fixtures/file-preview', 'files.0.name', 'quarterly-report.txt'],
@@ -151,9 +150,9 @@ it('serves the published Tree lazy and search response shapes', function (): voi
 });
 
 it('applies Tree query validation only to the Tree fixture endpoint', function (): void {
-    $this->getJson('/fixtures/forms?parent=unexpected')
+    $this->getJson('/fixtures/blueprint?parent=unexpected')
         ->assertOk()
-        ->assertJsonPath('value.name', 'Ada Lovelace');
+        ->assertJsonPath('nodes.4.id', 'published');
 
     $this->getJson('/fixtures/tree?parent=unexpected')
         ->assertUnprocessable()
@@ -161,7 +160,6 @@ it('applies Tree query validation only to the Tree fixture endpoint', function (
 });
 
 dataset('fixture-scenarios', [
-    'forms' => ['/fixtures/forms', 'Contributor profile', 'scenarios.2.state', 'error'],
     'table' => ['/fixtures/table', 'Contributor directory', 'scenarios.2.state', 'error'],
     'tree' => ['/fixtures/tree', 'Workspace navigation', 'scenarios.2.state', 'variant'],
     'blueprint' => ['/fixtures/blueprint', 'Editorial workflow', 'scenarios.2.state', 'variant'],
