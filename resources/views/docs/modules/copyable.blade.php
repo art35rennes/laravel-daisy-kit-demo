@@ -33,7 +33,7 @@ JS;
             <h2 id="copyable-examples-heading" class="text-2xl font-semibold">Interactive examples</h2>
             <section id="copyable-example-1" class="min-w-0 rounded-box border border-base-300 bg-base-100 p-5">
                 <h3 class="font-semibold">Reference number</h3>
-                <p class="mb-5 mt-2 text-sm text-base-content/70">The optional copy icon reinforces the action; the feedback tooltip disappears automatically.</p>
+                <p class="mb-10 mt-2 text-sm text-base-content/70">The optional copy icon reinforces the action; the feedback tooltip disappears automatically.</p>
                 <x-daisy-kit::copyable
                     show-icon
                     success-label="Invoice reference copied."
