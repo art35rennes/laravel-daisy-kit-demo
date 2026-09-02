@@ -23,7 +23,10 @@ it('renders the complete published map contract with deterministic sources', fun
             'Drawing, measurement and form export',
             'Persistence, errors and external controls',
         ])
-        ->assertSee('data-doc-map-action="view"', false)
+        ->assertSee('data-daisy-kit-map-menu="geometry"', false)
+        ->assertSee('data-daisy-kit-map-action="focus-depot"', false)
+        ->assertSee('data-daisy-kit-map-slot="filters"', false)
+        ->assertSee('MapControls')
         ->assertSee('name="maintenance_geometry"', false)
         ->assertSee('"type":"wms"', false)
         ->assertSee('"type":"xyz"', false)

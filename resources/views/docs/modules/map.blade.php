@@ -2,6 +2,45 @@
     $map = \App\Support\FileMapFixtures::mapParity();
     $mapProvider = config('services.openstreetmap.tiles_enabled') ? 'osm.standard' : false;
     $osmBasemaps = $mapProvider === false ? [] : $map['basemaps'];
+    $drawingControls = \Art35rennes\DaisyKit\Map\MapControls::make([
+        \Art35rennes\DaisyKit\Map\MapControl::menu('layers', 'Layers', [
+            \Art35rennes\DaisyKit\Map\MapControl::basemaps(),
+            \Art35rennes\DaisyKit\Map\MapControl::drawingLayers(),
+        ], icon: 'layers'),
+        \Art35rennes\DaisyKit\Map\MapControl::menu('drawing', 'Drawing', [
+            \Art35rennes\DaisyKit\Map\MapControl::objectTypeSelector(),
+            \Art35rennes\DaisyKit\Map\MapControl::drawLayerSelector(),
+            \Art35rennes\DaisyKit\Map\MapControl::menu('geometry', 'Geometry', [
+                \Art35rennes\DaisyKit\Map\MapControl::drawPoint(),
+                \Art35rennes\DaisyKit\Map\MapControl::drawLine(),
+                \Art35rennes\DaisyKit\Map\MapControl::drawPolygon(),
+                \Art35rennes\DaisyKit\Map\MapControl::drawRectangle(),
+            ]),
+        ], icon: 'drawing'),
+        \Art35rennes\DaisyKit\Map\MapControl::menu('selection', 'Selection', [
+            \Art35rennes\DaisyKit\Map\MapControl::edit(),
+            \Art35rennes\DaisyKit\Map\MapControl::selectFeature(),
+            \Art35rennes\DaisyKit\Map\MapControl::selectByArea(),
+            \Art35rennes\DaisyKit\Map\MapControl::deleteSelected(),
+            \Art35rennes\DaisyKit\Map\MapControl::clearSelection(),
+        ], icon: 'selection'),
+        \Art35rennes\DaisyKit\Map\MapControl::menu('history', 'History', [
+            \Art35rennes\DaisyKit\Map\MapControl::undo(),
+            \Art35rennes\DaisyKit\Map\MapControl::redo(),
+            \Art35rennes\DaisyKit\Map\MapControl::export(),
+        ], icon: 'history'),
+        \Art35rennes\DaisyKit\Map\MapControl::fitBounds(),
+        \Art35rennes\DaisyKit\Map\MapControl::fullscreen(),
+    ]);
+    $controlledMapControls = \Art35rennes\DaisyKit\Map\MapControls::make([
+        \Art35rennes\DaisyKit\Map\MapControl::menu('host', 'Host controls', [
+            \Art35rennes\DaisyKit\Map\MapControl::slot('filters'),
+        ]),
+        \Art35rennes\DaisyKit\Map\MapControl::customAction('focus-depot', 'Focus the depot', 'location'),
+        \Art35rennes\DaisyKit\Map\MapControl::fitBounds(),
+        \Art35rennes\DaisyKit\Map\MapControl::geolocate(),
+        \Art35rennes\DaisyKit\Map\MapControl::fullscreen(),
+    ]);
     $blade = <<<'BLADE'
 <x-daisy-kit::map
     :markers="$markers"
@@ -88,6 +127,8 @@ JS;
                         :zoom="12"
                         :value="$map['editableGeojson']"
                         :drawing="true"
+                        :controls="$drawingControls"
+                        :fullscreen="true"
                         :measure="true"
                         :spatial-selection="['mode' => 'both']"
                         :object-types="$map['objectTypes']"
@@ -111,17 +152,17 @@ JS;
                         :gesture-handling="true"
                         :geolocation="true"
                         :persist-state="true"
+                        :controls="$controlledMapControls"
                         state-key="docs-controlled-map"
                         :markers="[['id' => 'center', 'label' => 'Initial center', 'position' => [48.1173, -1.6778]]]"
                         :layers="[['id' => 'unavailable', 'label' => 'Unavailable local layer', 'type' => 'geojson', 'url' => '/fixtures/map/unavailable.geojson']]"
                     >
-                        <x-slot:controls>
+                        <x-slot:mapFilters>
                             <div class="flex flex-wrap gap-2" aria-label="Host map controls">
-                                <button class="btn btn-outline btn-sm" data-doc-map-action="view" type="button">Focus the depot</button>
                                 <button class="btn btn-outline btn-sm" data-doc-map-action="invalidate" type="button">Refresh layout</button>
                             </div>
-                            <p class="text-sm text-base-content/70">These controls call <code>getInstance()</code>; they do not access private Map state or a global Leaflet object.</p>
-                        </x-slot:controls>
+                            <p class="text-sm text-base-content/70">This named slot and the custom action use the facade without accessing private Map state or a global Leaflet object.</p>
+                        </x-slot:mapFilters>
                     </x-daisy-kit::map>
                 </div>
             </section>
@@ -147,7 +188,7 @@ JS;
                 <code>type: 'wms'</code>, not a separate prop.
             </p>
             <p class="mt-3 leading-7 text-base-content/75">
-                Organize the in-map menu with <code>controls.sections</code>. Drawing layers use radio-style visibility by default,
+                Compose direct actions, menus, groups, submenus and named slots with <code>MapControls</code> and <code>MapControl</code>. Every standard control can be omitted, hidden or disabled independently. Drawing layers use radio-style visibility by default,
                 or cumulative visibility with <code>drawLayerSelection="multiple"</code>. The facade methods
                 <code>getVisibleDrawLayers()</code> and <code>setVisibleDrawLayers()</code> let host filters drive the same state.
             </p>
