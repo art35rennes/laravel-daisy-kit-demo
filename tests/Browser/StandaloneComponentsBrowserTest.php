@@ -34,14 +34,18 @@ it('shows and automatically hides successful Copyable feedback', function (): vo
         ->assertNoSmoke();
 })->group('browser');
 
-it('selects a reviewer with the keyboard and submits its Laravel value', function (): void {
+it('discovers rich reviewer suggestions and submits ordered Laravel values', function (): void {
     visit('/combobox')->waitForEvent('networkidle')
+        ->click('#combobox-example-1 [role=combobox]')
+        ->assertCount('#combobox-example-1 [role=option]', 3)
+        ->assertSee('grace.hopper@example.test')
+        ->assertSee('Infrastructure')
         ->fill('#combobox-example-1 [role=combobox]', 'Grace')
         ->keys('#combobox-example-1 [role=combobox]', ['ArrowDown', 'Enter'])
-        ->assertScript("new FormData(document.querySelector('#combobox-example-1 form')).get('reviewer') === 'grace'")
+        ->assertScript("JSON.stringify(new FormData(document.querySelector('#combobox-example-1 form')).getAll('reviewers[]')) === JSON.stringify(['ada', 'grace'])")
         ->keys('#combobox-example-1 [role=combobox]', 'Escape')
         ->click('#combobox-example-1 button[type=submit]')
-        ->assertQueryStringHas('reviewer', 'grace')
+        ->assertScript("JSON.stringify(new URL(location.href).searchParams.getAll('reviewers[]')) === JSON.stringify(['ada', 'grace'])")
         ->assertNoSmoke();
 })->group('browser');
 

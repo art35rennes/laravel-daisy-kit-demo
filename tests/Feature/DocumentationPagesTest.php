@@ -49,6 +49,15 @@ it('documents the optional Copyable icon and transient visual feedback', functio
         ->assertSee('showFeedback=true');
 });
 
+it('demonstrates rich Combobox suggestions and its renderer facade', function (): void {
+    $this->get('/combobox')
+        ->assertOk()
+        ->assertSee('grace.hopper@example.test')
+        ->assertSee('Infrastructure')
+        ->assertSee('setOptionRenderer(renderer)')
+        ->assertSee('max-suggestions', false);
+});
+
 it('exposes exactly the eleven v5 modules without the retired Forms page', function (): void {
     expect(array_keys(DocumentationController::modules()))->toEqualCanonicalizing([
         'table', 'tree', 'blueprint', 'file-preview', 'map', 'copyable', 'combobox',
