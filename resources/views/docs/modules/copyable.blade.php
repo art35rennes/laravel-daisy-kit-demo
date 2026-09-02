@@ -1,6 +1,12 @@
 @php
     $blade = <<<'BLADE'
-<x-daisy-kit::copyable>INV-2026-0042</x-daisy-kit::copyable>
+<x-daisy-kit::copyable
+    show-icon
+    success-label="Invoice reference copied."
+    :feedback-duration="1500"
+>
+    INV-2026-0042
+</x-daisy-kit::copyable>
 BLADE;
     $imports = <<<'JS'
 import '@daisy-kit/copyable.css';
@@ -22,13 +28,19 @@ JS;
     <article class="max-w-5xl">
         <p class="text-sm font-medium uppercase tracking-widest text-primary">Module</p>
         <h1 class="mt-3 text-4xl font-bold tracking-tight">Copyable</h1>
-        <p class="mt-5 max-w-3xl text-lg leading-8 text-base-content/75">Copy a reference or plain-text payload with accessible feedback.</p>
+        <p class="mt-5 max-w-3xl text-lg leading-8 text-base-content/75">Copy a reference or plain-text payload with an optional icon and transient, accessible feedback.</p>
         <section class="mt-10 space-y-6" aria-labelledby="copyable-examples-heading">
             <h2 id="copyable-examples-heading" class="text-2xl font-semibold">Interactive examples</h2>
             <section id="copyable-example-1" class="min-w-0 rounded-box border border-base-300 bg-base-100 p-5">
                 <h3 class="font-semibold">Reference number</h3>
-                <p class="mb-5 mt-2 text-sm text-base-content/70">Copy the visible reference, or use the alternative JSON value in the second example.</p>
-                <x-daisy-kit::copyable>INV-2026-0042</x-daisy-kit::copyable>
+                <p class="mb-5 mt-2 text-sm text-base-content/70">The optional copy icon reinforces the action; the feedback tooltip disappears automatically.</p>
+                <x-daisy-kit::copyable
+                    show-icon
+                    success-label="Invoice reference copied."
+                    :feedback-duration="1500"
+                >
+                    INV-2026-0042
+                </x-daisy-kit::copyable>
             </section>
             <section id="copyable-example-2" class="min-w-0 rounded-box border border-base-300 bg-base-100 p-5">
                 <h3 class="font-semibold">Structured plain text</h3>
@@ -47,6 +59,7 @@ JS;
         <section class="mt-10 space-y-3">
             <h2 class="text-2xl font-semibold">Integrator API</h2>
             <p class="leading-7">copy(value?): Promise&lt;boolean&gt;; getValue(): string.</p>
+            <p class="leading-7"><code>showIcon=false</code> adds the decorative copy glyph when enabled. <code>showFeedback=true</code> displays success or error as a temporary tooltip using the existing labels and <code>feedbackDuration</code>; disabling it keeps the screen-reader announcement.</p>
             <p class="leading-7">mount(root) returns a stable facade or null; getInstance(root) retrieves it. unmount(root) cleans up the instance. Commands return booleans unless documented as asynchronous; getters return values.</p>
             <p class="leading-7">Events use the <code>daisy-kit:copyable:</code> prefix: copied { value }; error { code, message }.</p>
             <h3 class="pt-3 text-lg font-semibold">Laravel submission</h3>

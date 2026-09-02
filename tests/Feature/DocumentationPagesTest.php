@@ -39,6 +39,16 @@ it('documents the corrective VCS checkpoint and official Vite alias', function (
         ->assertSee('copyable');
 });
 
+it('documents the optional Copyable icon and transient visual feedback', function (): void {
+    $this->get('/copyable')
+        ->assertOk()
+        ->assertSee('data-daisy-kit-copyable-icon', false)
+        ->assertSee('data-daisy-kit-copyable-feedback', false)
+        ->assertSee('Invoice reference copied.')
+        ->assertSee('showIcon=false')
+        ->assertSee('showFeedback=true');
+});
+
 it('exposes exactly the eleven v5 modules without the retired Forms page', function (): void {
     expect(array_keys(DocumentationController::modules()))->toEqualCanonicalizing([
         'table', 'tree', 'blueprint', 'file-preview', 'map', 'copyable', 'combobox',

@@ -13,8 +13,24 @@ it('announces a refused clipboard request accessibly', function (): void {
         JS);
 
     $page
+        ->assertCount('#copyable-example-1 [data-daisy-kit-copyable-icon]', 1)
         ->click('#copyable-example-1 [data-daisy-kit-copyable-button]')
-        ->assertScript("window.copyFailure.code === 'clipboard-rejected' && window.copyFailure.announced && window.copyFailure.message === 'Copying failed.'")
+        ->assertScript("window.copyFailure.code === 'clipboard-rejected' && window.copyFailure.announced && window.copyFailure.message === 'Copying failed.' && document.querySelector('#copyable-example-1 [data-daisy-kit-status]').classList.contains('badge-error')")
+        ->assertNoSmoke();
+})->group('browser');
+
+it('shows and automatically hides successful Copyable feedback', function (): void {
+    $page = visit('/copyable')->waitForEvent('networkidle');
+    $page->script(<<<'JS'
+        Object.defineProperty(navigator, 'clipboard', { configurable: true, value: {
+            writeText: async () => undefined,
+        } });
+        JS);
+
+    $page
+        ->click('#copyable-example-1 [data-daisy-kit-copyable-button]')
+        ->assertScript("(() => { const status = document.querySelector('#copyable-example-1 [data-daisy-kit-status]'); return !status.hidden && status.textContent === 'Invoice reference copied.' && status.classList.contains('badge-success'); })()")
+        ->assertScript("document.querySelector('#copyable-example-1 [data-daisy-kit-status]').hidden")
         ->assertNoSmoke();
 })->group('browser');
 
