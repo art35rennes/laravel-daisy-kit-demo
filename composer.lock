@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3edba08237bff6c8aa029bc7a5d5eb72",
+    "content-hash": "b797fa4721d32246e63b016e943f27b1",
     "packages": [
         {
             "name": "art35rennes/laravel-daisy-kit",
