@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": "^8.4",
-        "art35rennes/laravel-daisy-kit": "^6.0",
+        "art35rennes/laravel-daisy-kit": "dev-codex/table-draft-v6-patch",
         "laravel/framework": "^13.17"
     },
     "require-dev": {

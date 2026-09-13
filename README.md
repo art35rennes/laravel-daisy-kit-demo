@@ -3,7 +3,7 @@
 Executable English documentation for eleven independent Laravel Daisy Kit v6 modules:
 Table, Tree, Blueprint, File Preview, Map, Copyable, Combobox, Signature, Truncate,
 Scrollspy, and Transfer List. The package is installed from Git VCS at
-`v6.0.0`; `composer.lock` records the exact reference, also shown on Installation.
+`v6.0.1`; `composer.lock` records the exact reference, also shown on Installation.
 Forms Viewer/Builder and Livewire are removed without compatibility aliases.
 
 The six small-component pages include working examples, explicit imports, facade methods,

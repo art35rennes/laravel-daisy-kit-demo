@@ -3,7 +3,7 @@
 ## Delivery
 
 A public Laravel 13 / PHP 8.4+ repository with executable English documentation
-for the exact `v6.0.0` Composer/VCS release. No hosted deployment, authentication,
+for the exact `v6.0.1` Composer/VCS release. No hosted deployment, authentication,
 persistence, package copies, proxy routes or replacement components are included.
 
 ## Contract

@@ -5,6 +5,8 @@ it('filters the real package table and retains keyboard focus', function (): voi
         ->waitForEvent('networkidle')
         ->wait(1)
         ->type('#contributor-directory [data-daisy-kit-table-filter]', 'Grace')
+        ->assertCount('#contributor-directory [data-daisy-kit-table-row-select]', 1)
+        ->assertSeeIn('#contributor-directory tbody', 'Grace Hopper')
         ->assertScript("document.activeElement.matches('#contributor-directory [data-daisy-kit-table-filter]')", true)
         ->assertScript("document.querySelector('#contributor-directory [data-daisy-kit-module=table]').dataset.daisyKitState === 'ready'", true)
         ->assertScript("document.querySelector('#filtered-server-result [data-daisy-kit-module=table]').dataset.daisyKitState === 'ready'", true)
@@ -19,7 +21,7 @@ it('filters the real package table and retains keyboard focus', function (): voi
         ->click('#contributor-directory [data-daisy-kit-table-edit="grace:name"]')
         ->fill('#contributor-directory [data-daisy-kit-table-edit-input="grace:name"]', 'Grace Murray Hopper')
         ->click('#contributor-directory [data-daisy-kit-table-edit-save="grace:name"]')
-        ->assertSee('Grace Murray Hopper')
+        ->assertSeeIn('#contributor-directory tbody tr:has([data-daisy-kit-table-row-select=grace])', 'Grace Murray Hopper')
         ->assertNoAccessibilityIssues(1)
         ->assertNoSmoke();
 })->group('browser');
