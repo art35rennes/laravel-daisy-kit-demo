@@ -35,7 +35,7 @@ it('renders four populated multi-page examples with custom cells and complete di
 
     expect($tables[0]['selection']['summaryVisibility'])->toBe('after-first-selection');
     expect($tables[1]['mode'])->toBe('server');
-    expect($tables[3]['rows'][0]['name'])->toContain('Ada Lovelace', 'London', 'text-base-content/60');
+    expect($tables[3]['rows'][0]['name'])->toContain('Ada Lovelace', 'London', 'text-base-content/70');
     expect($tables[3]['filterMode'])->toBe('manual');
 });
 
