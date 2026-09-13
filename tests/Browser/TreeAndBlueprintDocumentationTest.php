@@ -47,7 +47,7 @@ it('operates the real blueprint with the keyboard', function (): void {
         ->assertScript("document.activeElement?.getAttribute('aria-pressed') === 'true'", true)
         ->assertScript("window.__blueprintSelection === 'editorial-review'", true)
         ->click('#editorial-workflow [data-daisy-kit-blueprint-editor]')
-        ->keys('#editorial-workflow [data-daisy-kit-blueprint-editor]', 'Meta+A')
+        ->keys('#editorial-workflow [data-daisy-kit-blueprint-editor]', 'ControlOrMeta+A')
         ->typeSlowly('#editorial-workflow [data-daisy-kit-blueprint-editor]', 'EditorialApproval', 20)
         ->keys('#editorial-workflow [data-daisy-kit-blueprint-editor]', 'Tab')
         ->assertScript("JSON.parse(document.querySelector('#editorial-workflow [data-daisy-kit-blueprint-value]').value).nodes.find((node) => node.id === 'editorial-review').label", 'EditorialApproval')
