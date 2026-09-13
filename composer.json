@@ -12,8 +12,8 @@
         }
     ],
     "require": {
-        "art35rennes/laravel-daisy-kit": "dev-dev",
         "php": "^8.4",
+        "art35rennes/laravel-daisy-kit": "dev-codex/release-v6",
         "laravel/framework": "^13.17"
     },
     "require-dev": {

@@ -41,13 +41,13 @@ JS;
 @extends('layouts.docs', ['title' => 'Table — Laravel Daisy Kit'])
 
 @section('content')
-    <article class="max-w-5xl"><p class="text-sm font-medium uppercase tracking-widest text-primary">Module</p><h1 class="mt-3 text-4xl font-bold tracking-tight">Table</h1><p class="mt-5 max-w-3xl text-lg leading-8 text-base-content/75">The package owns table state and interactions; the demo only supplies deterministic rows and a read-only server endpoint.</p>
+    <article class="max-w-5xl"><p class="text-sm font-medium uppercase tracking-widest text-base-content/70">Module</p><h1 class="mt-3 text-4xl font-bold tracking-tight">Table</h1><p class="mt-5 max-w-3xl text-lg leading-8 text-base-content/75">The package owns table state and interactions; the demo only supplies deterministic rows and a read-only server endpoint.</p>
         <section class="mt-10 space-y-6" aria-labelledby="table-examples-heading"><h2 id="table-examples-heading" class="text-2xl font-semibold">Interactive examples</h2>
             <section id="contributor-directory" class="rounded-box border border-base-300 bg-base-100 p-5">
                 <h3 class="font-semibold">Contributor directory</h3>
                 <p class="mt-2 mb-4 text-sm text-base-content/70">60 client rows with a cumulative filter for every column. Change the page size, select rows across pages and open row details. The selection counter appears after your first selection and remains visible after clearing it. Filters and pagination are kept in this page's URL.</p>
                 <x-daisy-kit::table :columns="$directoryColumns" :rows="$fixture['rows']" :page-size="5" :page-size-options="$pageSizes" :selection="$selection" :bulk-actions="[['id' => 'archive', 'label' => 'Archive selected']]" :row-actions="[['id' => 'open', 'label' => 'Open']]" :row-details="true" :editable="true" persist-state="url" state-key="contributor-directory" caption="Contributors — client-side" />
-                <p class="mt-3 text-xs text-base-content/60">Open and Archive selected emit package events for a host application to handle. This read-only demo does not persist or archive records.</p>
+                <p class="mt-3 text-xs text-base-content/70">Open and Archive selected emit package events for a host application to handle. This read-only demo does not persist or archive records.</p>
             </section>
             <section id="filtered-server-result" class="rounded-box border border-base-300 bg-base-100 p-5">
                 <h3 class="font-semibold">Filtered server result</h3>

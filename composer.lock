@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8afcccf1af672c47daddb864bf725410",
+    "content-hash": "d28bf187d5245a4fb56a9576ad31620d",
     "packages": [
         {
             "name": "art35rennes/laravel-daisy-kit",
-            "version": "dev-dev",
+            "version": "dev-codex/release-v6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/art35rennes/laravel-daisy-kit.git",
-                "reference": "f29e248fa48a8f62a8812968c554f459241f308c"
+                "reference": "0a90b5c4835a09d0808e3a1384bb7433254ef0f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/art35rennes/laravel-daisy-kit/zipball/f29e248fa48a8f62a8812968c554f459241f308c",
-                "reference": "f29e248fa48a8f62a8812968c554f459241f308c",
+                "url": "https://api.github.com/repos/art35rennes/laravel-daisy-kit/zipball/0a90b5c4835a09d0808e3a1384bb7433254ef0f7",
+                "reference": "0a90b5c4835a09d0808e3a1384bb7433254ef0f7",
                 "shasum": ""
             },
             "require": {
@@ -77,6 +77,7 @@
                     "vendor/bin/pest --ci --no-tia --exclude-group=browser --type-coverage --min=100"
                 ],
                 "test:unit": [
+                    "npm run build:browser-assets",
                     "vendor/bin/pest --ci --no-tia --parallel --exclude-group=browser"
                 ],
                 "test:browser": [
@@ -128,7 +129,7 @@
                 "issues": "https://github.com/art35rennes/laravel-daisy-kit/issues",
                 "source": "https://github.com/art35rennes/laravel-daisy-kit"
             },
-            "time": "2026-09-02T09:56:56+00:00"
+            "time": "2026-09-13T11:53:26+00:00"
         },
         {
             "name": "brick/math",

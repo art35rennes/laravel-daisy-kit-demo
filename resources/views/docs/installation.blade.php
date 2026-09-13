@@ -36,7 +36,7 @@ JS;
 
 @section('content')
     <article class="max-w-3xl">
-        <p class="text-sm font-medium uppercase tracking-widest text-primary">Getting started</p>
+        <p class="text-sm font-medium uppercase tracking-widest text-base-content/70">Getting started</p>
         <h1 class="mt-3 text-4xl font-bold tracking-tight">Installation</h1>
         <p class="mt-5 leading-7 text-base-content/75">Laravel Daisy Kit is installed from GitHub as a Composer VCS package. This demo installs <code>{{ \Composer\InstalledVersions::getPrettyVersion('art35rennes/laravel-daisy-kit') }}</code> at <code>{{ \Composer\InstalledVersions::getReference('art35rennes/laravel-daisy-kit') }}</code>. Use composer.lock for reproducible installs. It is not published on Packagist or npm.</p>
         <section class="mt-10" aria-labelledby="composer-heading"><h2 id="composer-heading" class="text-2xl font-semibold">1. Require the verified package from VCS</h2><pre class="code-sample mt-4 overflow-x-auto" tabindex="0" aria-label="Composer VCS package configuration"><code>{{ $composer }}</code></pre><p class="mt-3 leading-7 text-base-content/75">Commit composer.lock to preserve the verified VCS reference. v6 removes Forms Viewer/Builder and the package Livewire integration from v5.0.0. Applications own their forms; no compatibility layer is provided.</p></section>

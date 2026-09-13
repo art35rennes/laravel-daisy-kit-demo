@@ -15,12 +15,15 @@ dataset('responsive-module-pages', [
 ]);
 
 it('mounts every published module accessibly at every supported viewport', function (string $uri, string $module, int $width, int $height, int $scenarioCount, string $theme): void {
-    visit($uri)
+    $page = visit($uri)
         ->resize($width, $height)
         ->waitForEvent('networkidle')
         ->wait(1)
-        ->select('[data-theme-select]', $theme)
-        ->assertScript("document.querySelector('[data-daisy-kit-module={$module}]').dataset.daisyKitState === 'ready'", true)
+        ->select('[data-theme-select]', $theme);
+
+    $page->script('Promise.all(document.getAnimations().filter((animation) => animation.effect.getTiming().iterations !== Infinity).map((animation) => animation.finished.then(() => true, () => false)))');
+
+    $page->assertScript("document.querySelector('[data-daisy-kit-module={$module}]').dataset.daisyKitState === 'ready'", true)
         ->assertScript('document.documentElement.scrollWidth <= window.innerWidth', true)
         ->assertCount('main article section[id]:not([data-daisy-kit-module])', $scenarioCount)
         ->assertNoAccessibilityIssues(1)

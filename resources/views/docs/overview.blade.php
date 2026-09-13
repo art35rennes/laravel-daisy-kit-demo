@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="max-w-3xl">
-        <p class="mb-3 text-sm font-medium uppercase tracking-widest text-primary">Laravel Daisy Kit v6</p>
+        <p class="mb-3 text-sm font-medium uppercase tracking-widest text-base-content/70">Laravel Daisy Kit v6</p>
         <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Focused modules for Laravel interfaces.</h1>
         <p class="mt-5 text-lg leading-8 text-base-content/75">This demo documents eleven independent package modules. DaisyUI and Tailwind CSS remain regular host-application dependencies, so standard interface elements stay familiar and portable.</p>
         <div class="mt-8 flex flex-wrap gap-3"><a class="btn btn-primary" href="{{ route('docs.installation') }}">Read installation</a><a class="btn btn-ghost" href="https://daisyui.com/components/" target="_blank" rel="noopener noreferrer">Browse DaisyUI components <span aria-hidden="true">↗</span></a></div>

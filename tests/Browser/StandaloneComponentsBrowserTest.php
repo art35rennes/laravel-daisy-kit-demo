@@ -28,7 +28,7 @@ it('shows and automatically hides successful Copyable feedback', function (): vo
         JS);
 
     $page
-        ->click('#copyable-example-1 [data-daisy-kit-copyable-button]')
+        ->keys('#copyable-example-1 [data-daisy-kit-copyable-button]', 'Enter')
         ->assertScript("(() => { const status = document.querySelector('#copyable-example-1 [data-daisy-kit-status]'); return !status.hidden && status.textContent === 'Invoice reference copied.' && status.classList.contains('badge-success'); })()")
         ->assertScript("document.querySelector('#copyable-example-1 [data-daisy-kit-status]').hidden")
         ->assertNoSmoke();
@@ -60,7 +60,7 @@ it('transfers and reorders assigned reviewers without dragging', function (): vo
 
 it('reveals selectable overflow text but keeps short text compact', function (): void {
     visit('/truncate')->waitForEvent('networkidle')
-        ->click('Read full release notes')
+        ->click('#truncate-example-1 [data-daisy-kit-truncate-reveal]')
         ->assertScript("document.querySelector('#truncate-example-1 [popover]').matches(':popover-open')")
         ->assertSee('without introducing a form engine')
         ->assertScript("document.querySelector('#truncate-example-2 [data-daisy-kit-truncate-reveal]').hidden")
@@ -70,7 +70,7 @@ it('reveals selectable overflow text but keeps short text compact', function ():
 it('follows document headings through the native navigation', function (): void {
     visit('/scrollspy')->waitForEvent('networkidle')
         ->assertScript("document.querySelector('[data-daisy-kit-module=scrollspy] [aria-current=location]').hash === '#guide-overview'")
-        ->click('[data-daisy-kit-module=scrollspy] a[href="#guide-publish"]')
+        ->keys('[data-daisy-kit-module=scrollspy] a[href="#guide-publish"]', 'Enter')
         ->assertScript("document.querySelector('[data-daisy-kit-module=scrollspy] [aria-current=location]').hash === '#guide-publish'")
         ->assertScript("document.querySelector('#release-guide').scrollTop > 0")
         ->assertNoSmoke();

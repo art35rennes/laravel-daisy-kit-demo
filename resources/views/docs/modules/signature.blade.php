@@ -1,7 +1,7 @@
 @php
     $blade = <<<'BLADE'
 <form>
-    <x-daisy-kit::signature name="approval_signature" label="Approval signature" :required="true" />
+    <x-daisy-kit::signature background-color="white" name="approval_signature" label="Approval signature" :required="true" />
 </form>
 BLADE;
     $imports = <<<'JS'
@@ -20,22 +20,22 @@ JS;
 
 @section('content')
     <article class="max-w-5xl">
-        <p class="text-sm font-medium uppercase tracking-widest text-primary">Module</p>
+        <p class="text-sm font-medium uppercase tracking-widest text-base-content/70">Module</p>
         <h1 class="mt-3 text-4xl font-bold tracking-tight">Signature</h1>
-        <p class="mt-5 max-w-3xl text-lg leading-8 text-base-content/75">Capture an approval signature with undo, redo and PNG export.</p>
+        <p class="mt-5 max-w-3xl text-lg leading-8 text-base-content/75">Capture an approval signature with undo, redo and PNG export. A white canvas keeps black ink readable in every theme.</p>
         <section class="mt-10 space-y-6" aria-labelledby="signature-examples-heading">
             <h2 id="signature-examples-heading" class="text-2xl font-semibold">Interactive examples</h2>
             <section id="signature-example-1" class="min-w-0 rounded-box border border-base-300 bg-base-100 p-5">
                 <h3 class="font-semibold">Approval signature</h3>
                 <p class="mb-5 mt-2 text-sm text-base-content/70">Draw with a mouse, touch or stylus. Undo, redo, clear and download are available through the component.</p>
                 <form>
-                    <x-daisy-kit::signature name="approval_signature" label="Approval signature" :required="true" />
+                    <x-daisy-kit::signature background-color="white" name="approval_signature" label="Approval signature" :required="true" />
                 </form>
             </section>
             <section id="signature-example-2" class="min-w-0 rounded-box border border-base-300 bg-base-100 p-5">
                 <h3 class="font-semibold">Read-only workflow</h3>
                 <p class="mb-5 mt-2 text-sm text-base-content/70">Disable capture when approval is not currently available.</p>
-                <x-daisy-kit::signature name="locked_signature" label="Signature unavailable" :disabled="true" />
+                <x-daisy-kit::signature background-color="white" name="locked_signature" label="Signature unavailable" :disabled="true" />
             </section>
         </section>
         <section class="mt-10" aria-labelledby="signature-usage-heading">

@@ -21,7 +21,7 @@ JS;
 
 @section('content')
     <article class="max-w-5xl">
-        <p class="text-sm font-medium uppercase tracking-widest text-primary">Module</p>
+        <p class="text-sm font-medium uppercase tracking-widest text-base-content/70">Module</p>
         <h1 class="mt-3 text-4xl font-bold tracking-tight">Transfer List</h1>
         <p class="mt-5 max-w-3xl text-lg leading-8 text-base-content/75">Choose and order an assignment list with keyboard or drag and drop.</p>
         <section class="mt-10 space-y-6" aria-labelledby="transfer-list-examples-heading">

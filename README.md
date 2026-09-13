@@ -14,7 +14,7 @@ events and Laravel submission shapes. Signature and Transfer List alone permit
 
 - PHP 8.4.1+
 - Composer 2
-- Node.js LTS and npm
+- Node.js 24 and npm
 
 The application has no authentication, database migrations, or persistent data.
 All examples use deterministic local fixtures.
