@@ -3,9 +3,10 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Executable documentation for Laravel Daisy Kit v5.">
+        <meta name="description" content="Executable documentation for Laravel Daisy Kit v6.">
         <title>{{ $title ?? 'Laravel Daisy Kit' }}</title>
         @vite([...['resources/css/app.css', 'resources/js/app.js'], ...($moduleAssets ?? [])])
+
     </head>
     <body class="min-h-screen bg-base-100 text-base-content">
         <a class="skip-link" href="#main-content">Skip to content</a>
@@ -16,7 +17,7 @@
                     <div class="navbar-start gap-2">
                         <label for="documentation-drawer" class="btn btn-square btn-ghost lg:hidden" aria-label="Open documentation navigation">☰</label>
                         <a class="font-semibold tracking-tight" href="{{ route('docs.overview') }}">Laravel Daisy Kit</a>
-                        <span class="badge badge-outline badge-sm">v5 preview</span>
+                        <span class="badge badge-outline badge-sm">v6</span>
                     </div>
                     <div class="navbar-end gap-2">
                         <label class="input input-sm hidden w-56 md:flex" aria-label="Filter documentation navigation"><input data-doc-search="desktop" type="search" placeholder="Filter modules"></label>
@@ -28,7 +29,7 @@
             <aside class="drawer-side z-30">
                 <label for="documentation-drawer" aria-label="Close documentation navigation" class="drawer-overlay"></label>
                 <nav aria-label="Documentation" class="min-h-full w-72 border-r border-base-300 bg-base-200 p-4">
-                    <a class="mb-6 flex items-center gap-2 px-3 py-2 font-semibold lg:hidden" href="{{ route('docs.overview') }}">Laravel Daisy Kit <span class="badge badge-outline badge-sm">v5</span></a>
+                    <a class="mb-6 flex items-center gap-2 px-3 py-2 font-semibold lg:hidden" href="{{ route('docs.overview') }}">Laravel Daisy Kit <span class="badge badge-outline badge-sm">v6</span></a>
                     <label class="input mb-4 flex md:hidden" aria-label="Filter documentation navigation"><input data-doc-search="mobile" type="search" placeholder="Filter modules"></label>
                     <ul class="menu menu-sm gap-1" data-doc-navigation>
                         <li><a href="{{ route('docs.overview') }}" @class(['menu-active' => request()->routeIs('docs.overview')])>Overview</a></li>
@@ -42,5 +43,6 @@
                 </nav>
             </aside>
         </div>
+
     </body>
 </html>

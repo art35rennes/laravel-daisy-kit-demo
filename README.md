@@ -1,15 +1,20 @@
-# Laravel Daisy Kit Demo v5
+# Laravel Daisy Kit Demo v6
 
-Executable English documentation for the six Laravel Daisy Kit v5 modules. It
-declares the Git VCS package `art35rennes/laravel-daisy-kit` at the public
-stable constraint `^5.0`; the committed lock resolves `v5.0.0`
-(`6d7f28ffc17cc2e91cd5be3e4598986da7ac75d4`).
+Executable English documentation for eleven independent Laravel Daisy Kit v6 modules:
+Table, Tree, Blueprint, File Preview, Map, Copyable, Combobox, Signature, Truncate,
+Scrollspy, and Transfer List. The package is installed from Git VCS at
+`v6.0.1`; `composer.lock` records the exact reference, also shown on Installation.
+Forms Viewer/Builder and Livewire are removed without compatibility aliases.
+
+The six small-component pages include working examples, explicit imports, facade methods,
+events and Laravel submission shapes. Signature and Transfer List alone permit
+`style-src-attr 'unsafe-inline'`; the other pages retain the strict policy.
 
 ## Requirements
 
 - PHP 8.4.1+
 - Composer 2
-- Node.js LTS and npm
+- Node.js 24 and npm
 
 The application has no authentication, database migrations, or persistent data.
 All examples use deterministic local fixtures.
@@ -17,6 +22,7 @@ All examples use deterministic local fixtures.
 ## Setup
 
 ```sh
+cp .env.example .env
 composer install
 npm ci
 npx playwright install chromium
@@ -24,8 +30,8 @@ php artisan key:generate
 npm run build
 ```
 
-The Composer lock resolves the package directly from GitHub. In `vite.config.js`,
-the official `@daisy-kit` alias resolves to
+Composer locks the stable release directly from that GitHub VCS source. In `vite.config.js`, the official `@daisy-kit`
+alias resolves to
 `vendor/art35rennes/laravel-daisy-kit/dist`; import only the required
 `@daisy-kit/{stem}.js` and `.css` entries. This demo has no local package copy,
 stub, or compatibility layer.
@@ -51,6 +57,21 @@ subsequent runs replay unaffected results from ignored `.pest/tia`. The release
 command always executes the complete suite without TIA, so browser, responsive,
 accessibility, and module coverage cannot be masked.
 
+## Dependency checkpoint
+
+The locks were renewed on 27 August 2026 after the functional browser baseline.
+`composer outdated --direct` and `npm outdated` reported no newer stable direct
+dependency, including a newer major, and both security audits were empty.
+
+| Area | Locked direct versions | Official release notes |
+| --- | --- | --- |
+| Application | Laravel 13.29.0 | [Laravel](https://github.com/laravel/framework/releases) |
+| PHP quality | Boost 2.7.0; Pint 1.30.5; Pest 5.1.3; Pest Browser 5.0.1 | [Boost](https://github.com/laravel/boost/releases), [Pint](https://github.com/laravel/pint/releases), [Pest](https://github.com/pestphp/pest/releases), [Pest Browser](https://github.com/pestphp/pest-plugin-browser/releases) |
+| Frontend | Tailwind CSS and its Vite plugin 4.3.3; DaisyUI 5.7.22; Vite 8.2.2; Laravel Vite plugin 3.2.0; Playwright 1.62.1 | [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss/releases), [DaisyUI](https://github.com/saadeghi/daisyui/releases), [Vite](https://github.com/vitejs/vite/releases), [Laravel Vite plugin](https://github.com/laravel/vite-plugin/releases), [Playwright](https://github.com/microsoft/playwright/releases) |
+
+The Composer and npm manifests retain compatible major ranges while the lock
+files preserve this verified application snapshot.
+
 ## AI guidance
 
 Laravel Boost 2 is installed as a development dependency. Keep project-specific
@@ -62,7 +83,7 @@ skill is genuinely needed); Boost synchronizes generated skills to
 php artisan boost:update --discover
 ```
 
-The package’s v5.0.0 Boost guidance and `laravel-daisy-kit-development` skill are
+The package’s v6 Boost guidance and `laravel-daisy-kit-development` skill are
 included through Boost after a static SkillSpector review (SAFE; no LLM analysis).
 The local MCP settings for Codex and Cursor remain ignored because their working
 directory is machine-specific.

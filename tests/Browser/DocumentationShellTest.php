@@ -1,21 +1,34 @@
 <?php
 
 dataset('responsive-module-pages', [
-    ['/forms', 'forms-viewer', 320, 800],
-    ['/table', 'table', 768, 900],
-    ['/tree', 'tree', 1024, 900],
-    ['/blueprint', 'blueprint', 1440, 960],
+    ...array_map(static fn (int $width): array => ['/copyable', 'copyable', $width, 900, 2], [320, 768, 1024, 1440]),
+    ...array_map(static fn (int $width): array => ['/combobox', 'combobox', $width, 900, 2], [320, 768, 1024, 1440]),
+    ...array_map(static fn (int $width): array => ['/signature', 'signature', $width, 900, 2], [320, 768, 1024, 1440]),
+    ...array_map(static fn (int $width): array => ['/truncate', 'truncate', $width, 900, 2], [320, 768, 1024, 1440]),
+    ...array_map(static fn (int $width): array => ['/scrollspy', 'scrollspy', $width, 900, 1], [320, 768, 1024, 1440]),
+    ...array_map(static fn (int $width): array => ['/transfer-list', 'transfer-list', $width, 900, 2], [320, 768, 1024, 1440]),
+    ...array_map(static fn (int $width): array => ['/table', 'table', $width, 900, 5], [320, 768, 1024, 1440]),
+    ...array_map(static fn (int $width): array => ['/tree', 'tree', $width, 900, 3], [320, 768, 1024, 1440]),
+    ...array_map(static fn (int $width): array => ['/blueprint', 'blueprint', $width, 900, 3], [320, 768, 1024, 1440]),
+    ...array_map(static fn (int $width): array => ['/file-preview', 'file-preview', $width, 900, 4], [320, 390, 768, 1024, 1440]),
+    ...array_map(static fn (int $width): array => ['/map', 'map', $width, 900, 4], [320, 390, 768, 1024, 1440]),
 ]);
 
-it('mounts the published module accessibly at its representative viewport', function (string $uri, string $module, int $width, int $height): void {
-    visit($uri)
+it('mounts every published module accessibly at every supported viewport', function (string $uri, string $module, int $width, int $height, int $scenarioCount, string $theme): void {
+    $page = visit($uri)
         ->resize($width, $height)
         ->waitForEvent('networkidle')
         ->wait(1)
-        ->assertScript("document.querySelector('[data-daisy-kit-module={$module}]').dataset.daisyKitState === 'ready'", true)
+        ->select('[data-theme-select]', $theme);
+
+    $page->script('Promise.all(document.getAnimations().filter((animation) => animation.effect.getTiming().iterations !== Infinity).map((animation) => animation.finished.then(() => true, () => false)))');
+
+    $page->assertScript("document.querySelector('[data-daisy-kit-module={$module}]').dataset.daisyKitState === 'ready'", true)
+        ->assertScript('document.documentElement.scrollWidth <= window.innerWidth', true)
+        ->assertCount('main article section[id]:not([data-daisy-kit-module])', $scenarioCount)
         ->assertNoAccessibilityIssues(1)
         ->assertNoSmoke();
-})->with('responsive-module-pages')->group('browser');
+})->with('responsive-module-pages')->with(['light', 'dark', 'cupcake'])->group('browser');
 
 it('filters the native documentation navigation with keyboard input', function (): void {
     visit('/')

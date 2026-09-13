@@ -6,13 +6,31 @@ it('renders the published file preview with a local deterministic source', funct
         ->assertSee('data-daisy-kit-module="file-preview"', false)
         ->assertSee('sandbox="allow-scripts"', false)
         ->assertSee('quarterly-report.txt')
+        ->assertSee('preview.wav')
+        ->assertSee('preview-walkthrough.mp4')
+        ->assertSee('data-file-preview-open-external="customer-handoff"', false)
+        ->assertDontSee('src="/fixtures/file-preview/quarterly-report.txt"', false)
         ->assertSee('@daisy-kit/file-preview.js');
 });
 
-it('renders the published map contract with deterministic GeoJSON', function (): void {
+it('renders the complete published map contract with deterministic sources', function (): void {
     $this->get('/map')
         ->assertOk()
         ->assertSee('data-daisy-kit-module="map"', false)
+        ->assertSeeInOrder([
+            'Markers, popups and clustering',
+            'OSM styles and business layers',
+            'Drawing, measurement and form export',
+            'Persistence, errors and external controls',
+        ])
+        ->assertSee('data-daisy-kit-map-menu="geometry"', false)
+        ->assertSee('data-daisy-kit-map-action="focus-depot"', false)
+        ->assertSee('data-daisy-kit-map-slot="filters"', false)
+        ->assertSee('MapControls')
+        ->assertSee('name="maintenance_geometry"', false)
+        ->assertSee('"type":"wms"', false)
+        ->assertSee('"type":"xyz"', false)
+        ->assertSee('"type":"geojson"', false)
         ->assertSee('data-daisy-kit-map-canvas', false)
         ->assertSee('48.1173')
         ->assertSee('@daisy-kit/map.js');

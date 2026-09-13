@@ -1,0 +1,77 @@
+<?php
+
+it('announces a refused clipboard request accessibly', function (): void {
+    $page = visit('/copyable')->waitForEvent('networkidle');
+    $page->script(<<<'JS'
+        Object.defineProperty(navigator, 'clipboard', { configurable: true, value: {
+            writeText: async () => { throw new DOMException('Denied', 'NotAllowedError'); },
+        } });
+        document.querySelector('#copyable-example-1').addEventListener('daisy-kit:copyable:error', (event) => {
+            const status = event.currentTarget.querySelector('[role=status]');
+            window.copyFailure = { code: event.detail.code, message: status.textContent, announced: !status.hidden };
+        });
+        JS);
+
+    $page
+        ->assertCount('#copyable-example-1 [data-daisy-kit-copyable-icon]', 1)
+        ->click('#copyable-example-1 [data-daisy-kit-copyable-button]')
+        ->assertScript("window.copyFailure.code === 'clipboard-rejected' && window.copyFailure.announced && window.copyFailure.message === 'Copying failed.' && document.querySelector('#copyable-example-1 [data-daisy-kit-status]').classList.contains('badge-error')")
+        ->assertNoSmoke();
+})->group('browser');
+
+it('shows and automatically hides successful Copyable feedback', function (): void {
+    $page = visit('/copyable')->waitForEvent('networkidle');
+    $page->script(<<<'JS'
+        Object.defineProperty(navigator, 'clipboard', { configurable: true, value: {
+            writeText: async () => undefined,
+        } });
+        JS);
+
+    $page
+        ->keys('#copyable-example-1 [data-daisy-kit-copyable-button]', 'Enter')
+        ->assertScript("(() => { const status = document.querySelector('#copyable-example-1 [data-daisy-kit-status]'); return !status.hidden && status.textContent === 'Invoice reference copied.' && status.classList.contains('badge-success'); })()")
+        ->assertScript("document.querySelector('#copyable-example-1 [data-daisy-kit-status]').hidden")
+        ->assertNoSmoke();
+})->group('browser');
+
+it('discovers rich reviewer suggestions and submits ordered Laravel values', function (): void {
+    visit('/combobox')->waitForEvent('networkidle')
+        ->click('#combobox-example-1 [role=combobox]')
+        ->assertCount('#combobox-example-1 [role=option]', 3)
+        ->assertSee('grace.hopper@example.test')
+        ->assertSee('Infrastructure')
+        ->fill('#combobox-example-1 [role=combobox]', 'Grace')
+        ->keys('#combobox-example-1 [role=combobox]', ['ArrowDown', 'Enter'])
+        ->assertScript("JSON.stringify(new FormData(document.querySelector('#combobox-example-1 form')).getAll('reviewers[]')) === JSON.stringify(['ada', 'grace'])")
+        ->keys('#combobox-example-1 [role=combobox]', 'Escape')
+        ->click('#combobox-example-1 button[type=submit]')
+        ->assertScript("JSON.stringify(new URL(location.href).searchParams.getAll('reviewers[]')) === JSON.stringify(['ada', 'grace'])")
+        ->assertNoSmoke();
+})->group('browser');
+
+it('transfers and reorders assigned reviewers without dragging', function (): void {
+    visit('/transfer-list')->waitForEvent('networkidle')
+        ->keys('#transfer-list-example-1 [data-daisy-kit-transfer-source] [data-value=ada]', ['ArrowRight'])
+        ->keys('#transfer-list-example-1 [data-daisy-kit-transfer-target] [data-value=ada]', 'Alt+ArrowUp')
+        ->assertScript("JSON.stringify(new FormData(document.querySelector('#transfer-list-example-1 form')).getAll('reviewers[]')) === JSON.stringify(['ada', 'grace'])")
+        ->assertScript("document.activeElement.dataset.value === 'ada'")
+        ->assertNoSmoke();
+})->group('browser');
+
+it('reveals selectable overflow text but keeps short text compact', function (): void {
+    visit('/truncate')->waitForEvent('networkidle')
+        ->click('#truncate-example-1 [data-daisy-kit-truncate-reveal]')
+        ->assertScript("document.querySelector('#truncate-example-1 [popover]').matches(':popover-open')")
+        ->assertSee('without introducing a form engine')
+        ->assertScript("document.querySelector('#truncate-example-2 [data-daisy-kit-truncate-reveal]').hidden")
+        ->assertNoSmoke();
+})->group('browser');
+
+it('follows document headings through the native navigation', function (): void {
+    visit('/scrollspy')->waitForEvent('networkidle')
+        ->assertScript("document.querySelector('[data-daisy-kit-module=scrollspy] [aria-current=location]').hash === '#guide-overview'")
+        ->keys('[data-daisy-kit-module=scrollspy] a[href="#guide-publish"]', 'Enter')
+        ->assertScript("document.querySelector('[data-daisy-kit-module=scrollspy] [aria-current=location]').hash === '#guide-publish'")
+        ->assertScript("document.querySelector('#release-guide').scrollTop > 0")
+        ->assertNoSmoke();
+})->group('browser');

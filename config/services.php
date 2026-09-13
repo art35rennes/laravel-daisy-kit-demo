@@ -22,6 +22,10 @@ return [
         'key' => env('RESEND_API_KEY'),
     ],
 
+    'openstreetmap' => [
+        'tiles_enabled' => env('OPENSTREETMAP_TILES_ENABLED', true),
+    ],
+
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),

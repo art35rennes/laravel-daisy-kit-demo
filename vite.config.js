@@ -1,4 +1,4 @@
-import path from 'node:path';
+import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
@@ -13,13 +13,17 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
-                'resources/js/daisy-kit/forms-viewer.js',
-                'resources/js/daisy-kit/forms-builder.js',
                 'resources/js/daisy-kit/table.js',
                 'resources/js/daisy-kit/tree.js',
                 'resources/js/daisy-kit/blueprint.js',
                 'resources/js/daisy-kit/file-preview.js',
                 'resources/js/daisy-kit/map.js',
+                'resources/js/daisy-kit/copyable.js',
+                'resources/js/daisy-kit/combobox.js',
+                'resources/js/daisy-kit/signature.js',
+                'resources/js/daisy-kit/truncate.js',
+                'resources/js/daisy-kit/scrollspy.js',
+                'resources/js/daisy-kit/transfer-list.js',
             ],
             refresh: true,
             fonts: [
@@ -32,7 +36,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@daisy-kit': path.resolve(projectRoot, 'vendor/art35rennes/laravel-daisy-kit/dist'),
+            '@daisy-kit': resolve(projectRoot, 'vendor/art35rennes/laravel-daisy-kit/dist'),
         },
     },
     server: {
