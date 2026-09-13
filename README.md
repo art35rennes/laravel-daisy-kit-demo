@@ -1,9 +1,9 @@
-# Laravel Daisy Kit Demo v5
+# Laravel Daisy Kit Demo v6
 
-Executable English documentation for eleven independent Laravel Daisy Kit v5 modules:
+Executable English documentation for eleven independent Laravel Daisy Kit v6 modules:
 Table, Tree, Blueprint, File Preview, Map, Copyable, Combobox, Signature, Truncate,
-Scrollspy, and Transfer List. The development package is installed from Git VCS as
-`dev-dev`; `composer.lock` records the exact reference, also shown on Installation.
+Scrollspy, and Transfer List. The package is installed from Git VCS at
+`v6.0.0`; `composer.lock` records the exact reference, also shown on Installation.
 Forms Viewer/Builder and Livewire are removed without compatibility aliases.
 
 The six small-component pages include working examples, explicit imports, facade methods,
@@ -22,6 +22,7 @@ All examples use deterministic local fixtures.
 ## Setup
 
 ```sh
+cp .env.example .env
 composer install
 npm ci
 npx playwright install chromium
@@ -29,7 +30,7 @@ php artisan key:generate
 npm run build
 ```
 
-Composer locks the prerelease directly from that GitHub VCS source. In `vite.config.js`, the official `@daisy-kit`
+Composer locks the stable release directly from that GitHub VCS source. In `vite.config.js`, the official `@daisy-kit`
 alias resolves to
 `vendor/art35rennes/laravel-daisy-kit/dist`; import only the required
 `@daisy-kit/{stem}.js` and `.css` entries. This demo has no local package copy,
@@ -82,7 +83,7 @@ skill is genuinely needed); Boost synchronizes generated skills to
 php artisan boost:update --discover
 ```
 
-The package’s v5 Boost guidance and `laravel-daisy-kit-development` skill are
+The package’s v6 Boost guidance and `laravel-daisy-kit-development` skill are
 included through Boost after a static SkillSpector review (SAFE; no LLM analysis).
 The local MCP settings for Codex and Cursor remain ignored because their working
 directory is machine-specific.

@@ -69,7 +69,9 @@ it('reveals selectable overflow text but keeps short text compact', function ():
 
 it('follows document headings through the native navigation', function (): void {
     visit('/scrollspy')->waitForEvent('networkidle')
-        ->click('[data-daisy-kit-module=scrollspy] a[href="#guide-review"]')
-        ->assertScript("document.querySelector('[data-daisy-kit-module=scrollspy] [aria-current=location]').hash === '#guide-review'")
+        ->assertScript("document.querySelector('[data-daisy-kit-module=scrollspy] [aria-current=location]').hash === '#guide-overview'")
+        ->click('[data-daisy-kit-module=scrollspy] a[href="#guide-publish"]')
+        ->assertScript("document.querySelector('[data-daisy-kit-module=scrollspy] [aria-current=location]').hash === '#guide-publish'")
+        ->assertScript("document.querySelector('#release-guide').scrollTop > 0")
         ->assertNoSmoke();
 })->group('browser');

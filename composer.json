@@ -2,7 +2,7 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "art35rennes/laravel-daisy-kit-demo",
     "type": "project",
-    "description": "Executable documentation for Laravel Daisy Kit v5.",
+    "description": "Executable documentation for Laravel Daisy Kit v6.",
     "keywords": ["laravel", "daisyui", "documentation"],
     "license": "MIT",
     "repositories": [

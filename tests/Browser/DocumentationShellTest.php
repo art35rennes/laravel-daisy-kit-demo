@@ -14,17 +14,18 @@ dataset('responsive-module-pages', [
     ...array_map(static fn (int $width): array => ['/map', 'map', $width, 900, 4], [320, 390, 768, 1024, 1440]),
 ]);
 
-it('mounts every published module accessibly at every supported viewport', function (string $uri, string $module, int $width, int $height, int $scenarioCount): void {
+it('mounts every published module accessibly at every supported viewport', function (string $uri, string $module, int $width, int $height, int $scenarioCount, string $theme): void {
     visit($uri)
         ->resize($width, $height)
         ->waitForEvent('networkidle')
         ->wait(1)
+        ->select('[data-theme-select]', $theme)
         ->assertScript("document.querySelector('[data-daisy-kit-module={$module}]').dataset.daisyKitState === 'ready'", true)
         ->assertScript('document.documentElement.scrollWidth <= window.innerWidth', true)
         ->assertCount('main article section[id]:not([data-daisy-kit-module])', $scenarioCount)
         ->assertNoAccessibilityIssues(1)
         ->assertNoSmoke();
-})->with('responsive-module-pages')->group('browser');
+})->with('responsive-module-pages')->with(['light', 'dark', 'cupcake'])->group('browser');
 
 it('filters the native documentation navigation with keyboard input', function (): void {
     visit('/')

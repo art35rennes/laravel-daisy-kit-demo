@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\DocumentationController;
+use App\Http\Middleware\DocumentationContentSecurityPolicy;
 use Composer\InstalledVersions;
+use Illuminate\Http\Request;
+use Laravel\Boost\Services\BrowserLogger;
 
 dataset('documentation-pages', [
     ['/', 'Laravel Daisy Kit'],
@@ -22,18 +25,41 @@ dataset('documentation-pages', [
 it('serves every documented module page', function (string $uri, string $heading): void {
     $styleAttributes = in_array($uri, ['/signature', '/transfer-list'], true) ? "'unsafe-inline'" : "'none'";
 
-    $this->get($uri)
+    $response = $this->get($uri)
         ->assertOk()
-        ->assertSee($heading)
-        ->assertHeader('Content-Security-Policy', "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self'; style-src 'self'; style-src-attr {$styleAttributes}; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self' blob:; frame-src 'self'; form-action 'self'");
+        ->assertSee($heading);
+
+    preg_match("/script-src 'self' 'nonce-([^']+)'/", $response->headers->get('Content-Security-Policy'), $nonce);
+
+    expect($nonce)->toHaveKey(1);
+
+    $response->assertHeader('Content-Security-Policy', "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self' 'nonce-{$nonce[1]}'; style-src 'self'; style-src-attr {$styleAttributes}; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self' blob:; frame-src 'self'; form-action 'self'");
 })->with('documentation-pages');
 
-it('documents the corrective VCS checkpoint and official Vite alias', function (): void {
+it('authorizes Boost browser logging with the documentation CSP nonce', function (): void {
+    expect(config('boost.browser_logs_watcher'))->toBeTrue();
+
+    $response = app(DocumentationContentSecurityPolicy::class)->handle(
+        Request::create('/'),
+        fn () => response('<html><head>'.BrowserLogger::getScript().'</head></html>')
+            ->header('Content-Type', 'text/html'),
+    );
+
+    preg_match('/<script\b[^>]*\bid="browser-logger-active"[^>]*>/', $response->getContent(), $scriptTag);
+    preg_match('/\bnonce="([^"]+)"/', $scriptTag[0] ?? '', $nonce);
+
+    expect($nonce)->toHaveKey(1)
+        ->and($response->headers->get('Content-Security-Policy'))
+        ->toContain("script-src 'self' 'nonce-{$nonce[1]}'");
+});
+
+it('documents the v6 VCS installation and official Vite alias', function (): void {
     $this->get('/installation')
         ->assertOk()
-        ->assertSee('dev-dev')
+        ->assertSee('^6.0')
+        ->assertSee(InstalledVersions::getPrettyVersion('art35rennes/laravel-daisy-kit'))
         ->assertSee(InstalledVersions::getReference('art35rennes/laravel-daisy-kit'))
-        ->assertSee('Do not use this development page as compatibility guidance for v5.0.0')
+        ->assertSee('v6 removes Forms Viewer/Builder')
         ->assertSee('https://github.com/art35rennes/laravel-daisy-kit')
         ->assertSee('@daisy-kit')
         ->assertSee('copyable');
@@ -58,7 +84,7 @@ it('demonstrates rich Combobox suggestions and its renderer facade', function ()
         ->assertSee('max-suggestions', false);
 });
 
-it('exposes exactly the eleven v5 modules without the retired Forms page', function (): void {
+it('exposes exactly the eleven v6 modules without the retired Forms page', function (): void {
     expect(array_keys(DocumentationController::modules()))->toEqualCanonicalizing([
         'table', 'tree', 'blueprint', 'file-preview', 'map', 'copyable', 'combobox',
         'signature', 'truncate', 'scrollspy', 'transfer-list',

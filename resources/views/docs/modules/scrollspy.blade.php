@@ -1,10 +1,12 @@
 @php
     $blade = <<<'BLADE'
-<x-daisy-kit::scrollspy target="#release-guide" />
-<div id="release-guide" class="mt-6 space-y-10">
-    <section class="min-h-64"><h2 id="guide-overview" class="text-xl font-semibold">Release overview</h2><p class="mt-4">Each component owns its behavior. The Laravel host owns routes, data and DaisyUI styling.</p></section>
-    <section class="min-h-64"><h2 id="guide-review" class="text-xl font-semibold">Review checklist</h2><p class="mt-4">Confirm keyboard access, submitted values and the Content Security Policy before shipping.</p></section>
-    <section class="min-h-64"><h2 id="guide-publish" class="text-xl font-semibold">Publish the release</h2><p class="mt-4">Install the verified Composer reference and compile the explicit module entries with Vite.</p></section>
+<div class="grid gap-6 lg:grid-cols-[14rem_minmax(0,1fr)]">
+    <div class="self-start lg:sticky lg:top-6">
+        <x-daisy-kit::scrollspy target="#release-guide" />
+    </div>
+    <div id="release-guide" class="max-h-96 space-y-10 overflow-y-auto" tabindex="0">
+        <!-- Document sections with h2/h3 identifiers -->
+    </div>
 </div>
 BLADE;
     $imports = <<<'JS'
@@ -31,11 +33,28 @@ JS;
             <section id="scrollspy-example-1" class="min-w-0 rounded-box border border-base-300 bg-base-100 p-5">
                 <h3 class="font-semibold">Document navigation</h3>
                 <p class="mb-5 mt-2 text-sm text-base-content/70">Select a heading or scroll the document; the current destination is announced with aria-current.</p>
-                <x-daisy-kit::scrollspy target="#release-guide" />
-                <div id="release-guide" class="mt-6 space-y-10">
-                    <section class="min-h-64"><h2 id="guide-overview" class="text-xl font-semibold">Release overview</h2><p class="mt-4">Each component owns its behavior. The Laravel host owns routes, data and DaisyUI styling.</p></section>
-                    <section class="min-h-64"><h2 id="guide-review" class="text-xl font-semibold">Review checklist</h2><p class="mt-4">Confirm keyboard access, submitted values and the Content Security Policy before shipping.</p></section>
-                    <section class="min-h-64"><h2 id="guide-publish" class="text-xl font-semibold">Publish the release</h2><p class="mt-4">Install the verified Composer reference and compile the explicit module entries with Vite.</p></section>
+                <div class="grid gap-6 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-8">
+                    <div class="self-start rounded-box bg-base-200 p-3 lg:sticky lg:top-6">
+                        <x-daisy-kit::scrollspy target="#release-guide" />
+                    </div>
+                    <div id="release-guide" class="max-h-96 min-w-0 space-y-10 overflow-y-auto scroll-smooth pr-3" tabindex="0" aria-label="Release guide">
+                        <section class="min-h-64 border-b border-base-300 pb-8">
+                            <h2 id="guide-overview" class="text-xl font-semibold">Release overview</h2>
+                            <p class="mt-4 leading-7">This release separates eleven focused components. Each one owns its browser behavior while the Laravel application continues to own routes, data and DaisyUI styling.</p>
+                            <p class="mt-4 leading-7 text-base-content/75">Start by identifying the smallest component that covers the user outcome, then import only its JavaScript and CSS entries.</p>
+                        </section>
+                        <section class="min-h-64 border-b border-base-300 pb-8">
+                            <h2 id="guide-review" class="text-xl font-semibold">Review checklist</h2>
+                            <p class="mt-4 leading-7">Exercise the control with a keyboard, verify the native Laravel value and inspect its accessible name and state before shipping.</p>
+                            <h3 id="guide-review-csp" class="mt-6 text-base font-semibold">Content Security Policy</h3>
+                            <p class="mt-2 leading-7 text-base-content/75">Keep the strict policy for this module and confirm that the browser reports no inline script or style violations.</p>
+                        </section>
+                        <section class="min-h-64 pb-8">
+                            <h2 id="guide-publish" class="text-xl font-semibold">Publish the release</h2>
+                            <p class="mt-4 leading-7">Install the verified Composer reference, compile the explicit module entries with Vite and deploy the generated application assets.</p>
+                            <p class="mt-4 leading-7 text-base-content/75">The active link follows this scrollable document and remains visible in the adjacent navigation.</p>
+                        </section>
+                    </div>
                 </div>
             </section>
         </section>
