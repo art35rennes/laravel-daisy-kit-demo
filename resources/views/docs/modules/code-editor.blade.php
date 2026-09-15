@@ -94,7 +94,7 @@ JS;
         <section class="mt-10 space-y-6" aria-label="Interactive examples">
             <section class="min-w-0 rounded-box border border-base-300 bg-base-100 p-5">
                 <h2 class="text-xl font-semibold">Edit application configuration</h2>
-                <p class="my-3 text-sm text-base-content/70">Explore nested objects and arrays. Place the cursor inside a project, then fold the other blocks to keep that project in view. Expand and Collapse switch the editor between its in-page sizes. Suggest and Ctrl+Space open completions, including keys already present in the document.</p>
+                <p class="my-3 text-sm text-base-content/70">Explore nested objects and arrays. Place the cursor inside a project, then fold the other blocks to keep that project in view. Expand and Collapse switch the editor between its in-page sizes. Suggest and Ctrl+Space open completions, including keys already present in the document. When you press Enter between existing JSON properties or array items, the editor can insert a missing comma; it does not guess unfinished values.</p>
                 <form>
                     <x-daisy-kit::code-editor name="configuration" label="Application configuration" filename="settings.json" language="json" :value="$configuration" :required="true" :nonce="Vite::cspNonce()" />
                     <button class="btn btn-sm mt-4" type="reset">Reset configuration</button>
