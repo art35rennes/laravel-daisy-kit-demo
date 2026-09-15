@@ -16,6 +16,7 @@ dataset('documentation-pages', [
     ['/scrollspy', 'Scrollspy'],
     ['/transfer-list', 'Transfer List'],
     ['/code-editor', 'Code Editor'],
+    ['/wysiwyg', 'WYSIWYG'],
     ['/table', 'Table'],
     ['/tree', 'Tree'],
     ['/blueprint', 'Blueprint'],
@@ -24,7 +25,7 @@ dataset('documentation-pages', [
 ]);
 
 it('serves every documented module page', function (string $uri, string $heading): void {
-    $styleAttributes = in_array($uri, ['/signature', '/transfer-list'], true) ? "'unsafe-inline'" : "'none'";
+    $styleAttributes = in_array($uri, ['/signature', '/transfer-list', '/wysiwyg'], true) ? "'unsafe-inline'" : "'none'";
 
     $response = $this->get($uri)
         ->assertOk()
@@ -34,7 +35,7 @@ it('serves every documented module page', function (string $uri, string $heading
 
     expect($nonce)->toHaveKey(1);
 
-    $styleSources = $uri === '/code-editor' ? "'self' 'nonce-{$nonce[1]}'" : "'self'";
+    $styleSources = in_array($uri, ['/code-editor', '/wysiwyg'], true) ? "'self' 'nonce-{$nonce[1]}'" : "'self'";
 
     $response->assertHeader('Content-Security-Policy', "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self' 'nonce-{$nonce[1]}'; style-src {$styleSources}; style-src-attr {$styleAttributes}; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self' blob:; frame-src 'self'; form-action 'self'");
 })->with('documentation-pages');
@@ -87,11 +88,23 @@ it('demonstrates rich Combobox suggestions and its renderer facade', function ()
         ->assertSee('max-suggestions', false);
 });
 
-it('exposes exactly the twelve v6 modules without the retired Forms page', function (): void {
+it('exposes exactly the thirteen v6 modules without the retired Forms page', function (): void {
     expect(array_keys(DocumentationController::modules()))->toEqualCanonicalizing([
-        'code-editor', 'table', 'tree', 'blueprint', 'file-preview', 'map', 'copyable', 'combobox',
+        'wysiwyg', 'code-editor', 'table', 'tree', 'blueprint', 'file-preview', 'map', 'copyable', 'combobox',
         'signature', 'truncate', 'scrollspy', 'transfer-list',
     ]);
 
     $this->get('/forms')->assertNotFound();
+});
+
+it('provides the response nonce to Trix before its module scripts', function (): void {
+    $response = $this->get('/wysiwyg');
+
+    preg_match("/style-src 'self' 'nonce-([^']+)'/", $response->headers->get('Content-Security-Policy'), $nonce);
+
+    $response->assertSeeInOrder(['name="trix-csp-nonce" content="'.$nonce[1].'"', '<script'], false)
+        ->assertSee('name="article_body"', false)
+        ->assertSee('Published article');
+
+    $this->get('/code-editor')->assertDontSee('name="trix-csp-nonce"', false);
 });

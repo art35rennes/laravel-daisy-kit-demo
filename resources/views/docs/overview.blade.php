@@ -4,7 +4,7 @@
     <section class="max-w-3xl">
         <p class="mb-3 text-sm font-medium uppercase tracking-widest text-base-content/70">Laravel Daisy Kit v6</p>
         <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Focused modules for Laravel interfaces.</h1>
-        <p class="mt-5 text-lg leading-8 text-base-content/75">This demo documents eleven independent package modules. DaisyUI and Tailwind CSS remain regular host-application dependencies, so standard interface elements stay familiar and portable.</p>
+        <p class="mt-5 text-lg leading-8 text-base-content/75">This demo documents thirteen independent package modules. DaisyUI and Tailwind CSS remain regular host-application dependencies, so standard interface elements stay familiar and portable.</p>
         <div class="mt-8 flex flex-wrap gap-3"><a class="btn btn-primary" href="{{ route('docs.installation') }}">Read installation</a><a class="btn btn-ghost" href="https://daisyui.com/components/" target="_blank" rel="noopener noreferrer">Browse DaisyUI components <span aria-hidden="true">↗</span></a></div>
     </section>
     <section class="mt-14" aria-labelledby="modules-heading"><h2 id="modules-heading" class="text-2xl font-semibold">Modules</h2><div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">@foreach ($modules as $slug => $module)<article class="border border-base-300 bg-base-100 p-5"><h3 class="font-semibold"><a class="link-hover link" href="{{ route('docs.module', $slug) }}">{{ $module['title'] }}</a></h3><p class="mt-2 text-sm leading-6 text-base-content/75">{{ $module['description'] }}</p></article>@endforeach</div></section>

@@ -20,7 +20,7 @@ final class DocumentationContentSecurityPolicy
             ? "'self' data: blob: https://tile.openstreetmap.org https://*.basemaps.cartocdn.com"
             : "'self' data: blob:";
 
-        $styleAttributes = in_array($request->route('module'), ['signature', 'transfer-list'], true)
+        $styleAttributes = in_array($request->route('module'), ['signature', 'transfer-list', 'wysiwyg'], true)
             ? "'unsafe-inline'"
             : "'none'";
 
@@ -28,7 +28,7 @@ final class DocumentationContentSecurityPolicy
             ? "'self' 'nonce-{$nonce}'"
             : "'self'";
 
-        $styleSources = $request->route('module') === 'code-editor'
+        $styleSources = in_array($request->route('module'), ['code-editor', 'wysiwyg'], true)
             ? "'self' 'nonce-{$nonce}'"
             : "'self'";
 

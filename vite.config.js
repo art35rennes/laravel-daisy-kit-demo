@@ -13,6 +13,7 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/js/daisy-kit/wysiwyg.js',
                 'resources/js/daisy-kit/code-editor.js',
                 'resources/js/daisy-kit/table.js',
                 'resources/js/daisy-kit/tree.js',
