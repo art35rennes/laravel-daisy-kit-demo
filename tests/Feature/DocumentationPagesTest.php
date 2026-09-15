@@ -108,3 +108,16 @@ it('provides the response nonce to Trix before its module scripts', function ():
 
     $this->get('/code-editor')->assertDontSee('name="trix-csp-nonce"', false);
 });
+
+it('demonstrates nested JSON, editable JavaScript and a read-only Laravel service', function (): void {
+    $this->get('/code-editor')
+        ->assertOk()
+        ->assertSee('settings.json')
+        ->assertSee('projects.js')
+        ->assertSee('ReleaseSummary.php')
+        ->assertSee('reviewRequired')
+        ->assertSee('activeProjectSummaries')
+        ->assertSee('readonly', false)
+        ->assertSee('Expand and Collapse')
+        ->assertSee('Press Enter inside a block');
+});

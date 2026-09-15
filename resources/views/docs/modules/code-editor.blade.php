@@ -1,5 +1,69 @@
 @php
-    $configuration = json_encode(['application' => 'Daisy Kit', 'features' => ['search', 'themes', 'completion'], 'enabled' => true], JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR);
+    $configuration = json_encode([
+        'application' => ['name' => 'Daisy Kit', 'environment' => 'staging', 'locales' => ['en', 'fr']],
+        'editor' => [
+            'theme' => 'inherit',
+            'features' => ['search' => true, 'completion' => true, 'lineWrapping' => false],
+            'languages' => ['json', 'javascript', 'php'],
+        ],
+        'projects' => [
+            ['name' => 'Documentation', 'members' => ['Ada', 'Grace'], 'settings' => ['public' => true, 'reviewRequired' => false]],
+            ['name' => 'Customer portal', 'members' => ['Linus', 'Margaret'], 'settings' => ['public' => false, 'reviewRequired' => true]],
+        ],
+        'notifications' => ['email' => ['enabled' => true, 'digest' => 'weekly'], 'channels' => ['releases', 'reviews']],
+    ], JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR);
+    $javascript = <<<'JS'
+const projects = [
+    { name: "Documentation", hours: [2, 4, 3], archived: false },
+    { name: "Customer portal", hours: [5, 2, 6], archived: false },
+    { name: "Prototype", hours: [1, 2], archived: true },
+];
+
+function summarizeProject(project) {
+    const totalHours = project.hours.reduce((total, hours) => {
+        return total + hours;
+    }, 0);
+
+    return {
+        name: project.name,
+        totalHours,
+        summary: `${project.name}: ${totalHours} hours`,
+    };
+}
+
+function activeProjectSummaries(items) {
+    return items
+        .filter((project) => !project.archived)
+        .map((project) => summarizeProject(project));
+}
+
+const summaries = activeProjectSummaries(projects);
+console.table(summaries);
+JS;
+    $php = <<<'PHP'
+<?php
+
+namespace App\Services;
+
+final class ReleaseSummary
+{
+    /**
+     * @param  list<array{title: string, published: bool, tags: list<string>}>  $releases
+     * @return list<array{title: string, tags: string}>
+     */
+    public function published(array $releases): array
+    {
+        return collect($releases)
+            ->filter(fn (array $release): bool => $release['published'])
+            ->map(fn (array $release): array => [
+                'title' => $release['title'],
+                'tags' => implode(', ', $release['tags']),
+            ])
+            ->values()
+            ->all();
+    }
+}
+PHP;
     $blade = <<<'BLADE'
 <x-daisy-kit::code-editor
     name="configuration"
@@ -30,16 +94,24 @@ JS;
         <section class="mt-10 space-y-6" aria-label="Interactive examples">
             <section class="min-w-0 rounded-box border border-base-300 bg-base-100 p-5">
                 <h2 class="text-xl font-semibold">Edit application configuration</h2>
-                <p class="my-3 text-sm text-base-content/70">Search and replace, fold all sections or only the other blocks, and enlarge or restore the editor. Suggest and Ctrl+Space open language and document-word completions, including JSON. Tab moves to the next control.</p>
+                <p class="my-3 text-sm text-base-content/70">Explore nested objects and arrays. Place the cursor inside a project, then fold the other blocks to keep that project in view. Expand and Collapse switch the editor between its in-page sizes. Suggest and Ctrl+Space open completions, including keys already present in the document.</p>
                 <form>
                     <x-daisy-kit::code-editor name="configuration" label="Application configuration" filename="settings.json" language="json" :value="$configuration" :required="true" :nonce="Vite::cspNonce()" />
                     <button class="btn btn-sm mt-4" type="reset">Reset configuration</button>
                 </form>
             </section>
+            <section class="min-w-0 rounded-box border border-base-300 bg-base-100 p-5">
+                <h2 class="text-xl font-semibold">Write JavaScript with local assistance</h2>
+                <p class="my-3 text-sm text-base-content/70">Try typing an opening parenthesis, bracket, brace or quote in the appropriate code context: the editor inserts its closing partner. Press Enter inside a block to indent the next line. Select a repeated word and open search, or fold a function while editing another one. Tab moves to the next control.</p>
+                <form>
+                    <x-daisy-kit::code-editor name="project_summary" label="Project summary script" filename="projects.js" language="javascript" :value="$javascript" :nonce="Vite::cspNonce()" />
+                    <button class="btn btn-sm mt-4" type="reset">Reset script</button>
+                </form>
+            </section>
             <section class="min-w-0 rounded-box border border-base-300 bg-base-100 p-5" data-theme="dark">
-                <h2 class="text-xl font-semibold">Read-only code in a local theme</h2>
-                <p class="my-3 text-sm text-base-content/70">Selection, search and copy remain available. This example inherits its own dark DaisyUI theme.</p>
-                <x-daisy-kit::code-editor label="Example response" filename="response.json" language="json" :value="$configuration" :read-only="true" :nonce="Vite::cspNonce()" />
+                <h2 class="text-xl font-semibold">Read-only Laravel code in a local theme</h2>
+                <p class="my-3 text-sm text-base-content/70">Inspect a PHP service with a Laravel collection pipeline. Selection, search, folding and copy remain available. This example inherits its own dark DaisyUI theme.</p>
+                <x-daisy-kit::code-editor label="Release summary service" filename="ReleaseSummary.php" language="php" :value="$php" :read-only="true" :nonce="Vite::cspNonce()" />
             </section>
         </section>
         <section class="mt-10"><h2 class="text-2xl font-semibold">Blade usage</h2><pre class="code-sample mt-4 overflow-x-auto" tabindex="0" aria-label="Blade usage"><code>{{ $blade }}</code></pre></section>
