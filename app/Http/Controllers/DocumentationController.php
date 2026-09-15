@@ -10,6 +10,7 @@ class DocumentationController extends Controller
      * @var array<string, array{title: string, description: string, component: string, daisyUiUrl: string, assets: list<string>}>
      */
     private const MODULES = [
+        'code-editor' => ['title' => 'Code Editor', 'description' => 'Read and edit code with search, local completion and DaisyUI themes.', 'component' => 'x-daisy-kit::code-editor', 'daisyUiUrl' => 'https://daisyui.com/components/textarea/', 'assets' => ['resources/js/daisy-kit/code-editor.js']],
         'table' => ['title' => 'Table', 'description' => 'Present deterministic records in an accessible data table.', 'component' => 'x-daisy-kit::table', 'daisyUiUrl' => 'https://daisyui.com/components/table/', 'assets' => ['resources/js/daisy-kit/table.js']],
         'tree' => ['title' => 'Tree', 'description' => 'Explore nested, deterministic fixture data.', 'component' => 'x-daisy-kit::tree', 'daisyUiUrl' => 'https://daisyui.com/components/menu/', 'assets' => ['resources/js/daisy-kit/tree.js']],
         'blueprint' => ['title' => 'Blueprint', 'description' => 'Inspect a compact graph fixture without host-level visual wrappers.', 'component' => 'x-daisy-kit::blueprint', 'daisyUiUrl' => 'https://daisyui.com/components/badge/', 'assets' => ['resources/js/daisy-kit/blueprint.js']],

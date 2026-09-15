@@ -15,6 +15,7 @@ dataset('documentation-pages', [
     ['/truncate', 'Truncate'],
     ['/scrollspy', 'Scrollspy'],
     ['/transfer-list', 'Transfer List'],
+    ['/code-editor', 'Code Editor'],
     ['/table', 'Table'],
     ['/tree', 'Tree'],
     ['/blueprint', 'Blueprint'],
@@ -33,7 +34,9 @@ it('serves every documented module page', function (string $uri, string $heading
 
     expect($nonce)->toHaveKey(1);
 
-    $response->assertHeader('Content-Security-Policy', "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self' 'nonce-{$nonce[1]}'; style-src 'self'; style-src-attr {$styleAttributes}; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self' blob:; frame-src 'self'; form-action 'self'");
+    $styleSources = $uri === '/code-editor' ? "'self' 'nonce-{$nonce[1]}'" : "'self'";
+
+    $response->assertHeader('Content-Security-Policy', "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self' 'nonce-{$nonce[1]}'; style-src {$styleSources}; style-src-attr {$styleAttributes}; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self' blob:; frame-src 'self'; form-action 'self'");
 })->with('documentation-pages');
 
 it('authorizes Boost browser logging with the documentation CSP nonce', function (): void {
@@ -84,9 +87,9 @@ it('demonstrates rich Combobox suggestions and its renderer facade', function ()
         ->assertSee('max-suggestions', false);
 });
 
-it('exposes exactly the eleven v6 modules without the retired Forms page', function (): void {
+it('exposes exactly the twelve v6 modules without the retired Forms page', function (): void {
     expect(array_keys(DocumentationController::modules()))->toEqualCanonicalizing([
-        'table', 'tree', 'blueprint', 'file-preview', 'map', 'copyable', 'combobox',
+        'code-editor', 'table', 'tree', 'blueprint', 'file-preview', 'map', 'copyable', 'combobox',
         'signature', 'truncate', 'scrollspy', 'transfer-list',
     ]);
 

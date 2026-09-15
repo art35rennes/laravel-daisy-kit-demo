@@ -28,7 +28,11 @@ final class DocumentationContentSecurityPolicy
             ? "'self' 'nonce-{$nonce}'"
             : "'self'";
 
-        $response->headers->set('Content-Security-Policy', "default-src 'none'; base-uri 'none'; object-src 'none'; script-src {$scriptSources}; style-src 'self'; style-src-attr {$styleAttributes}; img-src {$imageSources}; connect-src 'self'; worker-src 'self' blob:; frame-src 'self'; form-action 'self'");
+        $styleSources = $request->route('module') === 'code-editor'
+            ? "'self' 'nonce-{$nonce}'"
+            : "'self'";
+
+        $response->headers->set('Content-Security-Policy', "default-src 'none'; base-uri 'none'; object-src 'none'; script-src {$scriptSources}; style-src {$styleSources}; style-src-attr {$styleAttributes}; img-src {$imageSources}; connect-src 'self'; worker-src 'self' blob:; frame-src 'self'; form-action 'self'");
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
 
         return $response;
