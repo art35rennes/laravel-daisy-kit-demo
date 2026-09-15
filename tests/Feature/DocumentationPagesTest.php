@@ -118,6 +118,6 @@ it('demonstrates nested JSON, editable JavaScript and a read-only Laravel servic
         ->assertSee('reviewRequired')
         ->assertSee('activeProjectSummaries')
         ->assertSee('readonly', false)
-        ->assertSee('Expand and Collapse')
+        ->assertSee('Expand editor and Collapse editor')
         ->assertSee('Press Enter inside a block');
 });
