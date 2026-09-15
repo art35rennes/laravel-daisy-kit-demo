@@ -7,7 +7,9 @@ it('keeps the expanded title inside the editor and pairs JavaScript delimiters',
         ->assertSee('settings.json')
         ->assertSee('projects.js')
         ->assertSee('ReleaseSummary.php')
+        ->assertSee('Expand editor')
         ->click('[data-daisy-kit-module=code-editor]:has(textarea[name=configuration]) [data-code-editor-action=expand]')
+        ->assertSee('Collapse editor')
         ->assertScript(<<<'JS'
             (() => {
                 const root = document.querySelector('.daisy-kit-code-editor--expanded');
