@@ -29,3 +29,16 @@ it('keeps the expanded title inside the editor and pairs JavaScript delimiters',
         ->assertNoJavaScriptErrors()
         ->assertNoSmoke();
 })->group('browser');
+
+it('formats JSON locally and restores the previous layout with Undo', function (): void {
+    $page = visit('/code-editor')->waitForEvent('networkidle');
+
+    $page->fill('[data-daisy-kit-module=code-editor]:has(textarea[name=configuration]) .cm-content', '{"project":"Daisy Kit","settings":{"enabled":true}}')
+        ->click('[data-daisy-kit-module=code-editor]:has(textarea[name=configuration]) [data-code-editor-action=format]')
+        ->assertScript('document.querySelector("textarea[name=configuration]").value.includes("\\n")')
+        ->assertScript('JSON.parse(document.querySelector("textarea[name=configuration]").value).settings.enabled === true')
+        ->click('[data-daisy-kit-module=code-editor]:has(textarea[name=configuration]) [data-code-editor-action=undo]')
+        ->assertScript('document.querySelector("textarea[name=configuration]").value === \'{"project":"Daisy Kit","settings":{"enabled":true}}\'')
+        ->assertNoJavaScriptErrors()
+        ->assertNoSmoke();
+})->group('browser');
