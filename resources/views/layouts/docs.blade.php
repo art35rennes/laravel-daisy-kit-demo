@@ -5,6 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Executable documentation for Laravel Daisy Kit v6.">
         <title>{{ $title ?? 'Laravel Daisy Kit' }}</title>
+        @if (request()->route('module') === 'wysiwyg')
+            <meta name="trix-csp-nonce" content="{{ Vite::cspNonce() }}">
+        @endif
         @vite([...['resources/css/app.css', 'resources/js/app.js'], ...($moduleAssets ?? [])])
 
     </head>

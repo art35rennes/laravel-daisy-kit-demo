@@ -15,6 +15,8 @@ dataset('documentation-pages', [
     ['/truncate', 'Truncate'],
     ['/scrollspy', 'Scrollspy'],
     ['/transfer-list', 'Transfer List'],
+    ['/code-editor', 'Code Editor'],
+    ['/wysiwyg', 'WYSIWYG'],
     ['/table', 'Table'],
     ['/tree', 'Tree'],
     ['/blueprint', 'Blueprint'],
@@ -23,7 +25,7 @@ dataset('documentation-pages', [
 ]);
 
 it('serves every documented module page', function (string $uri, string $heading): void {
-    $styleAttributes = in_array($uri, ['/signature', '/transfer-list'], true) ? "'unsafe-inline'" : "'none'";
+    $styleAttributes = in_array($uri, ['/signature', '/transfer-list', '/wysiwyg'], true) ? "'unsafe-inline'" : "'none'";
 
     $response = $this->get($uri)
         ->assertOk()
@@ -33,7 +35,9 @@ it('serves every documented module page', function (string $uri, string $heading
 
     expect($nonce)->toHaveKey(1);
 
-    $response->assertHeader('Content-Security-Policy', "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self' 'nonce-{$nonce[1]}'; style-src 'self'; style-src-attr {$styleAttributes}; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self' blob:; frame-src 'self'; form-action 'self'");
+    $styleSources = in_array($uri, ['/code-editor', '/wysiwyg'], true) ? "'self' 'nonce-{$nonce[1]}'" : "'self'";
+
+    $response->assertHeader('Content-Security-Policy', "default-src 'none'; base-uri 'none'; object-src 'none'; script-src 'self' 'nonce-{$nonce[1]}'; style-src {$styleSources}; style-src-attr {$styleAttributes}; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self' blob:; frame-src 'self'; form-action 'self'");
 })->with('documentation-pages');
 
 it('authorizes Boost browser logging with the documentation CSP nonce', function (): void {
@@ -56,7 +60,7 @@ it('authorizes Boost browser logging with the documentation CSP nonce', function
 it('documents the v6 VCS installation and official Vite alias', function (): void {
     $this->get('/installation')
         ->assertOk()
-        ->assertSee('^6.0')
+        ->assertSee('^6.1')
         ->assertSee(InstalledVersions::getPrettyVersion('art35rennes/laravel-daisy-kit'))
         ->assertSee(InstalledVersions::getReference('art35rennes/laravel-daisy-kit'))
         ->assertSee('v6 removes Forms Viewer/Builder')
@@ -84,11 +88,36 @@ it('demonstrates rich Combobox suggestions and its renderer facade', function ()
         ->assertSee('max-suggestions', false);
 });
 
-it('exposes exactly the eleven v6 modules without the retired Forms page', function (): void {
+it('exposes exactly the thirteen v6 modules without the retired Forms page', function (): void {
     expect(array_keys(DocumentationController::modules()))->toEqualCanonicalizing([
-        'table', 'tree', 'blueprint', 'file-preview', 'map', 'copyable', 'combobox',
+        'wysiwyg', 'code-editor', 'table', 'tree', 'blueprint', 'file-preview', 'map', 'copyable', 'combobox',
         'signature', 'truncate', 'scrollspy', 'transfer-list',
     ]);
 
     $this->get('/forms')->assertNotFound();
+});
+
+it('provides the response nonce to Trix before its module scripts', function (): void {
+    $response = $this->get('/wysiwyg');
+
+    preg_match("/style-src 'self' 'nonce-([^']+)'/", $response->headers->get('Content-Security-Policy'), $nonce);
+
+    $response->assertSeeInOrder(['name="trix-csp-nonce" content="'.$nonce[1].'"', '<script'], false)
+        ->assertSee('name="article_body"', false)
+        ->assertSee('Published article');
+
+    $this->get('/code-editor')->assertDontSee('name="trix-csp-nonce"', false);
+});
+
+it('demonstrates nested JSON, editable JavaScript and a read-only Laravel service', function (): void {
+    $this->get('/code-editor')
+        ->assertOk()
+        ->assertSee('settings.json')
+        ->assertSee('projects.js')
+        ->assertSee('ReleaseSummary.php')
+        ->assertSee('reviewRequired')
+        ->assertSee('activeProjectSummaries')
+        ->assertSee('readonly', false)
+        ->assertSee('Expand editor and Collapse editor')
+        ->assertSee('Press Enter inside a block');
 });

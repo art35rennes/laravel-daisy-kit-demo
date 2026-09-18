@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "321f990c1ccd62afb03698b35964c891",
+    "content-hash": "28114270dbeb43eacda97b6ba1792aaf",
     "packages": [
         {
             "name": "art35rennes/laravel-daisy-kit",
-            "version": "v6.0.1",
+            "version": "v6.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/art35rennes/laravel-daisy-kit.git",
-                "reference": "b01c567c188a8bf22686e3ea3d3ac27d2a31099a"
+                "reference": "4d571c7d7ac12441dcaf27d648067c9cbf917318"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/art35rennes/laravel-daisy-kit/zipball/b01c567c188a8bf22686e3ea3d3ac27d2a31099a",
-                "reference": "b01c567c188a8bf22686e3ea3d3ac27d2a31099a",
+                "url": "https://api.github.com/repos/art35rennes/laravel-daisy-kit/zipball/4d571c7d7ac12441dcaf27d648067c9cbf917318",
+                "reference": "4d571c7d7ac12441dcaf27d648067c9cbf917318",
                 "shasum": ""
             },
             "require": {
@@ -129,7 +129,7 @@
                 "issues": "https://github.com/art35rennes/laravel-daisy-kit/issues",
                 "source": "https://github.com/art35rennes/laravel-daisy-kit"
             },
-            "time": "2026-09-13T12:30:08+00:00"
+            "time": "2026-09-18T08:57:14+00:00"
         },
         {
             "name": "brick/math",
