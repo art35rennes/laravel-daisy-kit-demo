@@ -3,13 +3,13 @@
 ## Delivery
 
 A public Laravel 13 / PHP 8.4+ repository with executable English documentation
-for the exact `v6.0.1` Composer/VCS release. No hosted deployment, authentication,
+for the exact `v6.1.0` Composer/VCS release. No hosted deployment, authentication,
 persistence, package copies, proxy routes or replacement components are included.
 
 ## Contract
 
-Exactly eleven pages: Table, Tree, Blueprint, File Preview, Map, Copyable,
-Combobox, Signature, Truncate, Scrollspy and Transfer List. Forms and the package
+Exactly thirteen pages: Table, Tree, Blueprint, File Preview, Map, Copyable,
+Combobox, Signature, Truncate, Scrollspy, Transfer List, Code Editor and WYSIWYG. Forms and the package
 Livewire integration from v5 are removed without aliases or compatibility glue.
 The package owns behavior; the host owns deterministic read-only fixtures,
 DaisyUI/Tailwind styling, routes and native forms. Use independent JS/CSS imports
@@ -21,7 +21,8 @@ Each page documents usage, imports, facade methods, events, submission shape and
 applicable loading/empty/error states with working examples. Test observable
 outcomes, not just successful mounting. Exercise keyboard and focus, CSP,
 accessibility and 320/768/1024/1440 px widths in light and dark themes.
-Signature and Transfer List alone need the style-attribute CSP exception.
+Signature, Transfer List and WYSIWYG need the style-attribute CSP exception.
+Code Editor and WYSIWYG also require the documented response nonce.
 File Preview remains sandboxed and its assets are emitted by Vite automatically.
 
 Run `composer run test:release` without TIA, Pint, Vite build, Composer validation

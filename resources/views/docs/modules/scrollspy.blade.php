@@ -40,7 +40,7 @@ JS;
                     <div id="release-guide" class="max-h-96 min-w-0 space-y-10 overflow-y-auto scroll-smooth pr-3" tabindex="0" aria-label="Release guide">
                         <section class="min-h-64 border-b border-base-300 pb-8">
                             <h2 id="guide-overview" class="text-xl font-semibold">Release overview</h2>
-                            <p class="mt-4 leading-7">This release separates eleven focused components. Each one owns its browser behavior while the Laravel application continues to own routes, data and DaisyUI styling.</p>
+                            <p class="mt-4 leading-7">This release separates thirteen focused components. Each one owns its browser behavior while the Laravel application continues to own routes, data and DaisyUI styling.</p>
                             <p class="mt-4 leading-7 text-base-content/75">Start by identifying the smallest component that covers the user outcome, then import only its JavaScript and CSS entries.</p>
                         </section>
                         <section class="min-h-64 border-b border-base-300 pb-8">

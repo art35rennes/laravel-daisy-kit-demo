@@ -1,14 +1,15 @@
 # Laravel Daisy Kit Demo v6
 
-Executable English documentation for eleven independent Laravel Daisy Kit v6 modules:
+Executable English documentation for thirteen independent Laravel Daisy Kit v6 modules:
 Table, Tree, Blueprint, File Preview, Map, Copyable, Combobox, Signature, Truncate,
-Scrollspy, and Transfer List. The package is installed from Git VCS at
-`v6.0.1`; `composer.lock` records the exact reference, also shown on Installation.
+Scrollspy, Transfer List, Code Editor, and WYSIWYG. The package is installed from Git VCS at
+`v6.1.0`; `composer.lock` records the exact reference, also shown on Installation.
 Forms Viewer/Builder and Livewire are removed without compatibility aliases.
 
-The six small-component pages include working examples, explicit imports, facade methods,
-events and Laravel submission shapes. Signature and Transfer List alone permit
-`style-src-attr 'unsafe-inline'`; the other pages retain the strict policy.
+Every module page includes working examples, explicit imports, facade methods,
+events and Laravel submission shapes. Signature, Transfer List and WYSIWYG permit
+`style-src-attr 'unsafe-inline'`; the other pages retain the strict policy. Code Editor
+and WYSIWYG also document their response nonce requirements.
 
 ## Requirements
 

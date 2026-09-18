@@ -5,7 +5,7 @@
     { "type": "vcs", "url": "https://github.com/art35rennes/laravel-daisy-kit" }
   ],
   "require": {
-    "art35rennes/laravel-daisy-kit": "^6.0"
+    "art35rennes/laravel-daisy-kit": "^6.1"
   }
 }
 JSON;

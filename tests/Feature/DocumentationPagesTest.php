@@ -60,7 +60,7 @@ it('authorizes Boost browser logging with the documentation CSP nonce', function
 it('documents the v6 VCS installation and official Vite alias', function (): void {
     $this->get('/installation')
         ->assertOk()
-        ->assertSee('^6.0')
+        ->assertSee('^6.1')
         ->assertSee(InstalledVersions::getPrettyVersion('art35rennes/laravel-daisy-kit'))
         ->assertSee(InstalledVersions::getReference('art35rennes/laravel-daisy-kit'))
         ->assertSee('v6 removes Forms Viewer/Builder')
