@@ -3,7 +3,7 @@
 Executable English documentation for thirteen independent Laravel Daisy Kit v6 modules:
 Table, Tree, Blueprint, File Preview, Map, Copyable, Combobox, Signature, Truncate,
 Scrollspy, Transfer List, Code Editor, and WYSIWYG. The package is installed from Git VCS at
-`v6.1.0`; `composer.lock` records the exact reference, also shown on Installation.
+`v6.1.4`; `composer.lock` records the exact reference, also shown on Installation.
 Forms Viewer/Builder and Livewire are removed without compatibility aliases.
 
 Every module page includes working examples, explicit imports, facade methods,
@@ -13,9 +13,9 @@ and WYSIWYG also document their response nonce requirements.
 
 ## Requirements
 
-- PHP 8.4.1+
+- PHP 8.4.27+ (PHP 8.5 requires 8.5.12+)
 - Composer 2
-- Node.js 24 and npm
+- Node.js 24.22.1+ within Node 24 (see `.nvmrc`) and npm
 
 The application has no authentication, database migrations, or persistent data.
 All examples use deterministic local fixtures.
@@ -60,15 +60,15 @@ accessibility, and module coverage cannot be masked.
 
 ## Dependency checkpoint
 
-The locks were renewed on 27 August 2026 after the functional browser baseline.
-`composer outdated --direct` and `npm outdated` reported no newer stable direct
-dependency, including a newer major, and both security audits were empty.
+The locks were renewed on 24 October 2026 after the functional browser baseline.
+Compatible updates were applied and both security audits were empty. Major
+migrations are planned separately in the package maintenance report.
 
 | Area | Locked direct versions | Official release notes |
 | --- | --- | --- |
-| Application | Laravel 13.29.0 | [Laravel](https://github.com/laravel/framework/releases) |
-| PHP quality | Boost 2.7.0; Pint 1.30.5; Pest 5.1.3; Pest Browser 5.0.1 | [Boost](https://github.com/laravel/boost/releases), [Pint](https://github.com/laravel/pint/releases), [Pest](https://github.com/pestphp/pest/releases), [Pest Browser](https://github.com/pestphp/pest-plugin-browser/releases) |
-| Frontend | Tailwind CSS and its Vite plugin 4.3.3; DaisyUI 5.7.22; Vite 8.2.2; Laravel Vite plugin 3.2.0; Playwright 1.62.1 | [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss/releases), [DaisyUI](https://github.com/saadeghi/daisyui/releases), [Vite](https://github.com/vitejs/vite/releases), [Laravel Vite plugin](https://github.com/laravel/vite-plugin/releases), [Playwright](https://github.com/microsoft/playwright/releases) |
+| Application | Laravel 13.38.0 | [Laravel](https://github.com/laravel/framework/releases) |
+| PHP quality | Boost 2.10.3; Pint 1.32.1; Pest 5.3.3; Pest Browser 5.1.2 | [Boost](https://github.com/laravel/boost/releases), [Pint](https://github.com/laravel/pint/releases), [Pest](https://github.com/pestphp/pest/releases), [Pest Browser](https://github.com/pestphp/pest-plugin-browser/releases) |
+| Frontend | Tailwind CSS and its Vite plugin 4.3.3; DaisyUI 5.7.50; Vite 8.3.5; Laravel Vite plugin 3.2.0; Playwright 1.64.1 | [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss/releases), [DaisyUI](https://github.com/saadeghi/daisyui/releases), [Vite](https://github.com/vitejs/vite/releases), [Laravel Vite plugin](https://github.com/laravel/vite-plugin/releases), [Playwright](https://github.com/microsoft/playwright/releases) |
 
 The Composer and npm manifests retain compatible major ranges while the lock
 files preserve this verified application snapshot.
@@ -97,3 +97,10 @@ directory is machine-specific.
 - [DaisyUI documentation](https://daisyui.com/docs/)
 - [Pest 5 TIA](https://pestphp.com/docs/tia)
 - [Pest Browser testing](https://pestphp.com/docs/browser-testing)
+
+## Security maintenance
+
+PHP must be 8.4.27+ or 8.5.12+; Node builds require patched Node 24.22.1+.
+CI rejects eMudhra and the affected AAA Certificate Services cross-signing path
+before checkout, covers PHP 8.4/8.5 and audits dependency locks weekly.
+The immutable VCS lock consumes kit v6.1.4. There is no deployment workflow.
